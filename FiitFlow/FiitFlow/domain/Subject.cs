@@ -3,10 +3,13 @@
 public class Subject
 {
     public readonly string Title;
-    private string linkToSheet; //ну тут что надо стрингом либо чем либо другим
+    private string linkToSheet; //ну тут что надо стрингом либо чем, либо другим
     
-    // private (как мы храним баллы пока хз) points 
-
+    // private Points Points;
+    // надо наверн отдельный класс сделать но пусть андрей с парсером думает
+    // TODO реализовать класс для баллов @XIONTER
+    
+    
     public Subject(string title, string linkToSheet = "")
     {
         Title = title;
@@ -24,9 +27,8 @@ public class Subject
 
     public void GetPoints()
     {
-        // ну там парсер чет делает
+        // ну тут парсер чет делает
         // типо parser.Parse(linkToSheet)
         throw new NotImplementedException();
     }
-    
 }
