@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiitFlow", "FiitFlow\FiitFlow.csproj", "{60896C20-6161-4E94-8E65-B304C187342C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFlow", "WebFlow\WebFlow.csproj", "{CA1262C3-1F7F-40E0-B813-D5C438605A8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{60896C20-6161-4E94-8E65-B304C187342C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60896C20-6161-4E94-8E65-B304C187342C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60896C20-6161-4E94-8E65-B304C187342C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA1262C3-1F7F-40E0-B813-D5C438605A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA1262C3-1F7F-40E0-B813-D5C438605A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA1262C3-1F7F-40E0-B813-D5C438605A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA1262C3-1F7F-40E0-B813-D5C438605A8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

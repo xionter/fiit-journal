@@ -24,11 +24,4 @@ public class Subject
         
         linkToSheet = link;
     }
-
-    public void GetPoints()
-    {
-        // ну тут парсер чет делает
-        // типо parser.Parse(linkToSheet)
-        throw new NotImplementedException();
-    }
 }

@@ -42,4 +42,11 @@ public class Student
         // ну тут удалить предмет из списка выбранных
         throw new NotImplementedException();
     }
+    
+    public void GetPoints()
+    {
+        // ну тут парсер чет делает
+        // типо parser.Parse(linkToSheet)
+        throw new NotImplementedException();
+    }
 }
