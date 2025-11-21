@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "nJav1+5zoPg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\artyo\\repositories\\FiitFlow\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\artyo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.11\\microsoft.aspnetcore.openapi.9.0.11.nupkg.sha512",
+    "C:\\Users\\artyo\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\9.0.11\\microsoft.aspnetcore.spaproxy.9.0.11.nupkg.sha512",
+    "C:\\Users\\artyo\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}

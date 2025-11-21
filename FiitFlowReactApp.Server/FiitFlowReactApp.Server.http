@@ -1,0 +1,6 @@
+@FiitFlowReactApp.Server_HostAddress = http://localhost:5273
+
+GET {{FiitFlowReactApp.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
