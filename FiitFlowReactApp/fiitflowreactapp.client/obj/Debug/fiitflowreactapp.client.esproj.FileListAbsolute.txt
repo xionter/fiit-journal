@@ -1,0 +1,1 @@
+C:\Users\artyo\repositories\fiit-journal\FiitFlowReactApp\fiitflowreactapp.client\obj\Debug\fiitflowreactapp.client.esproj.CoreCompileInputs.cache

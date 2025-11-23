@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF4C3EB8-EE94-C75A-0CDD-E0822DBC6D5B}|fiitflowreactapp.client\\fiitflowreactapp.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflowreactapp\\fiitflowreactapp.client\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{AF4C3EB8-EE94-C75A-0CDD-E0822DBC6D5B}|fiitflowreactapp.client\\fiitflowreactapp.client.esproj|solutionrelative:fiitflowreactapp.client\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF4C3EB8-EE94-C75A-0CDD-E0822DBC6D5B}|fiitflowreactapp.client\\fiitflowreactapp.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflowreactapp\\fiitflowreactapp.client\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{AF4C3EB8-EE94-C75A-0CDD-E0822DBC6D5B}|fiitflowreactapp.client\\fiitflowreactapp.client.esproj|solutionrelative:fiitflowreactapp.client\\package.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF4C3EB8-EE94-C75A-0CDD-E0822DBC6D5B}|fiitflowreactapp.client\\fiitflowreactapp.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflowreactapp\\fiitflowreactapp.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{AF4C3EB8-EE94-C75A-0CDD-E0822DBC6D5B}|fiitflowreactapp.client\\fiitflowreactapp.client.esproj|solutionrelative:fiitflowreactapp.client\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.tsx",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\fiitflowreactapp.client\\src\\App.tsx",
+              "RelativeDocumentMoniker": "fiitflowreactapp.client\\src\\App.tsx",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\fiitflowreactapp.client\\src\\App.tsx",
+              "RelativeToolTip": "fiitflowreactapp.client\\src\\App.tsx",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-11-23T16:31:50.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "package.json",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\fiitflowreactapp.client\\package.json",
+              "RelativeDocumentMoniker": "fiitflowreactapp.client\\package.json",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\fiitflowreactapp.client\\package.json",
+              "RelativeToolTip": "fiitflowreactapp.client\\package.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-23T16:27:49.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\fiitflowreactapp.client\\index.html",
+              "RelativeDocumentMoniker": "fiitflowreactapp.client\\index.html",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp\\fiitflowreactapp.client\\index.html",
+              "RelativeToolTip": "fiitflowreactapp.client\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-11-23T16:27:34.983Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
