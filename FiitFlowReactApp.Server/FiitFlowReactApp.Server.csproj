@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FiitFlow.Parser\FiitFlow.Parser.csproj" />
+  </ItemGroup>
+
 </Project>
