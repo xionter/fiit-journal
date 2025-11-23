@@ -14,6 +14,30 @@ namespace FiitFlow.Parser.Services
             _httpClient = httpClient ?? new HttpClient();
         }
 
+        public async Task<string> ParseAsync(string configPath, string studentName)
+        {
+            if (!File.Exists(configPath))
+                throw new FileNotFoundException($"Конфиг не найден: {configPath}");
+
+            var configContent = await File.ReadAllLinesAsync(configPath);
+            var config = new ConfigParser().Parse(configContent);
+
+            if (string.IsNullOrWhiteSpace(studentName))
+                throw new ArgumentException("Имя студента не указано");
+
+            using var outputWriter = new StringOutputWriter();
+
+            var searchService = new StudentSearchService(
+                new ExcelDownloader(_httpClient),
+                new ExcelParser(),
+                outputWriter
+            );
+
+            await searchService.SearchStudentInAllTablesAsync(config, studentName);
+
+            return outputWriter.GetContent();
+        }
+
         public async Task<string> ParseAsync(string configPath)
         {
             if (!File.Exists(configPath))
@@ -25,18 +49,7 @@ namespace FiitFlow.Parser.Services
             if (string.IsNullOrWhiteSpace(config.StudentName))
                 throw new ArgumentException("Имя студента не указано");
 
-            using var outputWriter = new StringOutputWriter();
-
-            var searchService = new StudentSearchService(
-                new ExcelDownloader(_httpClient),
-                new ExcelParser(),
-                outputWriter
-            );
-
-            await searchService.SearchStudentInAllTablesAsync(config);
-
-            return outputWriter.GetContent();
+            return await ParseAsync(configPath, config.StudentName);
         }
     }
 }
-

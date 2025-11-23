@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FiitFlowReactApp.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ff78d018f9c2f252050c1d3c089606b0cbb03546")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09423723e5742d16c96adf04454d1c123f2a8b36")]
 [assembly: System.Reflection.AssemblyProductAttribute("FiitFlowReactApp.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FiitFlowReactApp.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

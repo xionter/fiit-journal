@@ -21,7 +21,7 @@ public class StudentSearchService
         _outputWriter = outputWriter;
     }
 
-    public async Task SearchStudentInAllTablesAsync(AppConfig config)
+    public async Task SearchStudentInAllTablesAsync(AppConfig config, string studentName)
     {
         if (!string.IsNullOrEmpty(config.StudentName))
         {
@@ -58,7 +58,7 @@ public class StudentSearchService
             
             if (!hasData)
             {
-                _outputWriter.WriteEmptyLine(); // Keep consistent spacing even for empty tables
+                _outputWriter.WriteEmptyLine();
             }
             
             File.Delete(tempFile);
