@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\WebFlow\\WebFlow.csproj": {}
+    "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj": {
+    "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+        "projectUniqueName": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
         "projectName": "FiitFlow",
-        "projectPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+        "projectPath": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
         "packagesPath": "C:\\Users\\Nezeri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\obj\\",
+        "outputPath": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nezeri\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -36,13 +36,29 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.11, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -59,18 +75,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Nezeri\\.dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Nezeri\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\WebFlow\\WebFlow.csproj": {
+    "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\WebFlow\\WebFlow.csproj",
+        "projectUniqueName": "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj",
         "projectName": "WebFlow",
-        "projectPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\WebFlow\\WebFlow.csproj",
+        "projectPath": "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj",
         "packagesPath": "C:\\Users\\Nezeri\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\WebFlow\\obj\\",
+        "outputPath": "S:\\fiit-journal\\FiitFlow\\WebFlow\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nezeri\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -85,8 +101,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj": {
-                "projectPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj"
+              "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj": {
+                "projectPath": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj"
               }
             }
           }
@@ -99,9 +115,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
+          "auditMode": "all"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -125,7 +141,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Nezeri\\.dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Nezeri\\.dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
