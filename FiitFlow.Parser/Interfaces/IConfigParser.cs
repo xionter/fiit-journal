@@ -1,4 +1,9 @@
-public interface IConfigParser
+using FiitFlow.Parser.Models;
+
+namespace FiitFlow.Parser.Interfaces
 {
-    AppConfig Parse(string[] lines);
+    public interface IConfigParser
+    {
+        AppConfig Parse(string[] lines);
+    }
 }

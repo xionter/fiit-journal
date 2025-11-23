@@ -2,17 +2,19 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using FiitFlow.Parser.Models;
 
+namespace FiitFlow.Parser.Services;
 public class StudentSearchService
 {
     private readonly ExcelDownloader _excelDownloader;
     private readonly ExcelParser _excelParser;
-    private readonly FileOutputWriter _outputWriter;
+    private readonly IOutputWriter _outputWriter;
 
     public StudentSearchService(
         ExcelDownloader excelDownloader,
         ExcelParser excelParser,
-        FileOutputWriter outputWriter)
+        IOutputWriter outputWriter)
     {
         _excelDownloader = excelDownloader;
         _excelParser = excelParser;

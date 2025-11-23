@@ -8,19 +8,19 @@
     "net9.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Nezeri\\.nuget\\packages\\": {}
+    "/home/xionter/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+      "projectUniqueName": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
       "projectName": "FiitFlow",
-      "projectPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
-      "packagesPath": "C:\\Users\\Nezeri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\obj\\",
+      "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
+      "packagesPath": "/home/xionter/.nuget/packages/",
+      "outputPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Nezeri\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/xionter/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -44,7 +44,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -60,12 +60,18 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[9.0.9, 9.0.9]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\Nezeri\\.dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

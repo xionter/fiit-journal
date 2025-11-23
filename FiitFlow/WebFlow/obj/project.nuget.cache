@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "o3JoXTkoX0c=",
+  "dgSpecHash": "XLvPqg17yDE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\WebFlow\\WebFlow.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/WebFlow/WebFlow.csproj",
+  "expectedPackageFiles": [
+    "/home/xionter/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
   "logs": []
 }

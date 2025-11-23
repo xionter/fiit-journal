@@ -1,4 +1,8 @@
-public interface IExcelParser
+using FiitFlow.Parser.Models;
+namespace FiitFlow.Parser.Interfaces
 {
-    IEnumerable<Student> FindStudents(string filePath, string studentName, TableConfig tableConfig);
+    public interface IExcelParser
+    {
+        IEnumerable<Student> FindStudents(string filePath, string studentName, TableConfig tableConfig);
+    }
 }

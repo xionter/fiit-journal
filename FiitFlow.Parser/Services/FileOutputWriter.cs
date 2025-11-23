@@ -1,30 +1,48 @@
+using System;
 using System.IO;
 using System.Text;
-using System.Linq;
+using FiitFlow.Parser.Models;
 
-public class FileOutputWriter : IDisposable
+namespace FiitFlow.Parser.Services
 {
-    private readonly StreamWriter _writer;
-
-    public FileOutputWriter(string filePath)
+    public class FileOutputWriter : IOutputWriter
     {
-        _writer = new StreamWriter(filePath, false, Encoding.UTF8);
-    }
+        private readonly StreamWriter _writer;
+        private readonly string _filePath;
 
-    public void WriteStudentData(string tableName, string sheetName, Student student)
-    {
-        _writer.WriteLine($"{sheetName}:");
-        foreach (var (category, value) in student.Data.Where(x => x.Key != "SheetName"))
+        public FileOutputWriter(string filePath)
         {
-            _writer.WriteLine($"   {category}: {value}");
+            _filePath = filePath;
+            _writer = new StreamWriter(filePath, false, Encoding.UTF8);
         }
-    }
 
-    public void WriteTableHeader(string tableName) => _writer.WriteLine(tableName);
-    public void WriteEmptyLine() => _writer.WriteLine();
-    
-    public void Dispose()
-    {
-        _writer?.Dispose();
+        public void WriteLine(string line) => _writer.WriteLine(line);
+
+        public void WriteStudentData(string tableName, string sheetName, Student student)
+        {
+            _writer.WriteLine($"{sheetName}:");
+            foreach (var (category, value) in student.Data)
+            {
+                if (category != "SheetName")
+                {
+                    _writer.WriteLine($"   {category}: {value}");
+                }
+            }
+        }
+
+        public void WriteTableHeader(string tableName) => _writer.WriteLine(tableName);
+
+        public void WriteEmptyLine() => _writer.WriteLine();
+
+        public string GetContent()
+        {
+            _writer.Flush();
+            return File.ReadAllText(_filePath);
+        }
+
+        public void Dispose()
+        {
+            _writer?.Dispose();
+        }
     }
 }

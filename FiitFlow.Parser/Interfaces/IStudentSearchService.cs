@@ -1,4 +1,8 @@
-public interface IStudentSearchService
+using FiitFlow.Parser.Models;
+namespace FiitFlow.Parser.Interfaces
 {
-    Task SearchStudentInAllTablesAsync(AppConfig config);
+    public interface IStudentSearchService
+    {
+        Task SearchStudentInAllTablesAsync(AppConfig config);
+    }
 }

@@ -2,7 +2,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using FiitFlow.Parser.Models;
 
+namespace FiitFlow.Parser.Services;
 public class ConfigParser
 {
     public AppConfig Parse(string[] lines)

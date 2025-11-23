@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+using FiitFlow.Parser.Models;
+namespace FiitFlow.Parser.Services;
+
 public class ExcelParser
 {
     public IEnumerable<Student> FindStudents(string filePath, string studentName, TableConfig tableConfig)

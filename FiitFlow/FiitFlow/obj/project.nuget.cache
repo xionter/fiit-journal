@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "4eSR7e+q2Jg=",
+  "dgSpecHash": "mbTYQ5gCZKg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nezeri\\Documents\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
+  "expectedPackageFiles": [
+    "/home/xionter/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+  ],
   "logs": []
 }
