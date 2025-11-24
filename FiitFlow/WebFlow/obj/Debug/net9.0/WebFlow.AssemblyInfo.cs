@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f527a78b61cd696ad08a5f20ffed60d57d8019bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3eceacb80a985eff01c18298ed3c86b1655608f")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

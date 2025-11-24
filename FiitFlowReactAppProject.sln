@@ -24,7 +24,11 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|x64.Build.0 = Debug|Any CPU
+		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|x64.Deploy.0 = Debug|Any CPU
 		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}.Release|x64.ActiveCfg = Release|Any CPU
@@ -71,5 +75,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{53611A64-4EE5-4310-B3AF-A82A373D75DF} = {E8C5DD88-84A5-FE73-F604-B0610918A8E7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0ED636C-A260-40A7-B6B8-FF1B73476B56}
 	EndGlobalSection
 EndGlobal
