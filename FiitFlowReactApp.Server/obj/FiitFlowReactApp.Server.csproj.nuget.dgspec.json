@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlowReactApp.Server/FiitFlowReactApp.Server.csproj": {}
+    "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj": {}
   },
   "projects": {
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj": {
+    "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Parser\\FiitFlow.Parser.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj",
+        "projectUniqueName": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Parser\\FiitFlow.Parser.csproj",
         "projectName": "FiitFlow.Parser",
-        "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj",
-        "packagesPath": "/home/xionter/.nuget/packages/",
-        "outputPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/obj/",
+        "projectPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Parser\\FiitFlow.Parser.csproj",
+        "packagesPath": "C:\\Users\\artyo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Parser\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/xionter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\artyo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -77,34 +83,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/xionter/.dotnet/sdk/9.0.308/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlowReactApp.Server/FiitFlowReactApp.Server.csproj": {
+    "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlowReactApp.Server/FiitFlowReactApp.Server.csproj",
+        "projectUniqueName": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
         "projectName": "FiitFlowReactApp.Server",
-        "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlowReactApp.Server/FiitFlowReactApp.Server.csproj",
-        "packagesPath": "/home/xionter/.nuget/packages/",
-        "outputPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlowReactApp.Server/obj/",
+        "projectPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
+        "packagesPath": "C:\\Users\\artyo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp.Server\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/home/xionter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\artyo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj": {
-                "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj"
+              "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Parser\\FiitFlow.Parser.csproj": {
+                "projectPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Parser\\FiitFlow.Parser.csproj"
               }
             }
           }
@@ -149,7 +161,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/xionter/.dotnet/sdk/9.0.308/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
