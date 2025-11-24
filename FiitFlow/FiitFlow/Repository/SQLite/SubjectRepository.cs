@@ -20,9 +20,8 @@ public class SubjectRepository : ISubjectRepository
 
     public async Task<IReadOnlyList<Subject>> GetByGroupAndSemesterAsync(Guid groupId, int semester)
     {
-        // пока без groupId
         return await _db.Subjects
-            .Where(s => s.Semester == semester)
+            .Where(s => s.Semester == semester && s.GroupId == groupId)
             .OrderBy(s => s.Title)
             .ToListAsync();
     }

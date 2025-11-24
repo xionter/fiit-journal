@@ -22,7 +22,7 @@ public class PointsService
 
     public async Task UpdatePointsForGroupAsync(Guid groupId, int semester)
     {
-       
+       // TODO: але парсер
     }
 
     public Task<IReadOnlyList<Points>> GetStudentPointsAsync(Guid studentId)

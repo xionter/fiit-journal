@@ -38,7 +38,6 @@ S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\System.Composition.Convention
 S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\System.Composition.Hosting.dll
 S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\System.Composition.Runtime.dll
 S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\System.Composition.TypedParts.dll
-S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\System.Text.Json.dll
 S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
 S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
 S:\fiit-journal\FiitFlow\FiitFlow\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
