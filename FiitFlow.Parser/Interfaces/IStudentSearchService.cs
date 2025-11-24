@@ -3,6 +3,6 @@ namespace FiitFlow.Parser.Interfaces
 {
     public interface IStudentSearchService
     {
-        Task SearchStudentInAllTablesAsync(AppConfig config);
+        Task SearchStudentInAllTablesAsync(ParserConfig config);
     }
 }

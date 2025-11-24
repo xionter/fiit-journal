@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0rNGMV9mfO4=",
+  "dgSpecHash": "DgWSqU+xHMo=",
   "success": true,
   "projectFilePath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlowReactApp.Server/FiitFlowReactApp.Server.csproj",
   "expectedPackageFiles": [
@@ -34,8 +34,7 @@
     "/home/xionter/.nuget/packages/system.management/7.0.2/system.management.7.0.2.nupkg.sha512",
     "/home/xionter/.nuget/packages/system.security.cryptography.cng/5.0.0/system.security.cryptography.cng.5.0.0.nupkg.sha512",
     "/home/xionter/.nuget/packages/system.security.cryptography.pkcs/5.0.0/system.security.cryptography.pkcs.5.0.0.nupkg.sha512",
-    "/home/xionter/.nuget/packages/system.text.encoding.codepages/5.0.0/system.text.encoding.codepages.5.0.0.nupkg.sha512",
-    "/home/xionter/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.9/microsoft.aspnetcore.app.ref.9.0.9.nupkg.sha512"
+    "/home/xionter/.nuget/packages/system.text.encoding.codepages/5.0.0/system.text.encoding.codepages.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }

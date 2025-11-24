@@ -7,9 +7,9 @@ using FiitFlow.Parser.Models;
 namespace FiitFlow.Parser.Services;
 public class ConfigParser
 {
-    public AppConfig Parse(string[] lines)
+    public ParserConfig Parse(string[] lines)
     {
-        var config = new AppConfig();
+        var config = new ParserConfig();
         TableConfig currentTable = null;
         SheetConfig currentSheet = null;
 

@@ -21,7 +21,7 @@ public class StudentSearchService
         _outputWriter = outputWriter;
     }
 
-    public async Task SearchStudentInAllTablesAsync(AppConfig config, string studentName)
+    public async Task SearchStudentInAllTablesAsync(ParserConfig config, string studentName)
     {
         if (!string.IsNullOrEmpty(config.StudentName))
         {

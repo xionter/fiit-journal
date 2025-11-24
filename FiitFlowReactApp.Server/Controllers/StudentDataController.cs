@@ -27,12 +27,11 @@ namespace FiitFlowReactApp.Server.Controllers
                 using var httpClient = new HttpClient();
                 var parserService = new FiitFlowParserService(httpClient);
 
-                // Try multiple possible paths
                 var possiblePaths = new[]
                 {
-                    "../FiitFlow.Parser/config.txt",
-                    "../../../FiitFlow.Parser/config.txt",
-                    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/config.txt"
+                    "../FiitFlow.Parser/config.json",
+                    "../../../FiitFlow.Parser/config.json",
+                    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/config.json"
                 };
 
                 string configPath = null;
