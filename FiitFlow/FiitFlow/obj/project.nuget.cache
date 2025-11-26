@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5abQZ1akJp8=",
+  "dgSpecHash": "7CJSWBnO4mI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\artyo\\repositories\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+  "projectFilePath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artyo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\artyo\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
