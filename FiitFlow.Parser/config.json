@@ -1,5 +1,6 @@
 {
   "StudentName": "Солдатов Андрей",
+  "CacheSettings": {"CacheDirectory": "./Cache", "ForceRefresh": false},
   "Tables": [
     {
       "Name": "МАТАН ПРАКТИКА",

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using FiitFlow.Parser.Models;
+
 namespace FiitFlow.Parser.Services
 {
     public class FiitFlowParserService
@@ -25,10 +26,15 @@ namespace FiitFlow.Parser.Services
             if (string.IsNullOrWhiteSpace(studentName))
                 throw new ArgumentException("Имя студента не указано");
 
+            var cacheSettings = config.CacheSettings ?? new CacheSettings();
+            var cacheService = new CacheService(cacheSettings.CacheDirectory, cacheSettings.ForceRefresh);
+
             using var outputWriter = new StringOutputWriter();
 
+            var excelDownloader = new ExcelDownloader(_httpClient, cacheService);
+
             var searchService = new StudentSearchService(
-                new ExcelDownloader(_httpClient),
+                excelDownloader,
                 new ExcelParser(),
                 outputWriter
             );
@@ -60,7 +66,7 @@ namespace FiitFlow.Parser.Services
             };
 
             string json = await File.ReadAllTextAsync(configPath);
-            return JsonSerializer.Deserialize<ParserConfig>(json, options);
+            return JsonSerializer.Deserialize<ParserConfig>(json, options) ?? new ParserConfig();
         }
     }
 }

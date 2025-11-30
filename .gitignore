@@ -1,2 +1,5 @@
 **/bin/
 **/obj/
+FiitFlowReactApp.Server/Cache/
+FiitFlowReactApp.Server/obj
+*.xlsx

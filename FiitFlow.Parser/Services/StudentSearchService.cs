@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using FiitFlow.Parser.Models;
@@ -31,7 +30,7 @@ public class StudentSearchService
 
         foreach (var table in config.Tables)
         {
-            await ProcessTableAsync(table, config.StudentName);
+            await ProcessTableAsync(table, studentName);
         }
     }
 
@@ -41,12 +40,9 @@ public class StudentSearchService
         
         try
         {
-            var tempFile = Path.GetTempFileName();
-            var downloadUrl = BuildDownloadUrl(table.Url);
+            var filePath = await _excelDownloader.DownloadAsync(table);
             
-            await _excelDownloader.DownloadAsync(downloadUrl, tempFile);
-            
-            var students = _excelParser.FindStudents(tempFile, studentName, table);
+            var students = _excelParser.FindStudents(filePath, studentName, table);
             var hasData = false;
             
             foreach (var student in students)
@@ -60,33 +56,11 @@ public class StudentSearchService
             {
                 _outputWriter.WriteEmptyLine();
             }
-            
-            File.Delete(tempFile);
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при обработке таблицы {table.Name}: {ex.Message}");
             _outputWriter.WriteEmptyLine();
         }
-    }
-
-    private static string BuildDownloadUrl(string sheetUrl)
-    {
-        var fileId = ExtractFileId(sheetUrl);
-        return $"https://docs.google.com/spreadsheets/d/{fileId}/export?format=xlsx";
-    }
-
-    private static string ExtractFileId(string url)
-    {
-        var uri = new Uri(url);
-        var path = uri.AbsolutePath;
-        var startIndex = path.IndexOf("/d/") + 3;
-        
-        if (startIndex < 3) throw new ArgumentException("Invalid Google Sheets URL");
-        
-        var endIndex = path.IndexOf("/", startIndex);
-        if (endIndex == -1) endIndex = path.Length;
-        
-        return path.Substring(startIndex, endIndex - startIndex);
     }
 }

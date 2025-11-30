@@ -28,6 +28,14 @@ public class ConfigParser
             {
                 config.StudentName = trimmedLine.Substring("Студент:".Length).Trim();
             }
+            else if (trimmedLine.StartsWith("CacheDirectory:"))
+            {
+                config.CacheSettings.CacheDirectory = trimmedLine.Substring("CacheDirectory:".Length).Trim();
+            }
+            else if (trimmedLine.StartsWith("ForceRefresh:"))
+            {
+                config.CacheSettings.ForceRefresh = bool.Parse(trimmedLine.Substring("ForceRefresh:".Length).Trim());
+            }
             else if (!IsTableProperty(trimmedLine) && currentTable == null)
             {
                 currentTable = new TableConfig { Name = trimmedLine };
@@ -53,7 +61,8 @@ public class ConfigParser
 
     private static bool IsTableProperty(string line) => 
         line.StartsWith("http") || line.StartsWith("Sheet") || 
-        line.StartsWith("Строка с категориями:");
+        line.StartsWith("Строка с категориями:") ||
+        line.StartsWith("CacheDirectory:") || line.StartsWith("ForceRefresh:");
 
     private static int ParseCategoriesRow(string line)
     {
