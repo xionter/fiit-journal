@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "95ualMEx+yM=",
+  "dgSpecHash": "bBXCLn0sCEw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
+  "projectFilePath": "C:\\Users\\artyo\\repositories\\FiitFlow\\FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\artyo\\.nuget\\packages\\documentformat.openxml\\3.3.0\\documentformat.openxml.3.3.0.nupkg.sha512",
     "C:\\Users\\artyo\\.nuget\\packages\\documentformat.openxml.framework\\3.3.0\\documentformat.openxml.framework.3.3.0.nupkg.sha512",

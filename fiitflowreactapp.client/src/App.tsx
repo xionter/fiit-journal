@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
+import SubjectsGroup from "./components/SubjectsGroup"
 import './App.css';
 
 interface Forecast {
@@ -39,11 +40,61 @@ function App() {
         </table>;
 
     return (
-        <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
-        </div>
+        <Fragment>
+            <header>
+                <div className="container">
+                    <div className="header-content">
+                        <div className="logo">
+                            <span className="logo-icon">📊</span>
+                            FIITFLOW
+                        </div>
+                        <nav>
+                            <ul>
+                                <li><a href="index.html">Главная</a></li>
+                                <li><a href="subjects.html">Предметы</a></li>
+                                <li><a href="analytics.html">Аналитика</a></li>
+                                <li><a href="settings.html">Настройки</a></li>
+                            </ul>
+                        </nav>
+                        <div className="user-info">
+                            <div className="user-avatar">ИИ</div>
+                            <span>Иван Иванов</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <SubjectsGroup />
+            <footer>
+                <div className="container">
+                    <div className="footer-content">
+                        <div className="footer-section">
+                            <h3>FIITFLOW</h3>
+                            <p>Единая система для отслеживания учебных баллов студентов ФИИТ</p>
+                        </div>
+                        <div className="footer-section">
+                            <h3>Навигация</h3>
+                            <ul>
+                                <li><a href="index.html">Главная</a></li>
+                                <li><a href="subjects.html">Предметы</a></li>
+                                <li><a href="analytics.html">Аналитика</a></li>
+                                <li><a href="settings.html">Настройки</a></li>
+                            </ul>
+                        </div>
+                        <div className="footer-section">
+                            <h3>Контакты</h3>
+                            <ul>
+                                <li>Email: support@fiitflow.ru</li>
+                                <li>Телеграм: @fiitflow_support</li>
+                                <li>Кампус: УрФУ, корпус ФИИТ</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="copyright">
+                        &copy; 2023 FIITFLOW. Все права защищены.
+                    </div>
+                </div>
+            </footer>
+        </Fragment>
     );
 
     async function populateWeatherData() {

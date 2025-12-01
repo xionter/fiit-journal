@@ -5,10 +5,6 @@
       {
         "Path": "FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
         "Action": "Start"
-      },
-      {
-        "Path": "fiitflowreactapp.client\\fiitflowreactapp.client.esproj",
-        "Action": "Start"
       }
     ]
   }
