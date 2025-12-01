@@ -3,7 +3,7 @@
     "Name": "Новый профиль",
     "Projects": [
       {
-        "Path": "FiitFlowReactApp.Server\\FiitFlowReactApp.Server.csproj",
+        "Path": "FiitFlow.Server\\FiitFlow.Server.csproj",
         "Action": "Start"
       }
     ]

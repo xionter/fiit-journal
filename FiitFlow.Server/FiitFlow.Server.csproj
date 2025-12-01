@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FiitFlow.Parser\FiitFlow.Parser.csproj" />
-    <ProjectReference Include="..\fiitflowreactapp.client\fiitflowreactapp.client.esproj">
+    <ProjectReference Include="..\fiitflowreactapp.client\FiitFlow.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\FiitFlow\FiitFlow\FiitFlow.csproj" />

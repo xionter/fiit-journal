@@ -1,6 +1,6 @@
 function LoginPage() {
     return (
-        <p>Hello world!</p>
+        <p>Hello Student!</p>
     );
 }
 

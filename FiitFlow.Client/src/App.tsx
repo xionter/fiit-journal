@@ -40,7 +40,7 @@ function App() {
         </table>;
 
     return (
-        <Fragment>
+        <>
             <header>
                 <div className="container">
                     <div className="header-content">
@@ -63,7 +63,9 @@ function App() {
                     </div>
                 </div>
             </header>
-            <SubjectsGroup />
+            <div className="container">
+                <SubjectsGroup />
+            </div>
             <footer>
                 <div className="container">
                     <div className="footer-content">
@@ -90,11 +92,11 @@ function App() {
                         </div>
                     </div>
                     <div className="copyright">
-                        &copy; 2023 FIITFLOW. Все права защищены.
+                        &copy; 2025 FIITFLOW. Все права защищены.
                     </div>
                 </div>
             </footer>
-        </Fragment>
+        </>
     );
 
     async function populateWeatherData() {

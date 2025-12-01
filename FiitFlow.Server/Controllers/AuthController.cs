@@ -18,12 +18,12 @@ namespace FiitFlowReactApp.Server.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] string studentName, [FromBody] string studentGroup)
+        public IActionResult Login()
         {
             return Ok(new
             {
-                studentName = studentName,
-                studentGroup = studentGroup,
+                //studentName = studentName,
+                //studentGroup = studentGroup,
                 expiresIn = 3600
             });
         }
