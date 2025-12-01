@@ -23,7 +23,13 @@ namespace FiitFlow.Parser.Services
         public async Task<string> DownloadAsync(TableConfig table)
         {
             if (!_cacheService.ShouldDownload(table))
-                return _cacheService.GetCachedFile(table);
+            {
+                var cachedFile = _cacheService.GetCachedFile(table);
+                if (cachedFile != null && File.Exists(cachedFile))
+                {
+                    return cachedFile;
+                }
+            }
 
             var downloadUrl = BuildDownloadUrl(table.Url);
             var response = await _httpClient.GetAsync(downloadUrl);
@@ -46,16 +52,23 @@ namespace FiitFlow.Parser.Services
 
         private static string ExtractFileId(string url)
         {
-            var uri = new Uri(url);
-            var path = uri.AbsolutePath;
-            var startIndex = path.IndexOf("/d/") + 3;
-            
-            if (startIndex < 3) throw new ArgumentException("Invalid Google Sheets URL");
-            
-            var endIndex = path.IndexOf("/", startIndex);
-            if (endIndex == -1) endIndex = path.Length;
-            
-            return path.Substring(startIndex, endIndex - startIndex);
+            try
+            {
+                var uri = new Uri(url);
+                var path = uri.AbsolutePath;
+                var startIndex = path.IndexOf("/d/", StringComparison.Ordinal) + 3;
+                
+                if (startIndex < 3) throw new ArgumentException("Invalid Google Sheets URL");
+                
+                var endIndex = path.IndexOf("/", startIndex, StringComparison.Ordinal);
+                if (endIndex == -1) endIndex = path.Length;
+                
+                return path.Substring(startIndex, endIndex - startIndex);
+            }
+            catch
+            {
+                throw new ArgumentException($"Неверный URL таблицы: {url}");
+            }
         }
     }
 }
