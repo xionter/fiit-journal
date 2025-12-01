@@ -22,6 +22,7 @@ namespace FiitFlowReactApp.Server.Controllers
         {
             try
             {
+                _logger.LogInformation($"Student name: {studentName}");
                 _logger.LogInformation($"Current directory: {Directory.GetCurrentDirectory()}");
 
                 using var httpClient = new HttpClient();

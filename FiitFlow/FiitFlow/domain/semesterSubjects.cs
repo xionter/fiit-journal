@@ -1,11 +1,9 @@
 ﻿namespace FiitFlow.Domain;
 
-public class SemesterSubjects
+public static class SemesterSubjects
 {
-
-    // ну тут типо все предметы по курсам/семам
-    public static List<string> Sem1Subjects =
-    [
+    public static readonly IReadOnlyList<string> Sem1Subjects = new[]
+    {
         "VVM",
         "LinearAlgebra",
         "MathAnalysis",
@@ -16,10 +14,10 @@ public class SemesterSubjects
         "PEK",
         "PhysCult",
         "English"
-    ];
-    
-    public static List<string> Sem2Subjects =
-    [
+    };
+
+    public static readonly IReadOnlyList<string> Sem2Subjects = new[]
+    {
         "LinearAlgebra",
         "MathAnalysis",
         "BaseOfProgramming",
@@ -28,22 +26,22 @@ public class SemesterSubjects
         "Philosophy",
         "PhysCult",
         "English"
-    ];
-    
-    public static List<string> Sem3Subjects =
-    [
+    };
+
+    public static readonly IReadOnlyList<string> Sem3Subjects = new[]
+    {
         "Discrete",
         "MathAnalysis",
         "Terverus",
         "OOP",
         "Network",
-        "",
+        "Nand",   
         "PEK",
         "PhysCult"
-    ];
-    
-    public static List<string> Sem4Subjects =
-    [
+    };
+
+    public static readonly IReadOnlyList<string> Sem4Subjects = new[]
+    {
         "VVM",
         "LinearAlgebra",
         "MathAnalysis",
@@ -53,6 +51,5 @@ public class SemesterSubjects
         "Nand",
         "PEK",
         "PhysCult"
-    ];
-    //3-4 курсы по выбору, там наверное табличку парсить с ними надо, чтобы студент мог выбирать нужные ему
+    };
 }
