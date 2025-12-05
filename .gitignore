@@ -1,5 +1,15 @@
 **/bin/
 **/obj/
-FiitFlowReactApp.Server/Cache/
-FiitFlowReactApp.Server/obj/
+
+fiitflow.db
+*.db
+
 *.xlsx
+*.xls
+
+#.vs/
+#*.user
+#*.suo
+
+.idea/
+*.sln.iml
