@@ -15,9 +15,13 @@ public class Program
     public static async Task Main(string[] args)
     {
 
-        
+        var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
+        var dbPath = Path.Combine(rootPath, "fiitflow.db");
+        var configPath = Path.Combine(rootPath, "FiitFlow.Parser", "config.json");
+        Console.WriteLine($"Путь к БД: {dbPath}");
+
         var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlite("Data Source=fiitflow.db")
+            .UseSqlite($"Data Source={dbPath}")
             .Options;
 
         using var db = new AppDbContext(options);
@@ -33,7 +37,6 @@ public class Program
         
         
         // тест
-        var configPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../FiitFlow.Parser/config.json"));
         var parserConfig = await LoadParserConfigAsync(configPath);
         var sampleStudentName = parserConfig?.StudentName ?? "Иванов Иван Иванович";
         
