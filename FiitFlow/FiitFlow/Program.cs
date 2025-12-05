@@ -1,8 +1,12 @@
 ﻿using FiitFlow;
 using FiitFlow.Domain;
+using FiitFlow.Parser.Services;
 using FiitFlow.Repository;
 using FiitFlow.Repository.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using System.Text.Json;
+using ParserConfig = FiitFlow.Parser.Models.ParserConfig;
 
 namespace FiitFlow;
 
@@ -23,52 +27,32 @@ public class Program
         IStudentRepository studentRepo = new StudentRepository(db);
         ISubjectRepository subjectRepo = new SubjectRepository(db);
         IPointsRepository pointsRepo = new PointsRepository(db);
-
-
+        
+        
         var pointsService = new PointsService(pointsRepo, studentRepo, subjectRepo);
         
         
         // тест
-        if (!await db.Groups.AnyAsync())
+        var configPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../FiitFlow.Parser/config.json"));
+        var parserConfig = await LoadParserConfigAsync(configPath);
+        var sampleStudentName = parserConfig?.StudentName ?? "Иванов Иван Иванович";
+        
+        if (File.Exists(configPath))
         {
-            var group = new GroupEntity
-            {
-                Id = Guid.NewGuid(),
-                GroupTitle = "FIIT-101",
-                Subgroup = 1
-            };
+            var firstGroup = await db.Groups.Include(g => g.Students).FirstAsync();
+            Console.WriteLine($"Пробуем подтянуть баллы из парсера для {firstGroup.GroupTitle}-{firstGroup.Subgroup}");
+            await pointsService.UpdatePointsForGroupAsync(firstGroup.Id, 3, configPath);
 
-            var student = new Student
+            var points = await pointsService.GetGroupPointsAsync(firstGroup.Id, 3);
+            Console.WriteLine($"Найдено {points.Count} записей Points после парсинга:");
+            foreach (var p in points)
             {
-                Id = Guid.NewGuid(),
-                FullName = "Иванов Иван Иванович",
-                Group = group
-            };
-            
-            var subject = new Subject
-            {
-                Id = Guid.NewGuid(),
-                GroupId = group.Id,
-                Title = "Математика",
-                TableUrl = "hihiha"
-            };
-            
-            var points = new Points
-            {
-                Id = Guid.NewGuid(),
-                Student = student,
-                Subject = subject,
-                Value = 85,
-                UpdatedAt = DateTime.UtcNow
-            };
-            
-            db.Groups.Add(group);
-            db.Students.Add(student);
-            db.Subjects.Add(subject);
-            db.Points.Add(points);
-            await db.SaveChangesAsync();
-            //pointsService.GetStudentPointsAsync(student.Id).Wait();
-            Console.WriteLine("Добавили тестовую группу и студента.");
+                Console.WriteLine($"Студент: {p.StudentId}, Предмет: {p.SubjectId}, Баллы: {p.Value}, Обновлено: {p.UpdatedAt}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Конфиг парсера не найден: {configPath}");
         }
 
         var allGroups = await groupRepo.GetAllAsync();
@@ -79,5 +63,20 @@ public class Program
             Console.WriteLine($"Группа {g.GroupTitle}-{g.Subgroup}, студентов: {g.Students.Count}");
         }
 
+    }
+
+    private static async Task<ParserConfig?> LoadParserConfigAsync(string path)
+    {
+        if (!File.Exists(path))
+            return null;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
+        var json = await File.ReadAllTextAsync(path);
+        return JsonSerializer.Deserialize<ParserConfig>(json, options);
     }
 }

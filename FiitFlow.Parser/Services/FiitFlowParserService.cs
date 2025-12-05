@@ -16,7 +16,7 @@ namespace FiitFlow.Parser.Services
             _httpClient = httpClient ?? new HttpClient();
         }
 
-        public async Task<StudentSearchResult> ParseAsync(string configPath, string studentName)
+        public async Task<StudentSearchResult> ParseAsync(string configPath, string? studentName = null)
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
@@ -24,7 +24,9 @@ namespace FiitFlow.Parser.Services
             var config = await LoadJsonConfigAsync(configPath);
 
             if (string.IsNullOrWhiteSpace(studentName))
-                throw new ArgumentException("Имя студента не указано");
+            {
+                studentName = config.StudentName;
+            }
 
             var cacheSettings = config.CacheSettings ?? new CacheSettings();
             var cacheService = new CacheService(cacheSettings.CacheDirectory, cacheSettings.ForceRefresh);
@@ -37,19 +39,6 @@ namespace FiitFlow.Parser.Services
             );
 
             return await searchService.SearchStudentInAllTablesAsync(config, studentName);
-        }
-
-        public async Task<StudentSearchResult> ParseAsync(string configPath)
-        {
-            if (!File.Exists(configPath))
-                throw new FileNotFoundException($"Конфиг не найден: {configPath}");
-
-            var config = await LoadJsonConfigAsync(configPath);
-
-            if (string.IsNullOrWhiteSpace(config.StudentName))
-                throw new ArgumentException("Имя студента не указано в конфиге");
-
-            return await ParseAsync(configPath, config.StudentName);
         }
 
         private async Task<ParserConfig> LoadJsonConfigAsync(string configPath)

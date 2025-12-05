@@ -34,4 +34,25 @@ public class StudentRepository : IStudentRepository
             .OrderBy(s => s.FullName)
             .ToListAsync();
     }
+
+    public async Task<Student> GetOrCreateAsync(string fullName, Guid groupId)
+    {
+        var existing = await _db.Students
+            .FirstOrDefaultAsync(s => s.GroupId == groupId && s.FullName == fullName);
+
+        if (existing is not null)
+            return existing;
+
+        var student = new Student
+        {
+            Id = Guid.NewGuid(),
+            FullName = fullName,
+            GroupId = groupId
+        };
+
+        _db.Students.Add(student);
+        await _db.SaveChangesAsync();
+
+        return student;
+    }
 }

@@ -17,9 +17,9 @@ public class StudentSearchService
         _excelParser = excelParser;
     }
 
-    public async Task<StudentSearchResult> SearchStudentInAllTablesAsync(ParserConfig config, string studentName)
+    public async Task<StudentSearchResult> SearchStudentInAllTablesAsync(ParserConfig config, string? studentName = null)
     {
-        var result = new StudentSearchResult { StudentName = studentName };
+        var result = new StudentSearchResult { StudentName = studentName ?? string.Empty };
 
         foreach (var table in config.Tables)
         {
@@ -30,7 +30,7 @@ public class StudentSearchService
         return result;
     }
 
-    private async Task<IReadOnlyList<TableResult>> ProcessTableAsync(TableConfig table, string studentName)
+    private async Task<IReadOnlyList<TableResult>> ProcessTableAsync(TableConfig table, string? studentName)
     {
         var tableResults = new List<TableResult>();
         
@@ -48,6 +48,7 @@ public class StudentSearchService
                 data.Remove("SheetName");
 
                 tableResults.Add(new TableResult(
+                    student.FullName,
                     table.Name,
                     table.Url,
                     sheetName ?? string.Empty,

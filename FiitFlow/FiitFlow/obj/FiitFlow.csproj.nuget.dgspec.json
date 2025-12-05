@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj": {}
+    "/home/nezeri/Documents/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj": {}
   },
   "projects": {
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj": {
+    "/home/nezeri/Documents/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
-        "projectName": "FiitFlow",
-        "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
-        "packagesPath": "/home/xionter/.nuget/packages/",
-        "outputPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/obj/",
+        "projectUniqueName": "/home/nezeri/Documents/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj",
+        "projectName": "FiitFlow.Parser",
+        "projectPath": "/home/nezeri/Documents/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj",
+        "packagesPath": "/home/nezeri/.nuget/packages/",
+        "outputPath": "/home/nezeri/Documents/fiit-journal/FiitFlow.Parser/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/xionter/.nuget/NuGet/NuGet.Config"
+          "/home/nezeri/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -26,6 +26,87 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[3.3.0, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[5.8.12, )"
+            },
+            "Google.Apis.Drive.v3": {
+              "target": "Package",
+              "version": "[1.72.0.3938, )"
+            },
+            "Google.Apis.Sheets.v4": {
+              "target": "Package",
+              "version": "[1.70.0.3819, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/home/nezeri/.dotnet/sdk/9.0.308/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/nezeri/Documents/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/nezeri/Documents/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
+        "projectName": "FiitFlow",
+        "projectPath": "/home/nezeri/Documents/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
+        "packagesPath": "/home/nezeri/.nuget/packages/",
+        "outputPath": "/home/nezeri/Documents/fiit-journal/FiitFlow/FiitFlow/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/nezeri/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/home/nezeri/Documents/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj": {
+                "projectPath": "/home/nezeri/Documents/fiit-journal/FiitFlow.Parser/FiitFlow.Parser.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -70,34 +151,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.9, 9.0.9]"
-            },
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.11, 9.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[9.0.11, 9.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[9.0.11, 9.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[9.0.11, 9.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\Nezeri\\.dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/nezeri/.dotnet/sdk/9.0.308/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

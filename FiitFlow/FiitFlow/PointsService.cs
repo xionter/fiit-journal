@@ -2,6 +2,7 @@
 using FiitFlow.Repository;
 using FiitFlow.Parser.Services;
 using System.Globalization;
+using FiitFlow.Parser.Models;
 
 namespace FiitFlow;
 
@@ -24,38 +25,48 @@ public class PointsService
 
     public async Task UpdatePointsForGroupAsync(Guid groupId, int semester, string configPath)
     {
-        var students = await _studentRepo.GetByGroupAsync(groupId);
-        if (students.Count == 0)
-            return;
-
         var parserService = new FiitFlowParserService();
         var collectedPoints = new List<Points>();
+        var cache = new Dictionary<string, Subject>();
 
-        foreach (var student in students)
+        var parsedResult = await parserService.ParseAsync(configPath, null);
+
+        foreach (var table in parsedResult.Tables)
         {
             try
             {
-                var parsedResult = await parserService.ParseAsync(configPath, student.FullName);
-
-                foreach (var table in parsedResult.Tables)
+                if (string.IsNullOrWhiteSpace(table.StudentName))
                 {
-                    var subject = await _subjectRepo.GetOrCreateAsync(groupId, table.TableName, semester, table.TableUrl);
-                    var value = CalculatePoints(table.Data);
-
-                    collectedPoints.Add(new Points
-                    {
-                        Id = Guid.NewGuid(),
-                        StudentId = student.Id,
-                        SubjectId = subject.Id,
-                        Semester = semester,
-                        Value = value,
-                        UpdatedAt = DateTime.UtcNow
-                    });
+                    Console.WriteLine($"Пропускаем строку без имени студента в таблице {table.TableName}");
+                    continue;
                 }
+
+                var student = await _studentRepo.GetOrCreateAsync(table.StudentName, groupId);
+
+                var subjectCacheKey = $"{groupId}-{semester}-{table.TableName}";
+                if (!cache.TryGetValue(subjectCacheKey, out var subject))
+                {
+                    subject = await _subjectRepo.GetOrCreateAsync(groupId, table.TableName, semester, table.TableUrl);
+                    cache[subjectCacheKey] = subject;
+                }
+
+                var value = CalculatePoints(table.Data);
+
+                Console.WriteLine($"Студент {student.FullName}: {table.TableName} => {value} баллов");
+
+                collectedPoints.Add(new Points
+                {
+                    Id = Guid.NewGuid(),
+                    StudentId = student.Id,
+                    SubjectId = subject.Id,
+                    Semester = semester,
+                    Value = value,
+                    UpdatedAt = DateTime.UtcNow
+                });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Не удалось спарсить данные для студента {student.FullName}: {ex.Message}");
+                Console.WriteLine($"Не удалось спарсить данные из таблицы {table.TableName} для студента {table.StudentName}: {ex.Message}");
             }
         }
 

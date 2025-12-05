@@ -12,7 +12,7 @@ namespace FiitFlow.Parser.Services;
 
 public class ExcelParser
 {
-    public IEnumerable<Student> FindStudents(string filePath, string studentName, TableConfig tableConfig)
+public IEnumerable<Student> FindStudents(string filePath, string? studentName, TableConfig tableConfig)
     {
         using var spreadsheetDocument = SpreadsheetDocument.Open(filePath, false);
         var workbookPart = spreadsheetDocument.WorkbookPart;
@@ -37,9 +37,9 @@ public class ExcelParser
             if (sheetData == null) continue;
 
             var rows = sheetData.Elements<Row>().ToList();
-            var student = FindStudentInSheet(rows, studentName, sheetConfig, workbookPart);
+            var students = FindStudentInSheet(rows, studentName, sheetConfig, workbookPart);
 
-            if (student != null)
+            foreach (var student in students)
             {
                 student.Data["SheetName"] = sheet.Name ?? string.Empty;
                 yield return student;
@@ -54,7 +54,22 @@ public class ExcelParser
                 sc.Name.Equals(sheet.Name ?? "", StringComparison.OrdinalIgnoreCase));
     }
 
-    private static Student? FindStudentInSheet(List<Row> rows, string studentName, SheetConfig sheetConfig, WorkbookPart workbookPart)
+private static IEnumerable<Student> FindStudentInSheet(List<Row> rows, string? studentName, SheetConfig sheetConfig, WorkbookPart workbookPart)
+{
+    // If studentName is not provided, parse all student rows after the categories row.
+    if (string.IsNullOrWhiteSpace(studentName))
+    {
+        for (int r = sheetConfig.CategoriesRow; r < rows.Count; r++)
+        {
+            var name = GetFirstNonEmptyCellValue(rows[r], workbookPart);
+            if (string.IsNullOrWhiteSpace(name))
+                continue;
+
+            var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, name);
+            yield return student;
+        }
+    }
+    else
     {
         for (int r = 0; r < rows.Count; r++)
         {
@@ -65,18 +80,20 @@ public class ExcelParser
                 var value = GetCellValue(cell, workbookPart);
                 if (value.ToLower().Contains(studentName.ToLower()))
                 {
-                    return ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart);
+                    var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, studentName);
+                    yield return student;
+                    yield break;
                 }
             }
         }
-        return null;
     }
+}
 
-    private static Student ExtractStudentData(List<Row> rows, int studentRow, int categoriesRow, WorkbookPart workbookPart)
-    {
-        var student = new Student();
-        var categoriesRowData = rows[categoriesRow - 1];
-        var studentRowData = rows[studentRow - 1];
+private static Student ExtractStudentData(List<Row> rows, int studentRow, int categoriesRow, WorkbookPart workbookPart, string? fullName = null)
+{
+    var student = new Student { FullName = fullName ?? string.Empty };
+    var categoriesRowData = rows[categoriesRow - 1];
+    var studentRowData = rows[studentRow - 1];
 
         foreach (var categoryCell in categoriesRowData.Elements<Cell>())
         {
@@ -104,8 +121,24 @@ public class ExcelParser
             student.Data[categoryName] = cellValue;
         }
 
-        return student;
+    if (string.IsNullOrWhiteSpace(student.FullName))
+    {
+        student.FullName = GetFirstNonEmptyCellValue(studentRowData, workbookPart);
     }
+
+    return student;
+}
+
+private static string GetFirstNonEmptyCellValue(Row row, WorkbookPart workbookPart)
+{
+    foreach (var cell in row.Elements<Cell>())
+    {
+        var value = GetCellValue(cell, workbookPart);
+        if (!string.IsNullOrWhiteSpace(value))
+            return value.Trim();
+    }
+    return string.Empty;
+}
 
     private static string? TryParseExcelDate(string value)
     {
