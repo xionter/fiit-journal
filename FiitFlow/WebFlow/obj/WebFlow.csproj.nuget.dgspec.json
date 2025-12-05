@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/WebFlow/WebFlow.csproj": {}
+    "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj": {}
   },
   "projects": {
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj": {
+    "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
+        "projectUniqueName": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
         "projectName": "FiitFlow",
-        "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj",
-        "packagesPath": "/home/xionter/.nuget/packages/",
-        "outputPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/obj/",
+        "projectPath": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+        "packagesPath": "C:\\Users\\Nezeri\\.nuget\\packages\\",
+        "outputPath": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/xionter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Nezeri\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,11 +38,27 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.11, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -57,7 +73,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.9, 9.0.9]"
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.11, 9.0.11]"
             }
           ],
           "frameworkReferences": {
@@ -65,21 +93,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/WebFlow/WebFlow.csproj": {
+    "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/WebFlow/WebFlow.csproj",
+        "projectUniqueName": "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj",
         "projectName": "WebFlow",
-        "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/WebFlow/WebFlow.csproj",
-        "packagesPath": "/home/xionter/.nuget/packages/",
-        "outputPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/WebFlow/obj/",
+        "projectPath": "S:\\fiit-journal\\FiitFlow\\WebFlow\\WebFlow.csproj",
+        "packagesPath": "C:\\Users\\Nezeri\\.nuget\\packages\\",
+        "outputPath": "S:\\fiit-journal\\FiitFlow\\WebFlow\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/xionter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Nezeri\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -91,8 +119,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj": {
-                "projectPath": "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow/FiitFlow/FiitFlow.csproj"
+              "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj": {
+                "projectPath": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj"
               }
             }
           }
@@ -107,7 +135,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -126,7 +154,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[9.0.9, 9.0.9]"
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.11, 9.0.11]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.11, 9.0.11]"
             }
           ],
           "frameworkReferences": {
@@ -137,7 +177,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.110/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
