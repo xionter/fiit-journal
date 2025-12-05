@@ -8,59 +8,57 @@ public class StudentSearchService
 {
     private readonly ExcelDownloader _excelDownloader;
     private readonly ExcelParser _excelParser;
-    private readonly IOutputWriter _outputWriter;
 
     public StudentSearchService(
         ExcelDownloader excelDownloader,
-        ExcelParser excelParser,
-        IOutputWriter outputWriter)
+        ExcelParser excelParser)
     {
         _excelDownloader = excelDownloader;
         _excelParser = excelParser;
-        _outputWriter = outputWriter;
     }
 
-    public async Task SearchStudentInAllTablesAsync(ParserConfig config, string studentName)
+    public async Task<StudentSearchResult> SearchStudentInAllTablesAsync(ParserConfig config, string studentName)
     {
-        if (!string.IsNullOrEmpty(config.StudentName))
-        {
-            _outputWriter.WriteTableHeader($"Студент: {config.StudentName}");
-            _outputWriter.WriteEmptyLine();
-        }
+        var result = new StudentSearchResult { StudentName = studentName };
 
         foreach (var table in config.Tables)
         {
-            await ProcessTableAsync(table, studentName);
+            var tableResults = await ProcessTableAsync(table, studentName);
+            result.Tables.AddRange(tableResults);
         }
+
+        return result;
     }
 
-    private async Task ProcessTableAsync(TableConfig table, string studentName)
+    private async Task<IReadOnlyList<TableResult>> ProcessTableAsync(TableConfig table, string studentName)
     {
-        _outputWriter.WriteTableHeader(table.Name);
+        var tableResults = new List<TableResult>();
         
         try
         {
             var filePath = await _excelDownloader.DownloadAsync(table);
             
             var students = _excelParser.FindStudents(filePath, studentName, table);
-            var hasData = false;
             
             foreach (var student in students)
             {
-                _outputWriter.WriteStudentData(table.Name, student.Data["SheetName"], student);
-                _outputWriter.WriteEmptyLine();
-                hasData = true;
-            }
-            
-            if (!hasData)
-            {
-                _outputWriter.WriteEmptyLine();
+                student.Data.TryGetValue("SheetName", out var sheetName);
+
+                var data = new Dictionary<string, string>(student.Data);
+                data.Remove("SheetName");
+
+                tableResults.Add(new TableResult(
+                    table.Name,
+                    table.Url,
+                    sheetName ?? string.Empty,
+                    data));
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при обработке таблицы {table.Name}: {ex.Message}");
-            _outputWriter.WriteEmptyLine();
         }
+
+        return tableResults;
     }
 }

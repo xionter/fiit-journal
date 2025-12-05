@@ -16,7 +16,7 @@ namespace FiitFlow.Parser.Services
             _httpClient = httpClient ?? new HttpClient();
         }
 
-        public async Task<string> ParseAsync(string configPath, string studentName)
+        public async Task<StudentSearchResult> ParseAsync(string configPath, string studentName)
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
@@ -29,22 +29,17 @@ namespace FiitFlow.Parser.Services
             var cacheSettings = config.CacheSettings ?? new CacheSettings();
             var cacheService = new CacheService(cacheSettings.CacheDirectory, cacheSettings.ForceRefresh);
 
-            using var outputWriter = new StringOutputWriter();
-
             var excelDownloader = new ExcelDownloader(_httpClient, cacheService);
 
             var searchService = new StudentSearchService(
                 excelDownloader,
-                new ExcelParser(),
-                outputWriter
+                new ExcelParser()
             );
 
-            await searchService.SearchStudentInAllTablesAsync(config, studentName);
-
-            return outputWriter.GetContent();
+            return await searchService.SearchStudentInAllTablesAsync(config, studentName);
         }
 
-        public async Task<string> ParseAsync(string configPath)
+        public async Task<StudentSearchResult> ParseAsync(string configPath)
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");

@@ -25,4 +25,30 @@ public class SubjectRepository : ISubjectRepository
             .OrderBy(s => s.Title)
             .ToListAsync();
     }
+
+    public async Task<Subject> GetOrCreateAsync(Guid groupId, string title, int semester, string? tableUrl = null)
+    {
+        var existing = await _db.Subjects
+            .FirstOrDefaultAsync(s =>
+                s.GroupId == groupId &&
+                s.Semester == semester &&
+                s.Title == title);
+
+        if (existing is not null)
+            return existing;
+
+        var subject = new Subject
+        {
+            Id = Guid.NewGuid(),
+            GroupId = groupId,
+            Title = title,
+            Semester = semester,
+            TableUrl = tableUrl
+        };
+
+        _db.Subjects.Add(subject);
+        await _db.SaveChangesAsync();
+
+        return subject;
+    }
 }
