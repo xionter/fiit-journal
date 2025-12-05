@@ -15,7 +15,7 @@ public class Program
     public static async Task Main(string[] args)
     {
 
-        var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
+        var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
         var dbPath = Path.Combine(rootPath, "fiitflow.db");
         var configPath = Path.Combine(rootPath, "FiitFlow.Parser", "config.json");
         Console.WriteLine($"Путь к БД: {dbPath}");
@@ -38,7 +38,7 @@ public class Program
         
         // тест
         var parserConfig = await LoadParserConfigAsync(configPath);
-        var sampleStudentName = parserConfig?.StudentName ?? "Иванов Иван Иванович";
+       //var sampleStudentName = parserConfig?.StudentName ?? "Иванов Иван Иванович";
         
         if (File.Exists(configPath))
         {
