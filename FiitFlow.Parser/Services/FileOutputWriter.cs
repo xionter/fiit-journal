@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using FiitFlow.Parser.Models;
+using FiitFlow.Parser.Interfaces;
 
 namespace FiitFlow.Parser.Services
 {

@@ -1,7 +1,14 @@
+using System;
 using FiitFlow.Parser.Models;
-public interface IOutputWriter
+
+namespace FiitFlow.Parser.Interfaces
 {
-    void WriteStudentData(string tableName, string sheetName, Student student);
-    void WriteTableHeader(string tableName);
-    void WriteEmptyLine();
+    public interface IOutputWriter : IDisposable
+    {
+        void WriteLine(string line);
+        void WriteStudentData(string tableName, string sheetName, Student student);
+        void WriteTableHeader(string tableName);
+        void WriteEmptyLine();
+        string GetContent();
+    }
 }
