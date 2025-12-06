@@ -1,6 +1,9 @@
 {
   "StudentName": "Солдатов Андрей",
-  "CacheSettings": {"CacheDirectory": "./Cache", "ForceRefresh": false},
+  "CacheSettings": {
+    "CacheDirectory": "./Cache",
+    "ForceRefresh": false
+  },
   "Tables": [
     {
       "Name": "МАТАН ПРАКТИКА",
@@ -50,31 +53,55 @@
       ]
     }
   ],
-    "Formulas": {
+  "Formulas": {
     "SubjectFormulas": [
       {
         "SubjectName": "МАТАН",
         "TableNames": ["МАТАН ПРАКТИКА"],
-        "FinalFormula": "Лекции * 0.7 + Практика * 0.3",
+        "FinalFormula": "ДЗ * 0.3 + КР * 0.4 + Пров * 0.2 + Акт * 0.1",
         "ComponentFormulas": {
-          "Лекции": "Активность * 0.5 + Коллоквиум * 0.5",
-          "Практика": "ДЗ * 0.3 + КР * 0.4 + Пров * 0.2 + Акт * 0.1"
-        },
-        "ValueMappings": {
+          "ДЗ": "ДЗ",
+          "КР": "КР",
           "Пров": "Пров",
           "Акт": "Акт"
         }
       },
       {
-        "SubjectName": "ТЕРВЕР",
-        "TableNames": ["ТЕРВЕР ЛЕКЦИИ", "ПЯТИМИНУТКИ ТЕРВЕР"],
-        "FinalFormula": "Лекции * 0.6 + Практика * 0.4",
+        "SubjectName": "ТЕРВЕР_ЛЕКЦИИ",
+        "TableNames": ["ТЕРВЕР ЛЕКЦИИ"],
+        "FinalFormula": "Итого (без халявы)",
         "ComponentFormulas": {
-          "Лекции": "Пятиминутки + Доклады",
-          "Практика": "Аттестация + Тесты"
+          "Пятиминутки": "Пятиминутки",
+          "Доклады": "Доклады",
+          "Активность": "Активность"
         }
+      },
+      {
+        "SubjectName": "СЕТИ",
+        "TableNames": ["СЕТИ"],
+        "FinalFormula": "Итог",
+        "ComponentFormulas": {
+          "Аттестация": "Аттестация",
+          "Практические": "Sum",
+          "ДЗ": "ДЗ1 [15]"
+        }
+      },
+      {
+        "SubjectName": "ПРОЕКТИРОВАНИЕ_С#",
+        "TableNames": ["ПРОЕКТИРОВАНИЕ НА ЯЗЫКЕ C#"],
+        "FinalFormula": "Итого в БРС",
+        "ComponentFormulas": {
+          "Активность": "Акт",
+          "Упражнения": "Упр",
+          "Домашние задания": "ДЗ"
+        }
+      },
+      {
+        "SubjectName": "ПЯТИМИНУТКИ_ТЕРВЕР",
+        "TableNames": ["ПЯТИМИНУТКИ ТЕРВЕР"],
+        "FinalFormula": "ИТОГО",
+        "ComponentFormulas": {}
       }
     ]
   }
 }
-
