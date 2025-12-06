@@ -1,4 +1,4 @@
-import Fragment, { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import "./SubjectsGroup.css"
 
 interface SubjectPoints {
@@ -8,19 +8,24 @@ interface SubjectPoints {
     lastUpdate: Date;
 }
 
-function SubjectsGroup() {
+interface Student {
+    studentName: string;
+    group: string;
+}
+
+function SubjectsGroup({ studentName, group }: Student) {
     const [points, setPoints] = useState<SubjectPoints[]>();
 
     useEffect(() => {
         populateSubjectPointsData();
     }, []);
 
-    if (points === undefined)
-        populateSubjectPointsData();
+    //if (points === undefined)
+    //    populateSubjectPointsData();
 
     return (
-        <>
-            <h1 className="page-title">Мои предметы</h1>
+        <Fragment>
+            <h1 className="page-title">Мои предметы {studentName}</h1>
             <div className="subjects-grid">
                 {
                     points?.map((subpoint) => (
@@ -43,11 +48,11 @@ function SubjectsGroup() {
                     ))
                 }
             </div>
-        </>
+        </Fragment>
     );
 
     async function populateSubjectPointsData() {
-        const response = await fetch('');
+        const response = await fetch(window.location.protocol + "//" + window.location.host + "/api/studentsubjects");
         if (response.ok) {
             const data = await response.json();
             setPoints(data);

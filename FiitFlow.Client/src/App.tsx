@@ -1,6 +1,7 @@
 import { useEffect, useState, Fragment } from 'react';
 import SubjectsGroup from "./components/SubjectsGroup"
 import './App.css';
+import LoginPage from './components/LoginPage';
 
 interface Forecast {
     date: string;
@@ -16,28 +17,13 @@ function App() {
         populateWeatherData();
     }, []);
 
-    const contents = forecasts === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
-        : <table className="table table-striped" aria-labelledby="tableLabel">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
-                </tr>
-            </thead>
-            <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
-                    </tr>
-                )}
-            </tbody>
-        </table>;
+    let currentStudent: string = "Пеганов Артём";
+    let centralBlock;
+
+    if (currentStudent === undefined)
+        centralBlock = <LoginPage />
+    else
+        centralBlock = <SubjectsGroup studentName={currentStudent} group="201" />
 
     return (
         <>
@@ -57,14 +43,14 @@ function App() {
                             </ul>
                         </nav>
                         <div className="user-info">
-                            <div className="user-avatar">ИИ</div>
-                            <span>Иван Иванов</span>
+                            <div className="user-avatar">;)</div>
+                            <span>{currentStudent}</span>
                         </div>
                     </div>
                 </div>
             </header>
             <div className="container">
-                <SubjectsGroup />
+                {centralBlock}
             </div>
             <footer>
                 <div className="container">
