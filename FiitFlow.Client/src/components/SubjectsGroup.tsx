@@ -1,31 +1,26 @@
-import { Fragment, useEffect, useState } from "react"
+﻿import { Fragment, useEffect, useState } from "react"
+import LoadingPageData from "./LoadingPageData"
 import "./SubjectsGroup.css"
+import type Student from "./Student"
+import api from "./Api"
 
 interface SubjectPoints {
     subject: string;
     teacher: string;
     score: number;
-    lastUpdate: Date;
+    lastUpdate: string;
 }
 
-interface Student {
-    studentName: string;
-    group: string;
-}
-
-function SubjectsGroup({ studentName, group }: Student) {
+function SubjectsGroup({ firstName, secondName, group }: Student) {
     const [points, setPoints] = useState<SubjectPoints[]>();
 
     useEffect(() => {
-        populateSubjectPointsData();
+        populateSubjectPointsDataByStudent();
     }, []);
 
-    //if (points === undefined)
-    //    populateSubjectPointsData();
-
     return (
-        <Fragment>
-            <h1 className="page-title">Мои предметы {studentName}</h1>
+        <LoadingPageData isLoading={points === undefined}>
+            <h1 className="page-title">Мои предметы</h1>
             <div className="subjects-grid">
                 {
                     points?.map((subpoint) => (
@@ -40,7 +35,7 @@ function SubjectsGroup({ studentName, group }: Student) {
                                 <span>100</span>
                             </div>
                             <div className="subject-details">
-                                <span>Последнее обновление: {subpoint.lastUpdate.toDateString()}</span>
+                                <span>Последнее обновление: {subpoint.lastUpdate}</span>
                                 <span>Преподаватель: {subpoint.teacher}</span>
                             </div>
                             <a href={subpoint.subject} className="btn">Подробнее</a>
@@ -48,15 +43,18 @@ function SubjectsGroup({ studentName, group }: Student) {
                     ))
                 }
             </div>
-        </Fragment>
+        </LoadingPageData>
     );
 
-    async function populateSubjectPointsData() {
-        const response = await fetch(window.location.protocol + "//" + window.location.host + "/api/studentsubjects");
-        if (response.ok) {
-            const data = await response.json();
-            setPoints(data);
-        }
+    async function populateSubjectPointsDataByStudent() {
+        api.get(
+            `studentsubjects?firstName=${firstName}&secondName=${secondName}&group=${group}`
+        ).then(response => {
+            console.log(response);
+            if (response.status == 200) {
+                setPoints(response.data);
+            }
+        });
     }
 }
 

@@ -1,7 +1,8 @@
 import { useEffect, useState, Fragment } from 'react';
-import SubjectsGroup from "./components/SubjectsGroup"
+import SubjectsGroup from "./components/SubjectsGroup";
 import './App.css';
 import LoginPage from './components/LoginPage';
+import type Student from "./components/Student";
 
 interface Forecast {
     date: string;
@@ -11,22 +12,17 @@ interface Forecast {
 }
 
 function App() {
-    const [forecasts, setForecasts] = useState<Forecast[]>();
+    const [currentStudent, setCurrentStudent] = useState<Student>();
 
-    useEffect(() => {
-        populateWeatherData();
-    }, []);
-
-    let currentStudent: string = "Пеганов Артём";
     let centralBlock;
 
     if (currentStudent === undefined)
-        centralBlock = <LoginPage />
+        centralBlock = <LoginPage setCurrentStudent={setCurrentStudent} />;
     else
-        centralBlock = <SubjectsGroup studentName={currentStudent} group="201" />
+        centralBlock = <SubjectsGroup firstName={currentStudent.firstName} secondName={currentStudent.secondName} group={currentStudent.group} />;
 
     return (
-        <>
+        <Fragment>
             <header>
                 <div className="container">
                     <div className="header-content">
@@ -43,8 +39,8 @@ function App() {
                             </ul>
                         </nav>
                         <div className="user-info">
-                            <div className="user-avatar">;)</div>
-                            <span>{currentStudent}</span>
+                            <div className="user-avatar">ФИИТ</div>
+                            <span>{currentStudent?.secondName} {currentStudent?.firstName}</span>
                         </div>
                     </div>
                 </div>
@@ -82,16 +78,8 @@ function App() {
                     </div>
                 </div>
             </footer>
-        </>
+        </Fragment>
     );
-
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        if (response.ok) {
-            const data = await response.json();
-            setForecasts(data);
-        }
-    }
 }
 
 export default App;
