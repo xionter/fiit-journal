@@ -1,65 +1,85 @@
 using Microsoft.AspNetCore.Mvc;
 using FiitFlow.Parser.Services;
+using FiitFlow.Parser.Models;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
-namespace FiitFlowReactApp.Server.Controllers
+namespace FiitFlow.Parser.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class StudentDataController : ControllerBase
     {
-        private readonly ILogger<StudentDataController> _logger;
+        private readonly FiitFlowParserService _parserService;
+        private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _configuration;
 
-        public StudentDataController(ILogger<StudentDataController> logger, IConfiguration configuration)
+        public StudentDataController(IWebHostEnvironment env, IConfiguration configuration)
         {
-            _logger = logger;
+            _env = env;
             _configuration = configuration;
+            _parserService = new FiitFlowParserService();
         }
 
         [HttpGet("{studentName}")]
-        public async Task<IActionResult> GetStudentData(string studentName)
+        public async Task<ActionResult<StudentSearchResult>> GetStudentData(string studentName)
         {
             try
             {
-                _logger.LogInformation($"Current directory: {Directory.GetCurrentDirectory()}");
-
-                using var httpClient = new HttpClient();
-                var parserService = new FiitFlowParserService(httpClient);
-
-                var possiblePaths = new[]
+                // Получаем путь из конфигурации
+                var configPath = _configuration["ParserConfig:ConfigPath"] ?? "../FiitFlow.Parser/config.json";
+                
+                // Преобразуем в абсолютный путь
+                var absolutePath = Path.GetFullPath(configPath);
+                
+                if (!System.IO.File.Exists(absolutePath))
                 {
-                    "../FiitFlow.Parser/config.json",
-                    "../../../FiitFlow.Parser/config.json",
-                    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/config.json"
-                };
-
-                string configPath = null;
-                foreach (var path in possiblePaths)
-                {
-                    var fullPath = Path.GetFullPath(path);
-                    _logger.LogInformation($"Checking: {fullPath}");
-                    if (System.IO.File.Exists(fullPath))
+                    // Попробуем альтернативные пути
+                    absolutePath = TryFindConfigFile();
+                    
+                    if (string.IsNullOrEmpty(absolutePath))
                     {
-                        configPath = fullPath;
-                        break;
+                        return NotFound(new { 
+                            error = "Конфиг не найден",
+                            configPathFromSettings = configPath,
+                            absolutePath = Path.GetFullPath(configPath)
+                        });
                     }
                 }
-
-                if (configPath == null)
-                {
-                    return NotFound("Config file not found in any expected location");
-                }
-
-                _logger.LogInformation($"Using config: {configPath}");
-                var result = await parserService.ParseAsync(configPath, studentName);
+                
+                Console.WriteLine($"Использую конфиг: {absolutePath}");
+                var result = await _parserService.ParseAsync(absolutePath, studentName);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error running parser");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, new { error = ex.Message });
             }
+        }
+
+        private string? TryFindConfigFile()
+        {
+            // Список возможных местоположений
+            var possiblePaths = new[]
+            {
+                "../FiitFlow.Parser/config.json",
+                "../../FiitFlow.Parser/config.json",
+                "config.json",
+                Path.Combine(_env.ContentRootPath, "config.json"),
+                Path.Combine(AppContext.BaseDirectory, "config.json")
+            };
+            
+            foreach (var path in possiblePaths)
+            {
+                var absolutePath = Path.GetFullPath(path);
+                if (System.IO.File.Exists(absolutePath))
+                {
+                    return absolutePath;
+                }
+            }
+            
+            return null;
         }
     }
 }
