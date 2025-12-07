@@ -4,9 +4,10 @@ namespace FiitFlow.Parser.Models
     {
         public string SubjectName { get; set; } = string.Empty;
         public List<string> TableNames { get; set; } = new();
-        public string? FinalFormula { get; set; } // Формула итога
-        public Dictionary<string, string>? ComponentFormulas { get; set; } // Формулы компонентов
-        public Dictionary<string, string>? ValueMappings { get; set; } // Маппинг значений из таблиц
+        public string? FinalFormula { get; set; }
+        public Dictionary<string, string>? ComponentFormulas { get; set; }
+        public Dictionary<string, string>? ValueMappings { get; set; }
+        public string AggregateMethod { get; set; } = string.Empty;
     }
 
     public class FormulasConfig

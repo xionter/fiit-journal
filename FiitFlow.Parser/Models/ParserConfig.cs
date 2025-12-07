@@ -26,6 +26,6 @@ namespace FiitFlow.Parser.Models
         public string StudentName { get; set; } = string.Empty;
         public CacheSettings CacheSettings { get; set; } = new CacheSettings();
         public List<TableConfig> Tables { get; set; } = new();
-        public FormulasConfig Formulas { get; set; } = new FormulasConfig(); // Добавляем формулы
+        public FormulasConfig Formulas { get; set; } = new FormulasConfig();
     }
 }

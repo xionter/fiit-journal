@@ -19,12 +19,11 @@ namespace FiitFlow.Parser.Services
             _calculator = new FormulaCalculatorService();
         }
 
-        // СТАРЫЙ МЕТОД для обратной совместимости
         public async Task<StudentSearchResult> ParseAsync(string configPath, string? studentName = null)
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
-            
+
             var config = await LoadJsonConfigAsync(configPath);
 
             if (string.IsNullOrWhiteSpace(studentName))
@@ -38,19 +37,18 @@ namespace FiitFlow.Parser.Services
             var excelDownloader = new ExcelDownloader(_httpClient, cacheService);
 
             var searchService = new StudentSearchService(
-                excelDownloader,
-                new ExcelParser()
-            );
+                    excelDownloader,
+                    new ExcelParser()
+                    );
 
             return await searchService.SearchStudentInAllTablesAsync(config, studentName);
         }
 
-        // НОВЫЙ МЕТОД с формулами
         public async Task<StudentResults> ParseWithFormulasAsync(string configPath, string? studentName = null)
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
-            
+
             var config = await LoadJsonConfigAsync(configPath);
 
             if (string.IsNullOrWhiteSpace(studentName))
@@ -64,21 +62,19 @@ namespace FiitFlow.Parser.Services
             var excelDownloader = new ExcelDownloader(_httpClient, cacheService);
 
             var searchService = new StudentSearchService(
-                excelDownloader,
-                new ExcelParser()
-            );
+                    excelDownloader,
+                    new ExcelParser()
+                    );
 
-            // Получаем результаты из таблиц
             var searchResult = await searchService.SearchStudentInAllTablesAsync(config, studentName);
-            
-            // Группируем по предметам и рассчитываем формулы
+
             return GroupAndCalculateResults(config, searchResult, studentName);
         }
 
         private StudentResults GroupAndCalculateResults(
-            ParserConfig config, 
-            StudentSearchResult searchResult,
-            string studentName)
+                ParserConfig config, 
+                StudentSearchResult searchResult,
+                string studentName)
         {
             var studentResults = new StudentResults
             {
@@ -87,7 +83,6 @@ namespace FiitFlow.Parser.Services
                 RatingScores = new Dictionary<string, double>()
             };
 
-            // Если нет формул, просто группируем таблицы по названию
             if (config.Formulas?.SubjectFormulas == null || !config.Formulas.SubjectFormulas.Any())
             {
                 var groupedTables = searchResult.Tables
@@ -100,12 +95,11 @@ namespace FiitFlow.Parser.Services
                             Categories = new Dictionary<string, Dictionary<string, object>>()
                         }
                     );
-                
+
                 studentResults.Subjects = groupedTables;
                 return studentResults;
             }
 
-            // Обрабатываем каждый предмет с формулой
             foreach (var subjectFormula in config.Formulas.SubjectFormulas)
             {
                 var subjectTables = searchResult.Tables
@@ -121,16 +115,14 @@ namespace FiitFlow.Parser.Services
                     Categories = new Dictionary<string, Dictionary<string, object>>()
                 };
 
-                // Рассчитываем компоненты, если есть формулы
                 if (subjectFormula.ComponentFormulas?.Any() == true)
                 {
                     var components = _calculator.CalculateComponents(
-                        subjectTables,
-                        subjectFormula.ComponentFormulas,
-                        subjectFormula.ValueMappings
-                    );
+                            subjectTables,
+                            subjectFormula.ComponentFormulas,
+                            subjectFormula.ValueMappings
+                            );
 
-                    // Добавляем компоненты в категории
                     foreach (var component in components)
                     {
                         subjectResult.Categories[component.Key] = new Dictionary<string, object>
@@ -139,30 +131,26 @@ namespace FiitFlow.Parser.Services
                         };
                     }
 
-                    // Рассчитываем итоговый балл
                     if (!string.IsNullOrWhiteSpace(subjectFormula.FinalFormula))
                     {
                         subjectResult.CalculatedScore = _calculator.CalculateFinalScore(
-                            subjectFormula.FinalFormula,
-                            components,
-                            subjectTables
-                        );
-                        
-                        // Добавляем в общие результаты
+                                subjectFormula.FinalFormula,
+                                components,
+                                subjectTables,
+                                subjectFormula.AggregateMethod
+                                );
+
                         subjectResult.Overall["CalculatedScore"] = subjectResult.CalculatedScore;
                     }
                 }
 
-                // Извлекаем общие данные из таблиц
                 ExtractOverallData(subjectResult, subjectTables);
 
                 studentResults.Subjects[subjectFormula.SubjectName] = subjectResult;
 
-                // Рассчитываем рейтинговый балл (можно настроить отдельную формулу)
                 CalculateRatingScore(studentResults, subjectFormula.SubjectName, subjectResult);
             }
 
-            // Добавляем остальные таблицы без формул
             var processedTables = config.Formulas.SubjectFormulas
                 .SelectMany(sf => sf.TableNames)
                 .ToHashSet();
@@ -177,7 +165,7 @@ namespace FiitFlow.Parser.Services
                         Tables = g.ToList(),
                         Categories = new Dictionary<string, Dictionary<string, object>>()
                     }
-                );
+                    );
 
             foreach (var remaining in remainingTables)
             {
@@ -189,39 +177,67 @@ namespace FiitFlow.Parser.Services
 
         private void ExtractOverallData(SubjectResults subjectResult, List<TableResult> tables)
         {
-            // Извлекаем общие данные из всех таблиц предмета
             var overallData = new Dictionary<string, object>();
-            
+            var totals = new Dictionary<string, double>();
+
             foreach (var table in tables)
             {
                 foreach (var kvp in table.Data)
                 {
-                    // Ищем ключевые поля
-                    if (kvp.Key.Contains("Итог") || kvp.Key.Contains("Сумма") || 
-                        kvp.Key.Contains("Всего") || kvp.Key.Contains("Total"))
+                    string key = kvp.Key.ToLower();
+
+                    if (key.Contains("итог") || key.Contains("сумма") || 
+                            key.Contains("всего") || key.Contains("total") || 
+                            key.Contains("итого в брс") || key.Contains("итого"))
                     {
-                        overallData[$"{table.SheetName}_{kvp.Key}"] = kvp.Value;
+                        if (!key.Contains("кр_сумма") &&
+                                !key.Contains("дз_сумма") &&
+                                !key.Contains("проверочные_сумма") && 
+                                !key.Contains("активность_сумма"))
+                        {
+                            if (double.TryParse(kvp.Value, out double numericValue))
+                            {
+                                string cleanKey = CleanKey(kvp.Key);
+                                if (!totals.ContainsKey(cleanKey) || 
+                                        (cleanKey.Contains("итог") && numericValue > totals[cleanKey]))
+                                {
+                                    totals[cleanKey] = numericValue;
+                                }
+                            }
+                            else
+                            {
+                                overallData[$"{table.SheetName}_{kvp.Key}"] = kvp.Value;
+                            }
+                        }
                     }
                 }
             }
-            
+
+            foreach (var total in totals)
+            {
+                overallData[total.Key] = total.Value;
+            }
+
             subjectResult.Overall["ExtractedData"] = overallData;
         }
 
-        private void CalculateRatingScore(
-            StudentResults studentResults, 
-            string subjectName, 
-            SubjectResults subjectResult)
+        private string CleanKey(string key)
         {
-            // Пример: преобразуем в 100-балльную систему
-            // Можно добавить отдельную конфигурацию для преобразования
+            return key.Replace("_Сумма", "")
+                .Replace("_Итог", "")
+                .Replace("_Всего", "")
+                .Trim();
+        }
+        private void CalculateRatingScore(
+                StudentResults studentResults, 
+                string subjectName, 
+                SubjectResults subjectResult)
+        {
             double ratingScore = subjectResult.CalculatedScore;
-            
-            // Если есть общие данные, можно использовать их
+
             if (subjectResult.Overall.TryGetValue("ExtractedData", out var extractedDataObj) &&
-                extractedDataObj is Dictionary<string, object> extractedData)
+                    extractedDataObj is Dictionary<string, object> extractedData)
             {
-                // Ищем итоговый балл в извлеченных данных
                 foreach (var kvp in extractedData)
                 {
                     if (kvp.Key.Contains("БРС") || kvp.Key.Contains("Рейтинг"))
@@ -234,7 +250,7 @@ namespace FiitFlow.Parser.Services
                     }
                 }
             }
-            
+
             studentResults.RatingScores[subjectName] = Math.Round(ratingScore, 2);
         }
 

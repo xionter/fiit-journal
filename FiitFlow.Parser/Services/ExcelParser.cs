@@ -12,7 +12,7 @@ namespace FiitFlow.Parser.Services;
 
 public class ExcelParser
 {
-public IEnumerable<Student> FindStudents(string filePath, string? studentName, TableConfig tableConfig)
+    public IEnumerable<Student> FindStudents(string filePath, string? studentName, TableConfig tableConfig)
     {
         using var spreadsheetDocument = SpreadsheetDocument.Open(filePath, false);
         var workbookPart = spreadsheetDocument.WorkbookPart;
@@ -22,7 +22,7 @@ public IEnumerable<Student> FindStudents(string filePath, string? studentName, T
 
         var sheets = workbookPart.Workbook.Descendants<Sheet>().ToList();
 
-        for (int i = 0; i < sheets.Count; i++)
+        for (var i = 0; i < sheets.Count; ++i)
         {
             var sheet = sheets[i];
             var sheetConfig = GetSheetConfig(tableConfig, sheet, i);
@@ -54,46 +54,45 @@ public IEnumerable<Student> FindStudents(string filePath, string? studentName, T
                 sc.Name.Equals(sheet.Name ?? "", StringComparison.OrdinalIgnoreCase));
     }
 
-private static IEnumerable<Student> FindStudentInSheet(List<Row> rows, string? studentName, SheetConfig sheetConfig, WorkbookPart workbookPart)
-{
-    // If studentName is not provided, parse all student rows after the categories row.
-    if (string.IsNullOrWhiteSpace(studentName))
+    private static IEnumerable<Student> FindStudentInSheet(List<Row> rows, string? studentName, SheetConfig sheetConfig, WorkbookPart workbookPart)
     {
-        for (int r = sheetConfig.CategoriesRow; r < rows.Count; r++)
+        if (string.IsNullOrWhiteSpace(studentName))
         {
-            var name = GetFirstNonEmptyCellValue(rows[r], workbookPart);
-            if (string.IsNullOrWhiteSpace(name))
-                continue;
-
-            var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, name);
-            yield return student;
-        }
-    }
-    else
-    {
-        for (int r = 0; r < rows.Count; r++)
-        {
-            var row = rows[r];
-
-            foreach (var cell in row.Elements<Cell>())
+            for (var r = sheetConfig.CategoriesRow; r < rows.Count; ++r)
             {
-                var value = GetCellValue(cell, workbookPart);
-                if (value.ToLower().Contains(studentName.ToLower()))
+                var name = GetFirstNonEmptyCellValue(rows[r], workbookPart);
+                if (string.IsNullOrWhiteSpace(name))
+                    continue;
+
+                var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, name);
+                yield return student;
+            }
+        }
+        else
+        {
+            for (var r = 0; r < rows.Count; ++r)
+            {
+                var row = rows[r];
+
+                foreach (var cell in row.Elements<Cell>())
                 {
-                    var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, studentName);
-                    yield return student;
-                    yield break;
+                    var value = GetCellValue(cell, workbookPart);
+                    if (value.ToLower().Contains(studentName.ToLower()))
+                    {
+                        var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, studentName);
+                        yield return student;
+                        yield break;
+                    }
                 }
             }
         }
     }
-}
 
-private static Student ExtractStudentData(List<Row> rows, int studentRow, int categoriesRow, WorkbookPart workbookPart, string? fullName = null)
-{
-    var student = new Student { FullName = fullName ?? string.Empty };
-    var categoriesRowData = rows[categoriesRow - 1];
-    var studentRowData = rows[studentRow - 1];
+    private static Student ExtractStudentData(List<Row> rows, int studentRow, int categoriesRow, WorkbookPart workbookPart, string? fullName = null)
+    {
+        var student = new Student { FullName = fullName ?? string.Empty };
+        var categoriesRowData = rows[categoriesRow - 1];
+        var studentRowData = rows[studentRow - 1];
 
         foreach (var categoryCell in categoriesRowData.Elements<Cell>())
         {
@@ -121,24 +120,24 @@ private static Student ExtractStudentData(List<Row> rows, int studentRow, int ca
             student.Data[categoryName] = cellValue;
         }
 
-    if (string.IsNullOrWhiteSpace(student.FullName))
-    {
-        student.FullName = GetFirstNonEmptyCellValue(studentRowData, workbookPart);
+        if (string.IsNullOrWhiteSpace(student.FullName))
+        {
+            student.FullName = GetFirstNonEmptyCellValue(studentRowData, workbookPart);
+        }
+
+        return student;
     }
 
-    return student;
-}
-
-private static string GetFirstNonEmptyCellValue(Row row, WorkbookPart workbookPart)
-{
-    foreach (var cell in row.Elements<Cell>())
+    private static string GetFirstNonEmptyCellValue(Row row, WorkbookPart workbookPart)
     {
-        var value = GetCellValue(cell, workbookPart);
-        if (!string.IsNullOrWhiteSpace(value))
-            return value.Trim();
+        foreach (var cell in row.Elements<Cell>())
+        {
+            var value = GetCellValue(cell, workbookPart);
+            if (!string.IsNullOrWhiteSpace(value))
+                return value.Trim();
+        }
+        return string.Empty;
     }
-    return string.Empty;
-}
 
     private static string? TryParseExcelDate(string value)
     {

@@ -20,30 +20,25 @@ namespace FiitFlow.Parser.Services
             {
                 try
                 {
-                    // Парсим формулу
                     string formula = formulaEntry.Value;
                     
-                    // Находим все переменные в формуле
-                    var variables = ExtractVariables(formula);
-                    
-                    // Получаем значения переменных из таблиц
-                    var variableValues = new Dictionary<string, double>();
-                    foreach (var variable in variables)
+                    if (!ContainsOperators(formula))
                     {
-                        string lookupKey = variable;
+                        string lookupKey = formula;
                         
-                        // Применяем маппинг, если есть
-                        if (valueMappings != null && valueMappings.ContainsKey(variable))
+                        if (valueMappings != null && valueMappings.TryGetValue(formulaEntry.Key, out var mappedName))
                         {
-                            lookupKey = valueMappings[variable];
+                            lookupKey = mappedName;
                         }
                         
-                        variableValues[variable] = FindValueInTables(lookupKey, tables);
+                        double value = FindExactValue(lookupKey, tables) ?? FindPartialValue(lookupKey, tables);
+                        results[formulaEntry.Key] = Math.Round(value, 2);
                     }
-                    
-                    // Вычисляем формулу
-                    double result = EvaluateFormula(formula, variableValues);
-                    results[formulaEntry.Key] = Math.Round(result, 2);
+                    else
+                    {
+                        double result = EvaluateComplexFormula(formula, tables, valueMappings);
+                        results[formulaEntry.Key] = Math.Round(result, 2);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -58,157 +53,285 @@ namespace FiitFlow.Parser.Services
         public double CalculateFinalScore(
             string formula,
             Dictionary<string, double> components,
-            List<TableResult> tables)
+            List<TableResult> tables,
+            string? aggregateMethod = null)
         {
             if (string.IsNullOrWhiteSpace(formula))
                 return 0;
 
             try
             {
-                // Находим все переменные в формуле
-                var variables = ExtractVariables(formula);
-                var variableValues = new Dictionary<string, double>();
-
-                foreach (var variable in variables)
+                if (!string.IsNullOrWhiteSpace(aggregateMethod))
                 {
-                    // Проверяем, есть ли переменная в компонентах
-                    if (components.ContainsKey(variable))
+                    switch (aggregateMethod.ToUpper())
                     {
-                        variableValues[variable] = components[variable];
-                    }
-                    else
-                    {
-                        // Ищем значение в таблицах
-                        variableValues[variable] = FindValueInTables(variable, tables);
+                        case "SUM":
+                            return CalculateSumForColumn(formula, tables);
+                        case "AVG":
+                            return CalculateAverageForColumn(formula, tables);
+                        case "MAX":
+                            return CalculateMaxForColumn(formula, tables);
+                        case "MIN":
+                            return CalculateMinForColumn(formula, tables);
                     }
                 }
-
-                // Вычисляем формулу
-                return Math.Round(EvaluateFormula(formula, variableValues), 2);
+                
+                if (components.ContainsKey(formula.Trim()))
+                {
+                    return components[formula.Trim()];
+                }
+                
+                if (!ContainsOperators(formula) && !IsNumericExpression(formula))
+                {
+                    double value = FindExactValue(formula, tables) ?? FindPartialValue(formula, tables);
+                    return Math.Round(value, 2);
+                }
+                
+                if (ContainsOperators(formula))
+                {
+                    var variables = ExtractVariables(formula);
+                    var variableValues = new Dictionary<string, double>();
+                    
+                    foreach (var variable in variables)
+                    {
+                        if (components.ContainsKey(variable))
+                        {
+                            variableValues[variable] = components[variable];
+                        }
+                        else
+                        {
+                            variableValues[variable] = FindExactValue(variable, tables) ?? FindPartialValue(variable, tables);
+                        }
+                    }
+                    
+                    string expression = formula;
+                    foreach (var variable in variableValues)
+                    {
+                        expression = expression.Replace(variable.Key, 
+                            variable.Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                    }
+                    
+                    return Math.Round(EvaluateExpression(expression), 2);
+                }
+                
+                return 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка расчета итогового балла: {ex.Message}");
+                Console.WriteLine($"Ошибка расчета итогового балла '{formula}': {ex.Message}");
                 return 0;
             }
         }
 
-        private List<string> ExtractVariables(string formula)
+        private double CalculateSumForColumn(string columnName, List<TableResult> tables)
         {
-            // Убираем числа и операторы, оставляем только переменные
-            var variables = new List<string>();
-            var regex = new Regex(@"[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я0-9_]*");
+            double sum = 0;
             
-            foreach (Match match in regex.Matches(formula))
-            {
-                // Проверяем, что это не функция и не число
-                string value = match.Value;
-                if (!IsNumeric(value) && !IsOperator(value))
-                {
-                    variables.Add(value);
-                }
-            }
-
-            return variables.Distinct().ToList();
-        }
-
-        private double FindValueInTables(string key, List<TableResult> tables)
-        {
-            // Сначала ищем точное совпадение
-            foreach (var table in tables)
-            {
-                if (table.Data.TryGetValue(key, out string value))
-                {
-                    if (TryParseValue(value, out double numericValue))
-                        return numericValue;
-                }
-            }
-
-            // Затем ищем частичное совпадение
             foreach (var table in tables)
             {
                 foreach (var kvp in table.Data)
                 {
-                    if (kvp.Key.Contains(key, StringComparison.OrdinalIgnoreCase) ||
-                        key.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(kvp.Key, columnName, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (TryParseValue(kvp.Value, out double numericValue))
-                            return numericValue;
+                        if (TryParseValue(kvp.Value, out double value))
+                        {
+                            sum += value;
+                        }
                     }
                 }
             }
+            
+            return Math.Round(sum, 2);
+        }
 
-            // Ищем общие ключи
-            var commonKeys = new[] { "Сумма", "Итого", "Всего", "Total", "Sum", "Итог" };
-            foreach (var commonKey in commonKeys)
+        private double CalculateAverageForColumn(string columnName, List<TableResult> tables)
+        {
+            var values = new List<double>();
+            
+            foreach (var table in tables)
             {
-                foreach (var table in tables)
+                foreach (var kvp in table.Data)
                 {
-                    if (table.Data.TryGetValue(commonKey, out string value))
+                    if (string.Equals(kvp.Key, columnName, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (TryParseValue(value, out double numericValue))
-                            return numericValue;
+                        if (TryParseValue(kvp.Value, out double value))
+                        {
+                            values.Add(value);
+                        }
                     }
                 }
             }
+            
+            return values.Any() ? Math.Round(values.Average(), 2) : 0;
+        }
 
+        private double CalculateMaxForColumn(string columnName, List<TableResult> tables)
+        {
+            var values = new List<double>();
+            
+            foreach (var table in tables)
+            {
+                foreach (var kvp in table.Data)
+                {
+                    if (string.Equals(kvp.Key, columnName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (TryParseValue(kvp.Value, out double value))
+                        {
+                            values.Add(value);
+                        }
+                    }
+                }
+            }
+            
+            return values.Any() ? Math.Round(values.Max(), 2) : 0;
+        }
+
+        private double CalculateMinForColumn(string columnName, List<TableResult> tables)
+        {
+            var values = new List<double>();
+            
+            foreach (var table in tables)
+            {
+                foreach (var kvp in table.Data)
+                {
+                    if (string.Equals(kvp.Key, columnName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (TryParseValue(kvp.Value, out double value))
+                        {
+                            values.Add(value);
+                        }
+                    }
+                }
+            }
+            
+            return values.Any() ? Math.Round(values.Min(), 2) : 0;
+        }
+
+        private double? FindExactValue(string key, List<TableResult> tables)
+        {
+            double? lastValue = null;
+            
+            foreach (var table in tables)
+            {
+                foreach (var kvp in table.Data)
+                {
+                    if (string.Equals(kvp.Key, key, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (TryParseValue(kvp.Value, out double value))
+                        {
+                            lastValue = value;
+                        }
+                    }
+                }
+            }
+            
+            return lastValue;
+        }
+
+        private double FindPartialValue(string key, List<TableResult> tables)
+        {
+            foreach (var table in tables)
+            {
+                foreach (var kvp in table.Data)
+                {
+                    if (kvp.Key.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        key.IndexOf(kvp.Key, StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        if (TryParseValue(kvp.Value, out double value))
+                        {
+                            return value;
+                        }
+                    }
+                }
+            }
+            
             return 0;
         }
 
-        private double EvaluateFormula(string formula, Dictionary<string, double> variables)
+        private double EvaluateComplexFormula(string formula, List<TableResult> tables, Dictionary<string, string>? mappings)
         {
-            // Заменяем переменные на значения
-            string expression = formula;
+            var variables = ExtractVariables(formula);
+            var variableValues = new Dictionary<string, double>();
+            
             foreach (var variable in variables)
             {
-                expression = Regex.Replace(
-                    expression,
-                    $@"\b{Regex.Escape(variable.Key)}\b",
-                    variable.Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture),
-                    RegexOptions.IgnoreCase
-                );
+                string lookupKey = variable;
+                if (mappings != null && mappings.TryGetValue(variable, out var mappedName))
+                {
+                    lookupKey = mappedName;
+                }
+                
+                variableValues[variable] = FindExactValue(lookupKey, tables) ?? FindPartialValue(lookupKey, tables);
             }
-
-            // Заменяем русские запятые на точки
-            expression = expression.Replace(',', '.');
-
-            // Используем DataTable для вычисления
-            using DataTable table = new DataTable();
-            table.Columns.Add("expr", typeof(string), expression);
-            DataRow row = table.NewRow();
-            table.Rows.Add(row);
             
-            return Convert.ToDouble(row["expr"]);
+            return EvaluateExpression(formula, variableValues);
+        }
+
+        private List<string> ExtractVariables(string formula)
+        {
+            var cleaned = Regex.Replace(formula, @"[\d\+\-\*/\(\)]", " ");
+            var words = cleaned.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            
+            return words
+                .Where(w => !string.IsNullOrWhiteSpace(w) && w.Length > 1 && !IsNumeric(w))
+                .Distinct()
+                .ToList();
+        }
+
+        private double EvaluateExpression(string expression, Dictionary<string, double>? variables = null)
+        {
+            string expr = expression;
+            
+            if (variables != null)
+            {
+                foreach (var variable in variables)
+                {
+                    expr = expr.Replace(variable.Key, 
+                        variable.Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture));
+                }
+            }
+            
+            expr = expr.Replace(',', '.');
+            
+            expr = expr.Replace(" ", "");
+            
+            try
+            {
+                using DataTable table = new DataTable();
+                table.Columns.Add("expr", typeof(string), expr);
+                DataRow row = table.NewRow();
+                table.Rows.Add(row);
+                
+                return Convert.ToDouble(row["expr"]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка вычисления выражения '{expr}': {ex.Message}");
+                return 0;
+            }
         }
 
         private bool TryParseValue(string value, out double result)
         {
+            result = 0;
             if (string.IsNullOrWhiteSpace(value))
-            {
-                result = 0;
                 return false;
-            }
 
-            // Убираем лишние символы
             string cleanValue = value.Trim()
                 .Replace(',', '.')
                 .Replace(" ", "");
-
+                
             return double.TryParse(cleanValue, 
                 System.Globalization.NumberStyles.Any,
                 System.Globalization.CultureInfo.InvariantCulture,
                 out result);
         }
 
-        private bool IsNumeric(string s)
-        {
-            return double.TryParse(s, out _);
-        }
+        private bool ContainsOperators(string s) =>
+            s.Contains('+') || s.Contains('-') || s.Contains('*') || s.Contains('/');
 
-        private bool IsOperator(string s)
-        {
-            var operators = new[] { "+", "-", "*", "/", "(", ")", "^", "%" };
-            return operators.Contains(s);
-        }
+        private bool IsNumericExpression(string s) => double.TryParse(s, out _);
+
+        private bool IsNumeric(string s) => double.TryParse(s, out _);
     }
 }
