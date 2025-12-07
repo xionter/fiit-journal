@@ -11,7 +11,7 @@ interface SubjectPoints {
     lastUpdate: string;
 }
 
-function SubjectsGroup({ firstName, secondName, group }: Student) {
+function SubjectsGroup({ id, firstName, secondName, group }: Student) {
     const [points, setPoints] = useState<SubjectPoints[]>();
 
     useEffect(() => {
@@ -47,10 +47,15 @@ function SubjectsGroup({ firstName, secondName, group }: Student) {
     );
 
     async function populateSubjectPointsDataByStudent() {
-        api.get(
-            `studentsubjects?firstName=${firstName}&secondName=${secondName}&group=${group}`
-        ).then(response => {
-            console.log(response);
+        api.get("StudentSubjects", {
+            params: {
+                id: id,
+                firstName: firstName,
+                secondName: secondName,
+                group: group,
+                time: Date.now(),
+            }
+        }).then(response => {
             if (response.status == 200) {
                 setPoints(response.data);
             }

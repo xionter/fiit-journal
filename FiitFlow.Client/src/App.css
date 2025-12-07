@@ -1,5 +1,4 @@
-﻿/* Стили для header */
-:root {
+﻿:root {
     --primary: #6a0dad;
     --secondary: #9c27b0;
     --accent: #e91e63;
@@ -24,12 +23,27 @@ body {
     background-color: #fafafa;
     color: var(--text);
     line-height: 1.6;
+    min-height: 100vh;
 }
 
-.container {
+.body-root-container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.div-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+.central-container {
+    max-width: 1200px;
+    min-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex: 1;
 }
 
 header {
@@ -110,12 +124,12 @@ nav ul {
         margin-top: 15px;
     }
 }
-/* Стили для footer */
+
 footer {
     background: var(--dark);
     color: white;
     padding: 30px 0;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .footer-content {

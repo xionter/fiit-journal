@@ -3,7 +3,8 @@ main {
 }
 
 .page-title {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    margin-top: 10px;
     color: var(--dark);
     border-bottom: 2px solid var(--border);
     padding-bottom: 10px;

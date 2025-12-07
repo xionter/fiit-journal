@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FiitFlowReactApp.Server.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
-    [EnableCors("AllowAll")]
+    [Route("api/[controller]")]
     public class StudentSubjectsController : Controller
     {
         private readonly ILogger<StudentSubjectsController> _logger;
@@ -20,13 +19,17 @@ namespace FiitFlowReactApp.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<SubjectUnit> Get()
-            //[FromRoute] string firstName, [FromRoute] string secondName, [FromRoute] string group)
+        public IEnumerable<SubjectUnit> Get(
+            [FromQuery] long id,
+            [FromQuery] string firstName,
+            [FromQuery] string secondName,
+            [FromQuery] string group,
+            [FromQuery] DateTime dateTime)
         {
             return Enumerable.Range(1, 10).Select(n => new SubjectUnit
             {
                 Subject = $"Subject{n}",
-                Teacher = $"Teacher",// {secondName} {firstName} - {group}",
+                Teacher = $"Teacher {secondName} {firstName} - {id} - {group}",
                 Score = 8.34245f * n,
                 LastUpdate = DateTime.Now.ToString()
             }).ToArray();

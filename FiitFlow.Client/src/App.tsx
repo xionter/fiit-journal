@@ -1,30 +1,31 @@
-import { useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, Fragment, type ReactElement } from 'react';
 import SubjectsGroup from "./components/SubjectsGroup";
 import './App.css';
 import LoginPage from './components/LoginPage';
 import type Student from "./components/Student";
 
-interface Forecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
-}
-
 function App() {
     const [currentStudent, setCurrentStudent] = useState<Student>();
+    const [centralBlock, setCentralBlock] = useState<ReactElement>();
 
-    let centralBlock;
-
-    if (currentStudent === undefined)
-        centralBlock = <LoginPage setCurrentStudent={setCurrentStudent} />;
-    else
-        centralBlock = <SubjectsGroup firstName={currentStudent.firstName} secondName={currentStudent.secondName} group={currentStudent.group} />;
+    useEffect(() => {
+        if (currentStudent === undefined)
+            setCentralBlock(<LoginPage setCurrentStudent={setCurrentStudent} />);
+        else
+            setCentralBlock(
+                <SubjectsGroup
+                    id={currentStudent.id}
+                    firstName={currentStudent.firstName}
+                    secondName={currentStudent.secondName}
+                    group={currentStudent.group}
+                />
+            );
+    }, [currentStudent]);
 
     return (
         <Fragment>
             <header>
-                <div className="container">
+                <div className="div-container">
                     <div className="header-content">
                         <div className="logo">
                             <span className="logo-icon">📊</span>
@@ -40,16 +41,16 @@ function App() {
                         </nav>
                         <div className="user-info">
                             <div className="user-avatar">ФИИТ</div>
-                            <span>{currentStudent?.secondName} {currentStudent?.firstName}</span>
+                            <span onClick={() => setCurrentStudent(undefined)}>{currentStudent?.secondName} {currentStudent?.firstName}</span>
                         </div>
                     </div>
                 </div>
             </header>
-            <div className="container">
+            <div className="central-container">
                 {centralBlock}
             </div>
             <footer>
-                <div className="container">
+                <div className="div-container">
                     <div className="footer-content">
                         <div className="footer-section">
                             <h3>FIITFLOW</h3>
