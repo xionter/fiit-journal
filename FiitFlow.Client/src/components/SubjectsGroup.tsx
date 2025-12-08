@@ -1,18 +1,17 @@
 ﻿import { Fragment, useEffect, useState } from "react"
 import LoadingPageData from "./LoadingPageData"
-import "./SubjectsGroup.css"
 import type Student from "./Student"
+import type SubjectItem from "./SubjectItem"
 import api from "./Api"
 
-interface SubjectPoints {
-    subject: string;
-    teacher: string;
-    score: number;
-    lastUpdate: string;
+interface SubjectGroupProps {
+    setSubject: Function;
+    student: Student;
+    term: number;
 }
 
-function SubjectsGroup({ id, firstName, secondName, group }: Student) {
-    const [points, setPoints] = useState<SubjectPoints[]>();
+function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
+    const [points, setPoints] = useState<SubjectItem[]>();
 
     useEffect(() => {
         populateSubjectPointsDataByStudent();
@@ -28,7 +27,7 @@ function SubjectsGroup({ id, firstName, secondName, group }: Student) {
                             <div className="subject-name">{subpoint.subject}</div>
                             <div className="subject-score">{subpoint.score}</div>
                             <div className="progress-bar">
-                                <div className="progress-fill"></div>
+                                <div className="progress-fill" style={{width: `${Math.abs(subpoint.score)}%`}}></div>
                             </div>
                             <div className="progress-text">
                                 <span>0</span>
@@ -38,7 +37,7 @@ function SubjectsGroup({ id, firstName, secondName, group }: Student) {
                                 <span>Последнее обновление: {subpoint.lastUpdate}</span>
                                 <span>Преподаватель: {subpoint.teacher}</span>
                             </div>
-                            <a href={subpoint.subject} className="btn">Подробнее</a>
+                            <button onClick={() => setSubject({ subjectName: subpoint.subject, student: student, term: term })} className="btn">Подробнее</button>
                         </div>
                     ))
                 }
@@ -47,12 +46,13 @@ function SubjectsGroup({ id, firstName, secondName, group }: Student) {
     );
 
     async function populateSubjectPointsDataByStudent() {
-        api.get("StudentSubjects", {
+        api.get(`StudentSubjects/All`, {
             params: {
-                id: id,
-                firstName: firstName,
-                secondName: secondName,
-                group: group,
+                id: student.id,
+                firstName: student.firstName,
+                secondName: student.secondName,
+                group: student.group,
+                term: term,
                 time: Date.now(),
             }
         }).then(response => {

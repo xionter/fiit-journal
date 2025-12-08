@@ -18,7 +18,7 @@ namespace FiitFlowReactApp.Server.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         public IEnumerable<SubjectUnit> Get(
             [FromQuery] long id,
             [FromQuery] string firstName,

@@ -1,6 +1,6 @@
-export default interface SubjectPoints {
+export default interface SubjectItem {
     subject: string;
     teacher: string;
     score: number;
-    lastUpdate: Date;
+    lastUpdate: string;
 }
