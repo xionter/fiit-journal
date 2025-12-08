@@ -1,38 +1,109 @@
-﻿import { Fragment, useEffect, useState } from "react"
-import Cookies from "js-cookie"
+﻿import { Fragment, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import type Student from "./Student";
-import api from "./Api"
+import api from "./Api";
+import { saveStudentCookie, loadStudentCookie } from "./CookieTools";
 
 interface LoginProps {
     setCurrentStudent: Function;
 }
 
-function LoginPage({ setCurrentStudent }: LoginProps) {
+interface FormInputs {
+    firstName: string;
+    lastName: string;
+    group: string;
+}
+
+const schema = yup.object({
+    firstName: yup.string().required("Введите имя").matches(/^[А-Я][а-я]*/, "Неверный формат"),
+    lastName: yup.string().required("Введите фамилию").matches(/^[А-Я][а-я]*/, "Неверный формат"),
+    group: yup.string().required("Введите группу").matches(/^ФТ-\d\d\d-\d/, "Неверный формат")
+}).required("Введите все данные");
+
+export default function LoginPage({ setCurrentStudent }: LoginProps) {
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors, isValid, isSubmitting }
+    } = useForm<FormInputs>({
+        resolver: yupResolver(schema),
+        mode: "onChange"
+    });
 
     return (
-        <p>Hello Student!<button onClick={() => saveCookie({ id: 1, firstName: "Пеганов", secondName: "Артем", group: "ФТ-201-2" })}>Set Name</button></p>
+        <div className="login-container">
+            <div className="login-box">
+                <div className="login-logo">
+                    <h1>
+                        <span className="logo-icon">📊</span>
+                        FIITFLOW
+                    </h1>
+                    <p>Вход в систему</p>
+                </div>
+                <form onSubmit={handleSubmit((data) => setStudent(data))} className="login-form">
+                    <div className="form-group">
+                        <label htmlFor="lastName">Фамилия</label>
+                        <input {...register("lastName")} className={`input ${errors.firstName ? 'input-error' : ''}`} placeholder="Введите вашу фамилию" />
+                        {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName.message}</p>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="firstName">Имя</label>
+                        <input {...register("firstName")} className={`input ${errors.firstName ? 'input-error' : ''}`} placeholder="Введите ваше имя" />
+                        {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName.message}</p>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="group">Группа</label>
+                        <input {...register("group")} className={`input ${errors.firstName ? 'input-error' : ''}`} placeholder="Например: ФТ-201-1" />
+                        {errors.group && <p className="text-red-500 text-sm">{errors.group.message}</p>}
+                    </div>
+                    <button type="submit" className="login-btn" disabled={!isValid || isSubmitting}>{isSubmitting ? "Поиск студента" : "Войти"}</button>
+                    {errors.root && <p className="text-red-500 text-sm">{errors.root.message}</p>}
+                </form>
+                <div className="login-info">
+                    <p>Для входа используйте реальные данные</p>
+                    <p>Система предназначена для студентов ФИИТ УрФУ</p>
+                </div>
+            </div>
+        </div>
     );
 
-    function loadCookie() {
-        const studentDataString = Cookies.get("student");
-        const studentData = studentDataString ? JSON.parse(studentDataString) : null;
-    }
-
-    function saveCookie({ id, firstName, secondName, group }: Student) {
-        const data = {
-            id: id,
-            firstName: firstName,
-            secondName: secondName,
-            group: group
-        };
-        Cookies.set("student", JSON.stringify(data), {
-            expires: 3,
-            path: "/",
-            secure: true,
-            sameSite: "strict"
-        });
-        setCurrentStudent(data);
+    function setStudent(studentLogin: FormInputs) {
+        const newId = checkStudentLogin(studentLogin);
+        if (newId === undefined)
+            setError("root.serverError", {
+                type: "server",
+                message: "Студент не найден"
+            });
+        else {
+            const student = {
+                id: Number(newId),
+                firstName: studentLogin.firstName,
+                lastName: studentLogin.lastName,
+                group: studentLogin.group
+            };
+            saveStudentCookie(student, 5);
+            setCurrentStudent(student);
+        }
     }
 }
 
-export default LoginPage;
+async function checkStudentLogin(studentLogin: FormInputs) {
+    const [id, setId] = useState<number>();
+    api.get(`Auth/login`, {
+        params: {
+            firstName: studentLogin.firstName,
+            lastName: studentLogin.lastName,
+            group: studentLogin.group,
+            time: Date.now()
+        }
+    }).then(response => {
+        if (response.status == 200)
+            setId(response.data.id);
+        else
+            setId(undefined);
+    });
+    return id;
+}

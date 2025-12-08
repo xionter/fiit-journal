@@ -58,8 +58,8 @@ function App() {
                             </div>
                             <div className="user-info">
                                 <div className="user-avatar">ФИИТ</div>
-                                <span>{currentStudent?.secondName} {currentStudent?.firstName}</span>
-                                <button onClick={() => setCurrentStudent(undefined)} className="logout-btn">Выход</button>
+                                <span>{currentStudent?.lastName} {currentStudent?.firstName}</span>
+                                <button onClick={logoutReset} className="logout-btn">Выход</button>
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,12 @@ function App() {
                 </footer>
             </Fragment>
         );
+    }
+
+    function logoutReset() {
+        setCurrentStudent(undefined);
+        setCurrentSubject(undefined);
+        setCurrentTerm(1);
     }
 }
 

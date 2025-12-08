@@ -4,7 +4,7 @@ import api from "./Api"
 
 function StudentSubjectComponent({ subjectName, student, term }: StudentSubject) {
     return (
-        <LoadingPageData isLoading={false}>{subjectName} {term} {student.secondName} {student.firstName}</LoadingPageData>
+        <LoadingPageData isLoading={false}>{subjectName} {term} {student.lastName} {student.firstName}</LoadingPageData>
     );
 
     async function populateSubjectPointsDataByStudent() {
@@ -12,7 +12,7 @@ function StudentSubjectComponent({ subjectName, student, term }: StudentSubject)
             params: {
                 id: student.id,
                 firstName: student.firstName,
-                secondName: student.secondName,
+                lastName: student.lastName,
                 group: student.group,
                 term: term,
                 time: Date.now(),

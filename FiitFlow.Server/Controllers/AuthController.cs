@@ -17,13 +17,16 @@ namespace FiitFlowReactApp.Server.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("login")]
-        public IActionResult Login()
+        [HttpGet("login")]
+        public IActionResult Login(
+            [FromQuery] string firstName,
+            [FromQuery] string lastName,
+            [FromQuery] string group,
+            [FromQuery] DateTime dateTime)
         {
             return Ok(new
             {
-                //studentName = studentName,
-                //studentGroup = studentGroup,
+                id = (lastName + firstName + group + DateTime.Now.Date.ToString()).GetHashCode(),
                 expiresIn = 3600
             });
         }

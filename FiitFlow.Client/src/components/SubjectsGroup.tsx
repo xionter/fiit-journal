@@ -50,7 +50,7 @@ function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
             params: {
                 id: student.id,
                 firstName: student.firstName,
-                secondName: student.secondName,
+                lastName: student.lastName,
                 group: student.group,
                 term: term,
                 time: Date.now(),

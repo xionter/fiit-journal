@@ -9,7 +9,7 @@ function LoadingPageData({ isLoading, children }: LoadingProps) {
     if (!isLoading) return children;
     else return (
         <div>
-            <h1>Ну, теперь жди</h1>
+            <h1>Подождите</h1>
         </div>
     );
 }

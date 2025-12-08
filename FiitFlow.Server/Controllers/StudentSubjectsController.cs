@@ -22,14 +22,15 @@ namespace FiitFlowReactApp.Server.Controllers
         public IEnumerable<SubjectUnit> Get(
             [FromQuery] long id,
             [FromQuery] string firstName,
-            [FromQuery] string secondName,
+            [FromQuery] string lastName,
             [FromQuery] string group,
+            [FromQuery] int term,
             [FromQuery] DateTime dateTime)
         {
             return Enumerable.Range(1, 10).Select(n => new SubjectUnit
             {
-                Subject = $"Subject{n}",
-                Teacher = $"Teacher {secondName} {firstName} - {id} - {group}",
+                Subject = $"Subject{n} {term}",
+                Teacher = $"Teacher {lastName} {firstName} - {id} - {group}",
                 Score = 8.34245f * n,
                 LastUpdate = DateTime.Now.ToString()
             }).ToArray();
