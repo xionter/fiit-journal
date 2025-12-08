@@ -1,8 +1,8 @@
 ﻿using FiitFlow.Domain;
 using FiitFlow.Repository;
 using FiitFlow.Parser.Services;
-using System.Globalization;
 using FiitFlow.Parser.Models;
+using System.Globalization;
 
 namespace FiitFlow;
 
@@ -22,58 +22,138 @@ public class PointsService
         _subjectRepo = subjectRepo;
     }
 
-
     public async Task UpdatePointsForGroupAsync(Guid groupId, int semester, string configPath)
     {
-        var parserService = new FiitFlowParserService();
-        var collectedPoints = new List<Points>();
-        var cache = new Dictionary<string, Subject>();
-
-        var parsedResult = await parserService.ParseAsync(configPath, null);
-
-        foreach (var table in parsedResult.Tables)
+        try
         {
-            try
+            var students = await _studentRepo.GetByGroupAsync(groupId);
+            if (students.Count == 0)
             {
-                if (string.IsNullOrWhiteSpace(table.StudentName))
-                {
-                    Console.WriteLine($"Пропускаем строку без имени студента в таблице {table.TableName}");
-                    continue;
-                }
-
-                var student = await _studentRepo.GetOrCreateAsync(table.StudentName, groupId);
-
-                var subjectCacheKey = $"{groupId}-{semester}-{table.TableName}";
-                if (!cache.TryGetValue(subjectCacheKey, out var subject))
-                {
-                    subject = await _subjectRepo.GetOrCreateAsync(groupId, table.TableName, semester, table.TableUrl);
-                    cache[subjectCacheKey] = subject;
-                }
-
-                var value = CalculatePoints(table.Data);
-
-                Console.WriteLine($"Студент {student.FullName}: {table.TableName} => {value} баллов");
-
-                collectedPoints.Add(new Points
-                {
-                    Id = Guid.NewGuid(),
-                    StudentId = student.Id,
-                    SubjectId = subject.Id,
-                    Semester = semester,
-                    Value = value,
-                    UpdatedAt = DateTime.UtcNow
-                });
+                Console.WriteLine($"В группе {groupId} нет студентов");
+                return;
             }
-            catch (Exception ex)
+
+            Console.WriteLine($"Обработка {students.Count} студентов группы...");
+
+            var collectedPoints = new List<Points>();
+            var subjectCache = new Dictionary<string, Subject>();
+            var parserService = new FiitFlowParserService();
+            int processedCount = 0;
+
+            foreach (var student in students)
             {
-                Console.WriteLine($"Не удалось спарсить данные из таблицы {table.TableName} для студента {table.StudentName}: {ex.Message}");
+                try
+                {
+                    Console.WriteLine($"\nОбработка студента: {student.FullName}");
+                    
+                    var studentResult = await parserService.ParseWithFormulasAsync(configPath, student.FullName);
+                    
+                    if (studentResult?.Subjects == null || !studentResult.Subjects.Any())
+                    {
+                        Console.WriteLine($"  Не найдены данные для студента {student.FullName}");
+                        continue;
+                    }
+
+                    foreach (var subjectEntry in studentResult.Subjects)
+                    {
+                        var subjectName = subjectEntry.Key;
+                        var subjectData = subjectEntry.Value;
+
+                        double finalScore = GetFinalScore(subjectName, subjectData, studentResult.RatingScores);
+                        
+                        if (finalScore <= 0)
+                        {
+                            Console.WriteLine($"  {subjectName}: нет баллов");
+                            continue;
+                        }
+
+                        var subjectCacheKey = $"{groupId}-{semester}-{subjectName}";
+                        if (!subjectCache.TryGetValue(subjectCacheKey, out var subject))
+                        {
+                            var tableUrl = subjectData.Tables.FirstOrDefault()?.TableUrl ?? "";
+                            subject = await _subjectRepo.GetOrCreateAsync(groupId, subjectName, semester, tableUrl);
+                            subjectCache[subjectCacheKey] = subject;
+                        }
+
+                        int roundedValue = (int)Math.Round(finalScore);
+                        Console.WriteLine($"  {subjectName}: {finalScore:F2} → {roundedValue} баллов");
+
+                        collectedPoints.Add(new Points
+                        {
+                            Id = Guid.NewGuid(),
+                            StudentId = student.Id,
+                            SubjectId = subject.Id,
+                            Semester = semester,
+                            Value = roundedValue,
+                            UpdatedAt = DateTime.UtcNow
+                        });
+                    }
+
+                    processedCount++;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка обработки студента {student.FullName}: {ex.Message}");
+                }
+            }
+
+            if (collectedPoints.Count > 0)
+            {
+                await _pointsRepo.UpsertRangeAsync(collectedPoints);
+                Console.WriteLine($"\nУспешно обновлено {collectedPoints.Count} записей баллов для {processedCount} студентов");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при обновлении баллов группы: {ex.Message}");
+        }
+    }
+
+    private double GetFinalScore(string subjectName, SubjectResults subjectData, Dictionary<string, double> ratingScores)
+    {
+        if (ratingScores.TryGetValue(subjectName, out double ratingScore))
+        {
+            return ratingScore;
+        }
+
+        if (subjectData.CalculatedScore > 0)
+        {
+            return subjectData.CalculatedScore;
+        }
+
+        if (subjectData.Overall.TryGetValue("ExtractedData", out var extractedDataObj) &&
+            extractedDataObj is Dictionary<string, object> extractedData)
+        {
+            foreach (var entry in extractedData)
+            {
+                string key = entry.Key.ToLower();
+                if (key.Contains("итог") || key.Contains("сумма") || key.Contains("итого"))
+                {
+                    try
+                    {
+                        if (entry.Value is string strValue)
+                        {
+                            if (double.TryParse(strValue.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+                                return value;
+                        }
+                        else if (entry.Value is double dValue)
+                        {
+                            return dValue;
+                        }
+                        else if (entry.Value is int iValue)
+                        {
+                            return iValue;
+                        }
+                    }
+                    catch
+                    {
+                        // Пропускаем ошибки парсинга
+                    }
+                }
             }
         }
 
-        if (collectedPoints.Count > 0)
-        {
-            await _pointsRepo.UpsertRangeAsync(collectedPoints);
-        }
+        return 0;
     }
 
     public Task<IReadOnlyList<Points>> GetStudentPointsAsync(Guid studentId)
@@ -82,18 +162,45 @@ public class PointsService
     public Task<IReadOnlyList<Points>> GetGroupPointsAsync(Guid groupId, int? semester = null)
         => _pointsRepo.GetByGroupAsync(groupId, semester);
 
-    private static int CalculatePoints(Dictionary<string, string> data)
+    public async Task<IReadOnlyList<StudentPointsSummary>> GetGroupSummaryAsync(Guid groupId, int semester)
     {
-        double sum = 0;
+        var points = await _pointsRepo.GetByGroupAsync(groupId, semester);
+        var students = await _studentRepo.GetByGroupAsync(groupId);
+        var subjects = await _subjectRepo.GetByGroupAsync(groupId, semester);
 
-        foreach (var entry in data)
+        var summary = new List<StudentPointsSummary>();
+
+        foreach (var student in students)
         {
-            if (double.TryParse(entry.Value.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out var value))
+            var studentPoints = points.Where(p => p.StudentId == student.Id).ToList();
+            var subjectScores = new Dictionary<string, int>();
+
+            foreach (var point in studentPoints)
             {
-                sum += value;
+                var subject = subjects.FirstOrDefault(s => s.Id == point.SubjectId);
+                if (subject != null)
+                {
+                    subjectScores[subject.Title] = point.Value;
+                }
             }
+
+            summary.Add(new StudentPointsSummary
+            {
+                StudentId = student.Id,
+                StudentName = student.FullName,
+                SubjectScores = subjectScores,
+                TotalScore = subjectScores.Sum(x => x.Value)
+            });
         }
 
-        return (int)Math.Round(sum);
+        return summary.OrderByDescending(s => s.TotalScore).ToList();
     }
+}
+
+public class StudentPointsSummary
+{
+    public Guid StudentId { get; set; }
+    public string StudentName { get; set; } = string.Empty;
+    public Dictionary<string, int> SubjectScores { get; set; } = new();
+    public int TotalScore { get; set; }
 }

@@ -30,9 +30,9 @@ public class SubjectRepository : ISubjectRepository
     {
         var existing = await _db.Subjects
             .FirstOrDefaultAsync(s =>
-                s.GroupId == groupId &&
-                s.Semester == semester &&
-                s.Title == title);
+                    s.GroupId == groupId &&
+                    s.Semester == semester &&
+                    s.Title == title);
 
         if (existing is not null)
             return existing;
@@ -50,5 +50,12 @@ public class SubjectRepository : ISubjectRepository
         await _db.SaveChangesAsync();
 
         return subject;
+    }
+
+    public async Task<IReadOnlyList<Subject>> GetByGroupAsync(Guid groupId, int semester)
+    {
+        return await _db.Subjects
+            .Where(s => s.GroupId == groupId && s.Semester == semester)
+            .ToListAsync();
     }
 }

@@ -24,7 +24,7 @@ public class StudentRepository : IStudentRepository
         return await _db.Students
             .Include(s => s.Group)
             .FirstOrDefaultAsync(s =>
-                s.GroupId == groupId && s.FullName == fullName);
+                    s.GroupId == groupId && s.FullName == fullName);
     }
 
     public async Task<IReadOnlyList<Student>> GetByGroupAsync(Guid groupId)
@@ -54,5 +54,12 @@ public class StudentRepository : IStudentRepository
         await _db.SaveChangesAsync();
 
         return student;
+    }
+
+    public async Task<IReadOnlyList<Student>> GetByGroupIdAsync(Guid groupId)
+    {
+        return await _db.Students
+            .Where(s => s.GroupId == groupId)
+            .ToListAsync();
     }
 }
