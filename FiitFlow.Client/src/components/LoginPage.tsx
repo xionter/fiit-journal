@@ -1,14 +1,12 @@
-﻿import { Fragment, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import type Student from "./Student";
-import api from "./Api";
-import { saveStudentCookie, loadStudentCookie } from "./CookieTools";
-
-interface LoginProps {
-    setCurrentStudent: Function;
-}
+﻿import { useNavigate } from 'react-router-dom'
+import { Fragment, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup"
+import type Student from "./Student"
+import api from "./Api"
+import { saveStudentCookie, loadStudentCookie } from "./CookieTools"
+import { rootMain } from "./Navigation"
 
 interface FormInputs {
     firstName: string;
@@ -22,7 +20,8 @@ const schema = yup.object({
     group: yup.string().required("Введите группу").matches(/^ФТ-\d\d\d-\d$/, "Неверный формат")
 }).required();
 
-export default function LoginPage({ setCurrentStudent }: LoginProps) {
+export default function LoginPage() {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -43,7 +42,7 @@ export default function LoginPage({ setCurrentStudent }: LoginProps) {
                     </h1>
                     <p>Вход в систему</p>
                 </div>
-                <form onSubmit={handleSubmit(data => setStudent(data))} className="login-form">
+                <form onSubmit={handleSubmit(data => setStudentLoadMain(data))} className="login-form">
                     <div className="form-group">
                         <label htmlFor="lastName">Фамилия</label>
                         <input {...register("lastName")} className={`input ${errors.firstName ? 'input-error' : ''}`} placeholder="Введите вашу фамилию" />
@@ -70,7 +69,7 @@ export default function LoginPage({ setCurrentStudent }: LoginProps) {
         </div>
     );
 
-    async function setStudent(studentLogin: FormInputs) {
+    async function setStudentLoadMain(studentLogin: FormInputs) {
         const newId = await checkStudentLogin(studentLogin);
         if (newId === undefined)
             setError("root.serverError", {
@@ -85,7 +84,7 @@ export default function LoginPage({ setCurrentStudent }: LoginProps) {
                 group: studentLogin.group
             };
             saveStudentCookie(student, 5);
-            setCurrentStudent(student);
+            navigate(rootMain.to, rootMain.options);
         }
     }
 

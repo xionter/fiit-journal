@@ -3086,11 +3086,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\artyo\\repositories\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+      "projectUniqueName": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
       "projectName": "FiitFlow",
-      "projectPath": "C:\\Users\\artyo\\repositories\\FiitFlow\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
+      "projectPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\FiitFlow.csproj",
       "packagesPath": "C:\\Users\\artyo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\artyo\\repositories\\FiitFlow\\FiitFlow\\FiitFlow\\obj\\",
+      "outputPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3105,7 +3105,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3161,7 +3160,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

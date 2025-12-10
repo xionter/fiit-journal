@@ -3,20 +3,37 @@ import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
 import type SubjectItem from "./SubjectItem"
 import api from "./Api"
+import type StudentSubject from "./StudentSubject"
+import { loadSubjectCookie, saveSubjectCookie, removeSubjectCookie } from "./CookieTools"
+import StudentSubjectComponent from "./StudentSubjectComponent"
 
 interface SubjectGroupProps {
-    setSubject: Function;
     student: Student;
     term: number;
 }
 
-function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
+function SubjectsGroup({ student, term }: SubjectGroupProps) {
     const [points, setPoints] = useState<SubjectItem[]>();
+    const [currentSubject, setCurrentSubject] = useState<StudentSubject>();
 
     useEffect(() => {
         populateSubjectPointsDataByStudent();
+        setCurrentSubject(loadSubjectCookie());
     }, []);
 
+    if (!(currentSubject === undefined)) {
+        saveSubjectCookie(currentSubject, 5);
+        return (
+            <Fragment>
+                <a onClick={resetCurrentSubject} className="back-link">← Назад к списку предметов</a>
+                <StudentSubjectComponent
+                    subjectName={currentSubject.subjectName}
+                    student={currentSubject.student}
+                    term={term}
+                />
+            </Fragment>
+        );
+    }
     return (
         <LoadingPageData isLoading={points === undefined}>
             <h1 className="page-title">Мои предметы</h1>
@@ -37,7 +54,7 @@ function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
                                 <span>Последнее обновление: {subpoint.lastUpdate}</span>
                                 <span>Преподаватель: {subpoint.teacher}</span>
                             </div>
-                            <button onClick={() => setSubject({ subjectName: subpoint.subject, student: student, term: term })} className="btn">Подробнее</button>
+                            <button onClick={() => setCurrentSubject({ subjectName: subpoint.subject, student: student, term: term })} className="btn">Подробнее</button>
                         </div>
                     ))
                 }
@@ -46,7 +63,7 @@ function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
     );
 
     async function populateSubjectPointsDataByStudent() {
-        api.get(`StudentSubjects/All`, {
+        api.get("StudentSubjects/All", {
             params: {
                 id: student.id,
                 firstName: student.firstName,
@@ -60,6 +77,11 @@ function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
                 setPoints(response.data);
             }
         });
+    }
+
+    function resetCurrentSubject() {
+        setCurrentSubject(undefined);
+        removeSubjectCookie(5);
     }
 }
 

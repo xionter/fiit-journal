@@ -3,21 +3,11 @@ import type Student from "./Student"
 import LoadingPageData from "./LoadingPageData"
 import api from "./Api"
 
-interface StudentSubjectProps {
-    subjectName: string;
-    student: Student;
-    term: number;
-    subjectReset: Function;
-
-}
-
-function StudentSubjectComponent({ subjectName, student, term, subjectReset }: StudentSubjectProps) {
+function StudentSubjectComponent({ subjectName, student, term }: StudentSubject) {
     return (
         <LoadingPageData isLoading={false}>
-            <a href="fiitflowmain.html" className="back-link">← Назад к списку предметов</a>
-
             <div className="subject-header">
-                <h1 className="subject-title">Алгебра и геометрия</h1>
+                <h1 className="subject-title">Алгебра и геометрия {term}</h1>
                 <div className="subject-score-large">95</div>
             </div>
 
