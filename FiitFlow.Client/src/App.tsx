@@ -5,6 +5,7 @@ import LoginPage from './components/LoginPage';
 import './fiitflow.css';
 import type Student from "./components/Student";
 import type StudentSubject from "./components/StudentSubject";
+import { loadStudentCookie, loadSubjectCookie, removeStudentCookie, removeSubjectCookie, saveStudentCookie, saveSubjectCookie } from './components/CookieTools';
 
 function App() {
     const [currentStudent, setCurrentStudent] = useState<Student>();
@@ -14,23 +15,32 @@ function App() {
 
     useEffect(() => {
         if (currentStudent === undefined)
+            setCurrentStudent(loadStudentCookie());
+        if (currentStudent === undefined)
             setBodyBlock(<LoginPage setCurrentStudent={setCurrentStudent} />);
-        else if (currentSubject === undefined)
-            setBodyBlock(mainBodyBlock(
-                <SubjectsGroup
-                    setSubject={setCurrentSubject}
-                    student={currentStudent}
-                    term={currentTerm}
-                />
-            ));
-        else
-            setBodyBlock(mainBodyBlock(
-                <StudentSubjectComponent
-                    subjectName={currentSubject.subjectName}
-                    student={currentSubject.student}
-                    term={currentTerm}
-                />
-            ));
+        else {
+            saveStudentCookie(currentStudent, 5);
+            if (currentSubject === undefined)
+                setCurrentSubject(loadSubjectCookie());
+            if (currentSubject === undefined)
+                setBodyBlock(mainBodyBlock(
+                    <SubjectsGroup
+                        setSubject={setCurrentSubject}
+                        student={currentStudent}
+                        term={currentTerm}
+                    />
+                ));
+            else {
+                saveSubjectCookie(currentSubject, 5);
+                setBodyBlock(mainBodyBlock(
+                    <StudentSubjectComponent
+                        subjectName={currentSubject.subjectName}
+                        student={currentSubject.student}
+                        term={currentTerm}
+                    />
+                ));
+            }
+        }
     }, [currentStudent, currentSubject, currentTerm]);
 
     if (bodyBlock === undefined)
@@ -64,9 +74,9 @@ function App() {
                         </div>
                     </div>
                 </header>
-                <div className="central-container">
+                <main className="central-container">
                     {centralBlock}
-                </div>
+                </main>
                 <footer>
                     <div className="container">
                         <div className="footer-content">
@@ -102,9 +112,16 @@ function App() {
     }
 
     function logoutReset() {
+        removeStudentCookie(5);
+        removeSubjectCookie(5);
         setCurrentStudent(undefined);
         setCurrentSubject(undefined);
         setCurrentTerm(1);
+    }
+
+    function subjectReset() {
+        removeSubjectCookie(5);
+        setCurrentSubject(undefined);
     }
 }
 

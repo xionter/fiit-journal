@@ -27,7 +27,7 @@ function SubjectsGroup({ setSubject, student, term }: SubjectGroupProps) {
                             <div className="subject-name">{subpoint.subject}</div>
                             <div className="subject-score">{subpoint.score}</div>
                             <div className="progress-bar">
-                                <div className="progress-fill" style={{width: `${Math.abs(subpoint.score)}%`}}></div>
+                                <div className="progress-fill" style={{width: `${subpoint.score}%`}}></div>
                             </div>
                             <div className="progress-text">
                                 <span>0</span>

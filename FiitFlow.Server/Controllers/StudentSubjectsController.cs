@@ -6,6 +6,7 @@ namespace FiitFlowReactApp.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableCors("ReactClient")]
     public class StudentSubjectsController : Controller
     {
         private readonly ILogger<StudentSubjectsController> _logger;

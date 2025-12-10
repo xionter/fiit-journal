@@ -17,10 +17,10 @@ interface FormInputs {
 }
 
 const schema = yup.object({
-    firstName: yup.string().required("Введите имя").matches(/^[А-Я][а-я]*/, "Неверный формат"),
-    lastName: yup.string().required("Введите фамилию").matches(/^[А-Я][а-я]*/, "Неверный формат"),
-    group: yup.string().required("Введите группу").matches(/^ФТ-\d\d\d-\d/, "Неверный формат")
-}).required("Введите все данные");
+    lastName: yup.string().required("Введите фамилию").matches(/^[А-ЯЁ][а-яё]*$/, "Неверный формат"),
+    firstName: yup.string().required("Введите имя").matches(/^[А-ЯЁ][а-яё]*$/, "Неверный формат"),
+    group: yup.string().required("Введите группу").matches(/^ФТ-\d\d\d-\d$/, "Неверный формат")
+}).required();
 
 export default function LoginPage({ setCurrentStudent }: LoginProps) {
     const {
@@ -43,7 +43,7 @@ export default function LoginPage({ setCurrentStudent }: LoginProps) {
                     </h1>
                     <p>Вход в систему</p>
                 </div>
-                <form onSubmit={handleSubmit((data) => setStudent(data))} className="login-form">
+                <form onSubmit={handleSubmit(data => setStudent(data))} className="login-form">
                     <div className="form-group">
                         <label htmlFor="lastName">Фамилия</label>
                         <input {...register("lastName")} className={`input ${errors.firstName ? 'input-error' : ''}`} placeholder="Введите вашу фамилию" />
@@ -70,8 +70,8 @@ export default function LoginPage({ setCurrentStudent }: LoginProps) {
         </div>
     );
 
-    function setStudent(studentLogin: FormInputs) {
-        const newId = checkStudentLogin(studentLogin);
+    async function setStudent(studentLogin: FormInputs) {
+        const newId = await checkStudentLogin(studentLogin);
         if (newId === undefined)
             setError("root.serverError", {
                 type: "server",
@@ -88,22 +88,19 @@ export default function LoginPage({ setCurrentStudent }: LoginProps) {
             setCurrentStudent(student);
         }
     }
-}
 
-async function checkStudentLogin(studentLogin: FormInputs) {
-    const [id, setId] = useState<number>();
-    api.get(`Auth/login`, {
-        params: {
-            firstName: studentLogin.firstName,
-            lastName: studentLogin.lastName,
-            group: studentLogin.group,
-            time: Date.now()
-        }
-    }).then(response => {
-        if (response.status == 200)
-            setId(response.data.id);
-        else
-            setId(undefined);
-    });
-    return id;
+    async function checkStudentLogin(studentLogin: FormInputs) {
+        return api.post<number>(`Auth/login`, {}, {
+            params: {
+                firstName: studentLogin.firstName,
+                lastName: studentLogin.lastName,
+                group: studentLogin.group,
+                time: Date.now()
+            }
+        }).then(response => {
+            if (response.status == 200)
+                return response.data;
+            return null;
+        });
+    }
 }

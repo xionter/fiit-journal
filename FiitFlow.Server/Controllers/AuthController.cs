@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text;
 
 namespace FiitFlowReactApp.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
+    [EnableCors("ReactClient")]
     public class AuthController : Controller
     {
         private readonly ILogger<AuthController> _logger;
@@ -17,23 +19,14 @@ namespace FiitFlowReactApp.Server.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet("login")]
-        public IActionResult Login(
+        [HttpPost("login")]
+        public IActionResult Post(
             [FromQuery] string firstName,
             [FromQuery] string lastName,
             [FromQuery] string group,
             [FromQuery] DateTime dateTime)
         {
-            return Ok(new
-            {
-                id = (lastName + firstName + group + DateTime.Now.Date.ToString()).GetHashCode(),
-                expiresIn = 3600
-            });
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            return Ok((lastName + firstName + group + DateTime.Now.Date.ToString()).GetHashCode());
         }
     }
 }
