@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text;
 
-namespace FiitFlowReactApp.Server.Controllers
+namespace FiitFlow.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

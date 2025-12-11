@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
 using FiitFlow.Parser.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace FiitFlowReactApp.Server.Controllers
+namespace FiitFlow.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

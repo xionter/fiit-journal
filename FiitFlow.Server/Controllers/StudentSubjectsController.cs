@@ -1,8 +1,7 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FiitFlowReactApp.Server.Controllers
+namespace FiitFlow.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

@@ -12,10 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FiitFlow.Parser\FiitFlow.Parser.csproj" />
-    <ProjectReference Include="..\fiitflowreactapp.client\FiitFlow.client.esproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\FiitFlow\FiitFlow\FiitFlow.csproj" />
+    <ProjectReference Include="..\FiitFlow.Domain\FiitFlow.Domain.csproj" />
   </ItemGroup>
 
 </Project>

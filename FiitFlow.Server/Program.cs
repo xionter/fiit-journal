@@ -1,5 +1,5 @@
 
-namespace FiitFlowReactApp.Server
+namespace FiitFlow.Server
 {
     public class Program
     {
