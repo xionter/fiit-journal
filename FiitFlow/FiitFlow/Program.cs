@@ -2,8 +2,12 @@
 using FiitFlow.Domain;
 using FiitFlow.Repository;
 using FiitFlow.Repository.Sqlite;
+using System.IO;
+using System.Text.Json;
+using ParserConfig = FiitFlow.Parser.Models.ParserConfig;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace FiitFlow;
 
@@ -37,6 +41,41 @@ public class Program
         IPointsRepository pointsRepo = new PointsRepository(db);
         
         var pointsService = new PointsService(pointsRepo, studentRepo, subjectRepo);
+        var parserConfig = await LoadParserConfigAsync(configPath);
+        var studentName = parserConfig.StudentName;
+        var groupTitle = "ФТ-201";
+        var subgroup = 2;
+        var groupExists = await groupRepo.GetByTitleAsync(groupTitle, subgroup);
+        if (groupExists != null)
+        {
+            Console.WriteLine($"Группа {groupTitle}-{subgroup} уже существует в базе данных.");
+            var student = await studentRepo.GetOrCreateAsync(studentName, groupExists.Id);
+        }
+        else
+        {
+            var groupEntity = new GroupEntity() {Id = Guid.NewGuid(), GroupTitle = groupTitle, Subgroup = subgroup};
+            db.Groups.Add(groupEntity);
+            var student = await studentRepo.GetOrCreateAsync(studentName, groupEntity.Id);
+        }
+        
+        if (File.Exists(configPath))
+        {
+            var firstGroup = await db.Groups.Include(g => g.Students).FirstAsync();
+            Console.WriteLine($"Пробуем подтянуть баллы из парсера для {firstGroup.GroupTitle}-{firstGroup.Subgroup}");
+            await pointsService.UpdatePointsForGroupAsync(firstGroup.Id, 3, configPath);
+
+            var points = await pointsService.GetGroupPointsAsync(firstGroup.Id, 3);
+            Console.WriteLine($"Найдено {points.Count} записей Points после парсинга:");
+            foreach (var p in points)
+            {
+                Console.WriteLine($"Студент: {p.StudentId}, Предмет: {p.SubjectId}, Баллы: {p.Value}, Обновлено: {p.UpdatedAt}");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Конфиг парсера не найден: {configPath}");
+        }
+
         
         var allGroups = await groupRepo.GetAllAsync();
         Console.WriteLine($"\nНайдено групп: {allGroups.Count}");
@@ -102,4 +141,20 @@ public class Program
                              $"Баллы: {point.Value}, Семестр: {point.Semester}");
         }
     }
+    
+    private static async Task<ParserConfig?> LoadParserConfigAsync(string path)
+    {
+        if (!File.Exists(path))
+            return null;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
+        var json = await File.ReadAllTextAsync(path);
+        return JsonSerializer.Deserialize<ParserConfig>(json, options);
+    }
+
 }
