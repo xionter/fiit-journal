@@ -1,4 +1,8 @@
 
+using FiitFlow.Repository;
+using FiitFlow.Repository.Sqlite;
+using Microsoft.EntityFrameworkCore;
+
 namespace FiitFlowReactApp.Server
 {
     public class Program
@@ -8,6 +12,16 @@ namespace FiitFlowReactApp.Server
             var builder = WebApplication.CreateBuilder(args);
 
             var policyClient = "AllowLocalhost";
+
+            builder.Services.AddDbContext<AppDbContext>(
+                options => options.UseSqlite(
+                    $"Data Source={builder.Configuration.GetValue<string>("DbPath")}"));
+
+            // Регистрация репозиториев с использованием интерфейсов
+            builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+            builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+            builder.Services.AddScoped<IPointsRepository, PointsRepository>();
 
             builder.Services.AddControllers();
 
