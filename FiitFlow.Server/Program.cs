@@ -7,7 +7,9 @@ namespace FiitFlowReactApp.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var policyClient = "ReactClient";
+            var policyClient = "AllowLocalhost";
+
+            builder.Services.AddControllers();
 
             // Add services to the container.
             builder.Services.AddCors(options =>
@@ -15,25 +17,23 @@ namespace FiitFlowReactApp.Server
                 options.AddPolicy(policyClient,
                     builder =>
                     {
-                        builder//.WithOrigins(
-                               //"https://localhost:7242",
-                               //"https://localhost:49575",
-                               //"http://localhost:5173",
-                               //"http://localhost:5273"
-                               //)
-                            .AllowAnyOrigin()
+                        builder.WithOrigins(
+                               "https://localhost:7242",
+                               "https://localhost:49757",
+                               "http://localhost:5173",
+                               "http://localhost:5273"
+                               )
+                            //.AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyHeader();
+                            .AllowAnyHeader()
+                            .AllowCredentials();
                     });
             });
-
-            builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
 
-            app.UseCors(policyClient);
 
             app.UseDefaultFiles();
             app.MapStaticAssets();
@@ -48,12 +48,12 @@ namespace FiitFlowReactApp.Server
             }
 
             app.UseHttpsRedirection();
-
+            app.UseRouting();
+            app.UseCors(policyClient);
+            app.UseAuthentication();
             app.UseAuthorization();
 
-
             app.MapControllers();
-
             app.MapFallbackToFile("/index.html");
 
             app.Run();

@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace FiitFlowReactApp.Server.Controllers
 {
     [ApiController]
+    [EnableCors("AllowLocalhost")]
     [Route("api/[controller]")]
-    [EnableCors("ReactClient")]
     public class StudentSubjectsController : Controller
     {
         private readonly ILogger<StudentSubjectsController> _logger;
@@ -46,3 +46,4 @@ public class SubjectUnit
     public float Score { get; set; }
     public string LastUpdate { get; set; }
 }
+

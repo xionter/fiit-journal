@@ -89,13 +89,13 @@ export default function LoginPage() {
     }
 
     async function checkStudentLogin(studentLogin: FormInputs) {
-        return api.post<number>(`Auth/login`, {}, {
-            params: {
-                firstName: studentLogin.firstName,
-                lastName: studentLogin.lastName,
-                group: studentLogin.group,
-                time: Date.now()
-            }
+        return api.post<number>(`Auth/login`, {
+            firstName: studentLogin.firstName,
+            lastName: studentLogin.lastName,
+            group: studentLogin.group,
+            time: Date.now()
+        }, {
+            withCredentials: true
         }).then(response => {
             if (response.status == 200)
                 return response.data;

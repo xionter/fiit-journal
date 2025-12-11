@@ -51,6 +51,7 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
 
     async function populateSubjectPointsDataByStudent() {
         api.get("StudentSubjects/All", {
+            withCredentials: true,
             params: {
                 id: student.id,
                 firstName: student.firstName,

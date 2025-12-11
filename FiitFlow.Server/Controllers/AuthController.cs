@@ -6,8 +6,8 @@ using System.Text;
 namespace FiitFlowReactApp.Server.Controllers
 {
     [ApiController]
+    [EnableCors("AllowLocalhost")]
     [Route("api/[controller]")]
-    [EnableCors("ReactClient")]
     public class AuthController : Controller
     {
         private readonly ILogger<AuthController> _logger;
@@ -20,13 +20,22 @@ namespace FiitFlowReactApp.Server.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Post(
-            [FromQuery] string firstName,
-            [FromQuery] string lastName,
-            [FromQuery] string group,
-            [FromQuery] DateTime dateTime)
+        public IActionResult Post([FromBody] StudentLoginRequest request)
         {
-            return Ok(string.Join("3453", new[] { lastName, firstName, dateTime.Date.ToString(), group }).GetHashCode());
+            return Ok(string.Join("3453", new[] {
+                request.LastName,
+                request.FirstName,
+                request.DateTime.Date.ToString(),
+                request.Group
+            }).GetHashCode());
         }
+    }
+
+    public class StudentLoginRequest
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Group { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }
