@@ -1,30 +1,58 @@
-﻿import { useEffect, useState, Fragment, type ReactElement } from 'react'
-import { rootLogin } from "./Navigation"
+﻿import { useEffect, useState, Fragment, type ReactElement } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { rootLogin, rootMain } from "./Navigation"
 import SubjectsGroup from "./SubjectsGroup"
 import type Student from "./Student"
-import { loadStudentCookie, removeStudentCookie, removeSubjectCookie, saveStudentCookie } from './CookieTools'
-import { useNavigate } from 'react-router-dom'
+import { loadStudentCookie, loadSubjectCookie, removeStudentCookie, removeSubjectCookie, saveStudentCookie } from "./CookieTools"
+import StudentSubjectComponent from "./StudentSubjectComponent"
 
-function Main() {
+interface MainProps {
+    subjectPeaked: boolean
+}
+
+function Main({ subjectPeaked }: MainProps) {
     const navigate = useNavigate();
+    const { subjectName } = useParams();
     const [currentStudent, setCurrentStudent] = useState<Student>();
     const [currentTerm, setCurrentTerm] = useState<number>(1);
     const [centralBlock, setCentralBlock] = useState<ReactElement>();
 
     useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
         const studentFromCookie = loadStudentCookie();
         if (studentFromCookie === undefined)
             goToLogin();
         else {
             setCurrentStudent(studentFromCookie);
-            setCentralBlock(
-                <SubjectsGroup
-                    student={studentFromCookie}
-                    term={currentTerm}
-                />
-            );
+            if (subjectPeaked) {
+                const subjectFromCookie = loadSubjectCookie();
+                if (subjectFromCookie !== undefined && subjectFromCookie.subjectName === subjectName)
+                    setCentralBlock(
+                        <Fragment>
+                            <a onClick={goToMain} className="back-link">← Назад к списку предметов</a>
+                            <StudentSubjectComponent
+                                subjectName={subjectFromCookie.subjectName}
+                                student={studentFromCookie}
+                                term={currentTerm}
+                            />
+                        </Fragment>
+                    );
+                else
+                    goToMain();
+            }
+            else
+                setCentralBlock(
+                    <SubjectsGroup
+                        student={studentFromCookie}
+                        term={currentTerm}
+                    />
+                );
         }
-    }, [currentTerm]);
+    }, [currentTerm, subjectPeaked]);
 
     return (
         <Fragment>
@@ -38,7 +66,7 @@ function Main() {
                         <div className="semester-select">
                             <select onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
                                 {
-                                    [1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                                    [1, 2, 3, 4].map(num => (
                                         <option key={num} value={num}>Семестр {num}</option>
                                     ))
                                 }
@@ -94,6 +122,10 @@ function Main() {
 
     function goToLogin() {
         navigate(rootLogin.to, rootLogin.options);
+    }
+
+    function goToMain() {
+        navigate(rootMain.to, rootMain.options);
     }
 }
 

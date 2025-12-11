@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FiitFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00d837b5b3afb3d92ead9a867590b54b2f288d72")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71fb0ec9616de387aefdae59194e28bcf5e81c6b")]
 [assembly: System.Reflection.AssemblyProductAttribute("FiitFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FiitFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

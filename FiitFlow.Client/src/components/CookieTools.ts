@@ -5,12 +5,12 @@ import type StudentSubject from "./StudentSubject"
 const studentCookieKey = "fiitflow-student";
 const subjectCookieKey = "fiitflow-subject";
 
-export function loadStudentCookie() {
+export function loadStudentCookie(): Student | undefined {
     const studentFromCookie = loadCookieJson(studentCookieKey);
     return studentFromCookie === null ? undefined : studentFromCookie;
 }
 
-export function loadSubjectCookie() {
+export function loadSubjectCookie(): StudentSubject | undefined {
     const subjectFromCookie = loadCookieJson(subjectCookieKey);
     return subjectFromCookie === null ? undefined : subjectFromCookie;
 }

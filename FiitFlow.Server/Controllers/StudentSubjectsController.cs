@@ -30,7 +30,7 @@ namespace FiitFlowReactApp.Server.Controllers
         {
             return Enumerable.Range(1, 10).Select(n => new SubjectUnit
             {
-                Subject = $"Subject{n} {term}",
+                Subject = $"Subject{n}-{term}",
                 Teacher = $"Teacher {lastName} {firstName} - {id} - {group}",
                 Score = 8.34245f * n,
                 LastUpdate = DateTime.Now.ToString()

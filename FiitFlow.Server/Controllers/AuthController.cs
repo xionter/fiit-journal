@@ -26,7 +26,7 @@ namespace FiitFlowReactApp.Server.Controllers
             [FromQuery] string group,
             [FromQuery] DateTime dateTime)
         {
-            return Ok((lastName + firstName + group + DateTime.Now.Date.ToString()).GetHashCode());
+            return Ok(string.Join("3453", new[] { lastName, firstName, dateTime.Date.ToString(), group }).GetHashCode());
         }
     }
 }

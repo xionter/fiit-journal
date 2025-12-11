@@ -1,11 +1,12 @@
-﻿import { Fragment, useEffect, useState } from "react"
+﻿import { useNavigate } from 'react-router-dom'
+import { Fragment, useEffect, useState } from "react"
+import { rootMain } from "./Navigation"
 import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
 import type SubjectItem from "./SubjectItem"
 import api from "./Api"
 import type StudentSubject from "./StudentSubject"
 import { loadSubjectCookie, saveSubjectCookie, removeSubjectCookie } from "./CookieTools"
-import StudentSubjectComponent from "./StudentSubjectComponent"
 
 interface SubjectGroupProps {
     student: Student;
@@ -13,27 +14,13 @@ interface SubjectGroupProps {
 }
 
 function SubjectsGroup({ student, term }: SubjectGroupProps) {
+    const navigate = useNavigate();
     const [points, setPoints] = useState<SubjectItem[]>();
-    const [currentSubject, setCurrentSubject] = useState<StudentSubject>();
 
     useEffect(() => {
         populateSubjectPointsDataByStudent();
-        setCurrentSubject(loadSubjectCookie());
-    }, []);
+    }, [term]);
 
-    if (!(currentSubject === undefined)) {
-        saveSubjectCookie(currentSubject, 5);
-        return (
-            <Fragment>
-                <a onClick={resetCurrentSubject} className="back-link">← Назад к списку предметов</a>
-                <StudentSubjectComponent
-                    subjectName={currentSubject.subjectName}
-                    student={currentSubject.student}
-                    term={term}
-                />
-            </Fragment>
-        );
-    }
     return (
         <LoadingPageData isLoading={points === undefined}>
             <h1 className="page-title">Мои предметы</h1>
@@ -79,9 +66,9 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
         });
     }
 
-    function resetCurrentSubject() {
-        setCurrentSubject(undefined);
-        removeSubjectCookie(5);
+    function setCurrentSubject(subject: StudentSubject) {
+        saveSubjectCookie(subject, 5);
+        navigate(`${rootMain.to}/${subject.subjectName}`, rootMain.options);
     }
 }
 
