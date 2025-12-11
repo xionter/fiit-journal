@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "Новый профиль",
+    "Projects": [
+      {
+        "Path": "FiitFlow.Server\\FiitFlow.Server.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
