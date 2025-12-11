@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FiitFlow.Parser\FiitFlow.Parser.csproj" />
-    <ProjectReference Include="..\FiitFlow.Domain\FiitFlow.Domain.csproj" />
+    <ProjectReference Include="../FiitFlow/FiitFlow.csproj" />
   </ItemGroup>
 
 </Project>
