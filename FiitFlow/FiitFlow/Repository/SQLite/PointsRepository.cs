@@ -12,7 +12,7 @@ public class PointsRepository : IPointsRepository
         _db = db;
     }
 
-    public async Task<IReadOnlyList<Points>> GetByStudentAsync(Guid studentId)
+    public async Task<IReadOnlyList<Points>> GetByStudentAsync(int studentId)
     {
         return await _db.Points
             .Include(p => p.Subject)

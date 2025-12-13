@@ -12,19 +12,19 @@ public class StudentRepository : IStudentRepository
         _db = db;
     }
 
-    public async Task<Student?> GetByIdAsync(Guid id)
+    public async Task<Student?> GetByHashAsync(int id)
     {
         return await _db.Students
             .Include(s => s.Group)
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public async Task<Student?> GetByNameAsync(string fullName, Guid groupId)
+    public async Task<Student?> GetByNameAndGroupAsync(string name, string surName, string groupTitle, int subGroup)
     {
         return await _db.Students
             .Include(s => s.Group)
             .FirstOrDefaultAsync(s =>
-                    s.GroupId == groupId && s.FullName == fullName);
+                    s.Group.GroupTitle == groupTitle && s.Group.Subgroup == subGroup && s.FullName == surName + name);
     }
 
     public async Task<IReadOnlyList<Student>> GetByGroupAsync(Guid groupId)
@@ -35,7 +35,7 @@ public class StudentRepository : IStudentRepository
             .ToListAsync();
     }
 
-    public async Task<Student> GetOrCreateAsync(string fullName, Guid groupId)
+    public async Task<Student> GetOrCreateAsync(string fullName, string groupTitle, int subGroup, Guid groupId)
     {
         var existing = await _db.Students
             .FirstOrDefaultAsync(s => s.GroupId == groupId && s.FullName == fullName);
@@ -45,7 +45,7 @@ public class StudentRepository : IStudentRepository
 
         var student = new Student
         {
-            Id = Guid.NewGuid(),
+            Id = HashCode.Combine(fullName, groupTitle, subGroup),
             FullName = fullName,
             GroupId = groupId
         };

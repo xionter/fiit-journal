@@ -156,7 +156,7 @@ public class PointsService
         return 0;
     }
 
-    public Task<IReadOnlyList<Points>> GetStudentPointsAsync(Guid studentId)
+    public Task<IReadOnlyList<Points>> GetStudentPointsAsync(int studentId)
         => _pointsRepo.GetByStudentAsync(studentId);
 
     public Task<IReadOnlyList<Points>> GetGroupPointsAsync(Guid groupId, int? semester = null)
@@ -199,7 +199,7 @@ public class PointsService
 
 public class StudentPointsSummary
 {
-    public Guid StudentId { get; set; }
+    public int StudentId { get; set; }
     public string StudentName { get; set; } = string.Empty;
     public Dictionary<string, int> SubjectScores { get; set; } = new();
     public int TotalScore { get; set; }

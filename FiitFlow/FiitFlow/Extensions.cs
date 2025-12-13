@@ -15,4 +15,5 @@ public class Extensions
             _ => throw new NotImplementedException()
         };
     }
+
 }
