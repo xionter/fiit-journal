@@ -49,13 +49,13 @@ public class Program
         if (groupExists != null)
         {
             Console.WriteLine($"Группа {groupTitle}-{subgroup} уже существует в базе данных.");
-            var student = await studentRepo.GetOrCreateAsync(studentName, groupExists.Id);
+            var student = await studentRepo.GetOrCreateAsync(studentName, groupTitle, subgroup, groupExists.Id);
         }
         else
         {
             var groupEntity = new GroupEntity() {Id = Guid.NewGuid(), GroupTitle = groupTitle, Subgroup = subgroup};
             db.Groups.Add(groupEntity);
-            var student = await studentRepo.GetOrCreateAsync(studentName, groupEntity.Id);
+            var student = await studentRepo.GetOrCreateAsync(studentName, groupTitle, subgroup, groupEntity.Id);
         }
         
         if (File.Exists(configPath))

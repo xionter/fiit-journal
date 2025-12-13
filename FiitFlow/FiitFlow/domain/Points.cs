@@ -5,7 +5,7 @@ public class Points
 {
     public Guid Id { get; set; }
 
-    public Guid StudentId { get; set; }
+    public int StudentId { get; set; }
     public Student Student { get; set; } = null!;
 
     public Guid SubjectId { get; set; }
