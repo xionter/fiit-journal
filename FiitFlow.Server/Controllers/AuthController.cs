@@ -1,5 +1,7 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using FiitFlow.Repository;
+using FiitFlow.Server.SubTools;
+using FiitFlow.Server.SubTools.SubToolsUnits;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -16,54 +18,25 @@ namespace FiitFlowReactApp.Server.Controllers
     {
         private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IStudentRepository _studentRepository;
-        private readonly IGroupRepository _groupRepository;
+        private readonly IAuthentication _authentication;
 
         public AuthController(
             ILogger<AuthController> logger,
             IConfiguration configuration,
-            IStudentRepository studentRepository,
-            IGroupRepository groupRepository)
+            IAuthentication authentication)
         {
             _logger = logger;
             _configuration = configuration;
-            _studentRepository = studentRepository;
-            _groupRepository = groupRepository;
+            _authentication = authentication;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Post([FromBody] StudentLoginRequest request)
         {
-            if (!CheckStudentData(request.FirstName, request.LastName, request.Group))
-                return BadRequest("Wrong format");
-            var hashId = await TryGetStudentGuid(request.FirstName, request.LastName, request.Group);
-            if (hashId == null)
-                return BadRequest("Undefind student");
-            return Ok(hashId);
+            var authResponse = await _authentication.FindAuthIdByLoginForm(request.FirstName, request.LastName, request.Group);
+            if (authResponse.Accepted)
+                return Ok(authResponse.Data);
+            return BadRequest(authResponse.exceptionMessage);
         }
-
-        private bool CheckStudentData(string firstName, string lastName, string group) =>
-            Regex.IsMatch(firstName, "^[А-ЯЁ][а-яё]*$") &&
-            Regex.IsMatch(lastName, "^[А-ЯЁ][а-яё]*$") &&
-            Regex.IsMatch(group, "^ФТ-[0-9]{3}-[0-9]$");
-
-        private async Task<int?> TryGetStudentGuid(string firstName, string lastName, string group)
-        {
-            var groupEntity = await _groupRepository.GetByTitleAsync(group.Substring(0, 6), int.Parse(group.Substring(7, 1)));
-            if (groupEntity == null)
-                return null;
-            var student = await _studentRepository.GetByNameAsync(lastName + " " + firstName, groupEntity.Id);
-            if (student == null)
-                return null;
-            return (student.Id.ToString() + groupEntity.Id.ToString()).GetHashCode();
-        }
-    }
-
-    public class StudentLoginRequest
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Group { get; set; }
-        public DateTime DateTime { get; set; }
     }
 }

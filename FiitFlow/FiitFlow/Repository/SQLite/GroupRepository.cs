@@ -19,12 +19,27 @@ public class GroupRepository : IGroupRepository
             .FirstOrDefaultAsync(g => g.Id == id);
     }
 
-    public async Task<GroupEntity?> GetByTitleAsync(string groupTitle, int subgroup)
+    public async Task<GroupEntity> GetOrCreateByTitleAsync(string groupTitle, int subgroup)
     {
-        return await _db.Groups
+        var existing = await _db.Groups
             .Include(g => g.Students)
             .FirstOrDefaultAsync(g =>
                 g.GroupTitle == groupTitle && g.Subgroup == subgroup);
+
+        if (existing is not null)
+            return existing;
+
+        var group = new GroupEntity
+        {
+            Id = Guid.NewGuid(),
+            GroupTitle = groupTitle,
+            Subgroup = subgroup
+        };
+
+        _db.Groups.Add(group);
+        await _db.SaveChangesAsync();
+
+        return group;
     }
 
     public async Task<IReadOnlyList<GroupEntity>> GetAllAsync()

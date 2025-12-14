@@ -3,23 +3,39 @@ using FiitFlow.Repository;
 using FiitFlow.Parser.Services;
 using FiitFlow.Parser.Models;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 
 namespace FiitFlow;
 
 public class PointsService
 {
+    private readonly ILogger<PointsService> _logger;
     private readonly IPointsRepository _pointsRepo;
     private readonly IStudentRepository _studentRepo;
     private readonly ISubjectRepository _subjectRepo;
+    private readonly IGroupRepository _groupRepo;
 
     public PointsService(
+        ILogger<PointsService> logger,
         IPointsRepository pointsRepo,
         IStudentRepository studentRepo,
-        ISubjectRepository subjectRepo)
+        ISubjectRepository subjectRepo,
+        IGroupRepository groupRepo)
     {
         _pointsRepo = pointsRepo;
         _studentRepo = studentRepo;
         _subjectRepo = subjectRepo;
+        _groupRepo = groupRepo;
+        _logger = logger;
+    }
+
+    public async Task UpdateAll()
+    {
+        foreach (var group in await _groupRepo.GetAllAsync())
+        {
+            var semester = 3;
+            _logger.LogInformation("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+        }
     }
 
     public async Task UpdatePointsForGroupAsync(Guid groupId, int semester, string configPath)

@@ -1,6 +1,10 @@
 
+using FiitFlow;
 using FiitFlow.Repository;
 using FiitFlow.Repository.Sqlite;
+using FiitFlow.Server;
+using FiitFlow.Server.SubTools;
+using FiitFlow.Server.SubTools.SubToolsUnits;
 using Microsoft.EntityFrameworkCore;
 
 namespace FiitFlowReactApp.Server
@@ -13,15 +17,22 @@ namespace FiitFlowReactApp.Server
 
             var policyClient = "AllowLocalhost";
 
-            builder.Services.AddDbContext<AppDbContext>(
-                options => options.UseSqlite(
-                    $"Data Source={builder.Configuration.GetValue<string>("DbPath")}"));
+            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../"));
+            var dbPath   = Path.Combine(rootPath, "fiitflow.db");
 
-            // Регистрация репозиториев с использованием интерфейсов
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlite($"Data Source={dbPath}"));
+
             builder.Services.AddScoped<IGroupRepository, GroupRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
             builder.Services.AddScoped<IPointsRepository, PointsRepository>();
+
+            builder.Services.AddScoped<PointsService, PointsService>();
+
+            builder.Services.AddScoped<IAuthentication, AuthenticationTool>();
+
+            builder.Services.AddHostedService<DbUpdateWorker>();
 
             builder.Services.AddControllers();
 
@@ -48,6 +59,11 @@ namespace FiitFlowReactApp.Server
 
             var app = builder.Build();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                db.Database.EnsureCreated();
+            }
 
             app.UseDefaultFiles();
             app.MapStaticAssets();
