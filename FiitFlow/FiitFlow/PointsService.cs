@@ -33,8 +33,9 @@ public class PointsService
     {
         foreach (var group in await _groupRepo.GetAllAsync())
         {
-            var semester = 3;
-            _logger.LogInformation("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ");
+            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
+            var groupConfigPath = Path.Combine(rootPath, "cfg", $"{group.GroupTitle}");
+            await UpdatePointsForGroupAsync(group.Id, group.GetCurrentSemester(), groupConfigPath);
         }
     }
 
@@ -58,15 +59,17 @@ public class PointsService
 
             foreach (var student in students)
             {
-                try
+                try 
                 {
                     Console.WriteLine($"\nОбработка студента: {student.FullName}");
-                    
-                    var studentResult = await parserService.ParseWithFormulasAsync(configPath, student.FullName);
+                    var studentConfigPath = Path.Combine(configPath, $"{student.FullName}.json");
+                    var confEditor = new ConfigEditorService(studentConfigPath);
+                    confEditor.SetCache("./Cache", true);
+                    var studentResult = await parserService.ParseWithFormulasAsync(studentConfigPath, student.FullName);
                     
                     if (studentResult?.Subjects == null || !studentResult.Subjects.Any())
                     {
-                        Console.WriteLine($"  Не найдены данные для студента {student.FullName}");
+                        Console.WriteLine($"  Не найдены данные для студента {student.FullName}"); 
                         continue;
                     }
 

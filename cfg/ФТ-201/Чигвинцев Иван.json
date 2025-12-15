@@ -2,7 +2,7 @@
   "StudentName": "Чигвинцев Иван",
   "CacheSettings": {
     "CacheDirectory": "./Cache",
-    "ForceRefresh": false
+    "ForceRefresh": true
   },
   "Subjects": [
     {

@@ -40,7 +40,7 @@ public class StudentRepository : IStudentRepository
     public async Task<Student> GetOrCreateAsync(string firstName, string lastName, string groupTitle, int subGroup)
     {
         var group = await _groupRepository.GetOrCreateByTitleAsync(groupTitle, subGroup);
-        var fullName = lastName + firstName;
+        var fullName = lastName + " " + firstName;
         var existing = await _db.Students
             .FirstOrDefaultAsync(s => s.GroupId == group.Id && s.FullName == fullName);
 

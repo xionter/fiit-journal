@@ -1,8 +1,8 @@
 ﻿{
-  "StudentName": "Чигвинцев Иван",
+  "StudentName": "Солдатов Андрей",
   "CacheSettings": {
     "CacheDirectory": "./Cache",
-    "ForceRefresh": false
+    "ForceRefresh": true
   },
   "Subjects": [
     {

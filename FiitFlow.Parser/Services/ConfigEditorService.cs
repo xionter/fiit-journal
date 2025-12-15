@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FiitFlow.Parser.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
-using FiitFlow.Parser.Models;
 
 namespace FiitFlow.Parser.Services
 {
@@ -19,7 +20,8 @@ namespace FiitFlow.Parser.Services
             PropertyNameCaseInsensitive = true,
             ReadCommentHandling = JsonCommentHandling.Skip,
             AllowTrailingCommas = true,
-            WriteIndented = true
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
 
         public ConfigEditorService(string configPath)
@@ -70,7 +72,6 @@ namespace FiitFlow.Parser.Services
                 var tmp = _configPath + ".tmp";
                 File.WriteAllText(tmp, json, Encoding.UTF8);
 
-                // максимально атомарно
                 if (File.Exists(_configPath))
                 {
                     try
@@ -80,7 +81,6 @@ namespace FiitFlow.Parser.Services
                     }
                     catch
                     {
-                        // если Replace недоступен (например, на некоторых FS), упадём на Move
                     }
 
                     File.Delete(_configPath);
@@ -90,9 +90,6 @@ namespace FiitFlow.Parser.Services
             }
         }
 
-        /// <summary>
-        /// Удобное редактирование: Load -> apply -> Save.
-        /// </summary>
         public ParserConfig Edit(Action<ParserConfig> edit)
         {
             if (edit is null) throw new ArgumentNullException(nameof(edit));
@@ -188,13 +185,6 @@ namespace FiitFlow.Parser.Services
 
         private static int NormalizeRow(int row) => row <= 0 ? 1 : row;
 
-        private static List<SheetConfig> CloneSheets(List<SheetConfig>? sheets) =>
-            sheets?.Select(s => new SheetConfig
-            {
-                Name = s.Name,
-                CategoriesRow = NormalizeRow(s.CategoriesRow)
-            }).ToList() ?? new List<SheetConfig>();
-
         private ParserConfig EditSubject(
             string subjectName,
             string? tableName,
@@ -219,7 +209,6 @@ namespace FiitFlow.Parser.Services
             });
         }
 
-        // Примеры готовых высокоуровневых операций:
 
         public ParserConfig SetStudentName(string name) =>
             Edit(cfg => cfg.StudentName = name ?? string.Empty);
@@ -231,9 +220,6 @@ namespace FiitFlow.Parser.Services
                 cfg.CacheSettings.ForceRefresh = forceRefresh;
             });
 
-        /// <summary>
-        /// Создать новый предмет: таблица + формулы.
-        /// </summary>
         public ParserConfig CreateSubject(
             string subjectName,
             string tableName,
@@ -320,52 +306,6 @@ namespace FiitFlow.Parser.Services
                 EnsureCollections(cfg);
 
                 cfg.Subjects.RemoveAll(f => NameComparer.Equals(f.SubjectName, subjectName));
-            });
-
-        public ParserConfig CloneSubject(string sourceSubjectName, string newSubjectName, string? newTableName = null) =>
-            Edit(cfg =>
-            {
-                EnsureCollections(cfg);
-
-                if (cfg.Subjects.Any(f => NameComparer.Equals(f.SubjectName, newSubjectName)))
-                    throw new InvalidOperationException($"Предмет \"{newSubjectName}\" уже существует.");
-
-                var sourceSubject = cfg.Subjects
-                    .FirstOrDefault(f => NameComparer.Equals(f.SubjectName, sourceSubjectName))
-                    ?? throw new InvalidOperationException($"Предмет \"{sourceSubjectName}\" не найден.");
-
-                var sourceTable = ResolveTable(sourceSubject, sourceSubject.Tables.FirstOrDefault()?.Name);
-                var targetSubject = EnsureSubject(cfg, newSubjectName, allowExisting: false);
-                var targetTableName = string.IsNullOrWhiteSpace(newTableName)
-                    ? sourceTable?.Name ?? newSubjectName
-                    : newTableName.Trim();
-
-                var targetTable = EnsureTable(targetSubject, targetTableName);
-
-                if (sourceTable != null)
-                {
-                    targetTable.Url = sourceTable.Url;
-                    targetTable.Sheets = CloneSheets(sourceTable.Sheets);
-                }
-                else
-                {
-                    targetTable.Url = targetTable.Url ?? string.Empty;
-                    targetTable.Sheets ??= new List<SheetConfig>();
-                    if (!targetTable.Sheets.Any())
-                        targetTable.Sheets.Add(new SheetConfig());
-                }
-
-                targetSubject.Formula = new SubjectFormula
-                {
-                    FinalFormula = sourceSubject.Formula?.FinalFormula,
-                    ComponentFormulas = sourceSubject.Formula?.ComponentFormulas != null
-                        ? new Dictionary<string, string>(sourceSubject.Formula.ComponentFormulas)
-                        : null,
-                    ValueMappings = sourceSubject.Formula?.ValueMappings != null
-                        ? new Dictionary<string, string>(sourceSubject.Formula.ValueMappings)
-                        : null,
-                    AggregateMethod = sourceSubject.Formula?.AggregateMethod ?? string.Empty
-                };
             });
     }
 }

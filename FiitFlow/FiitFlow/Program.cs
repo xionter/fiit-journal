@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using ParserConfig = FiitFlow.Parser.Models.ParserConfig;
-using FiitFlow.Parser.Services;  
+using FiitFlow.Parser.Services;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 
 namespace FiitFlow;
@@ -19,16 +20,10 @@ public class Program
     {
         var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
         var dbPath = Path.Combine(rootPath, "fiitflow.db");
-        var configPath = Path.Combine(rootPath, "FiitFlow.Parser", "config.json");
+        var cfgBasePath = Path.Combine(rootPath, "cfg");
 
         Console.WriteLine($"Путь к БД: {dbPath}");
-        Console.WriteLine($"Путь к конфигу: {configPath}");
-
-        if (!File.Exists(configPath))
-        {
-            Console.WriteLine($"Конфиг парсера не найден: {configPath}");
-            return;
-        }
+        Console.WriteLine($"Путь к конфигам: {cfgBasePath}");
 
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlite($"Data Source={dbPath}")
@@ -44,38 +39,9 @@ public class Program
 
         var logger = NullLoggerFactory.Instance.CreateLogger<PointsService>();
         var pointsService = new PointsService(logger, pointsRepo, studentRepo, subjectRepo, groupRepo);
-        var parserConfig = await LoadParserConfigAsync(configPath);
-        if (parserConfig == null)
-        {
-            Console.WriteLine("Не удалось загрузить конфиг парсера.");
-            return;
-        }
-        var configEditor = new ConfigEditorService(configPath);
-        configEditor.SetStudentName("Чигвинцев Иван");
-        var studentName = parserConfig.StudentName;
-        var groupTitle = "ФТ-201";
-        var subgroup = 2;
-        var primaryGroup = await groupRepo.GetOrCreateByTitleAsync(groupTitle, subgroup);
-        var (firstName, lastName) = SplitStudentName(studentName);
-        _ = await studentRepo.GetOrCreateAsync(firstName, lastName, groupTitle, subgroup);
-
-        if (File.Exists(configPath))
-        {
-            var firstGroup = await db.Groups.Include(g => g.Students).FirstAsync();
-            Console.WriteLine($"Пробуем подтянуть баллы из парсера для {firstGroup.GroupTitle}-{firstGroup.Subgroup}");
-            await pointsService.UpdatePointsForGroupAsync(firstGroup.Id, 3, configPath);
-
-            var points = await pointsService.GetGroupPointsAsync(firstGroup.Id, 3);
-            Console.WriteLine($"Найдено {points.Count} записей Points после парсинга:");
-            foreach (var p in points)
-            {
-                Console.WriteLine($"Студент: {p.StudentId}, Предмет: {p.SubjectId}, Баллы: {p.Value}, Обновлено: {p.UpdatedAt}");
-            }
-        }
-        else
-        {
-            Console.WriteLine($"Конфиг парсера не найден: {configPath}");
-        }
+        await studentRepo.GetOrCreateAsync("Дарья", "Макарова", "ФТ-201", 2);
+        
+        await pointsService.UpdateAll();
 
         var allGroups = await groupRepo.GetAllAsync();
         Console.WriteLine($"\nНайдено групп: {allGroups.Count}");
@@ -92,8 +58,6 @@ public class Program
             {
                 Console.WriteLine($"\n=== Обработка группы: {group.GroupTitle}-{group.Subgroup} ===");
                 Console.WriteLine($"Студентов в группе: {group.Students.Count}");
-
-                await pointsService.UpdatePointsForGroupAsync(group.Id, 3, configPath);
 
                 var summary = await pointsService.GetGroupSummaryAsync(group.Id, 3);
 
@@ -157,17 +121,5 @@ public class Program
         return JsonSerializer.Deserialize<ParserConfig>(json, options);
     }
 
-    private static (string firstName, string lastName) SplitStudentName(string fullName)
-    {
-        if (string.IsNullOrWhiteSpace(fullName))
-            return (string.Empty, string.Empty);
 
-        var parts = fullName.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        if (parts.Length == 1)
-            return (parts[0], string.Empty);
-
-        var lastName = parts[0] + " ";
-        var firstName = string.Join(' ', parts.Skip(1));
-        return (firstName, lastName);
-    }
 }
