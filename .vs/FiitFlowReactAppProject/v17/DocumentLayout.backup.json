@@ -3,24 +3,64 @@
   "WorkspaceRootPath": "C:\\Users\\artyo\\repositories\\fiit-journal\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\controllers\\studentdatacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\controllers\\studentdatacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\controllers\\studentsubjectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\controllers\\studentsubjectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\dbupdateworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\dbupdateworker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow\\fiitflow\\pointsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\pointsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\subjectsgroup.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\subjectsgroup.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\navigation.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\navigation.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\loginpage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\loginpage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow\\fiitflow\\repository\\istudentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\repository\\istudentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow\\fiitflow\\repository\\isubjectrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\repository\\isubjectrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow\\fiitflow\\repository\\ipointsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\repository\\ipointsrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow\\fiitflow\\repository\\igrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\repository\\igrouprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\subtools\\subtoolsunits\\authenticationtool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\subtools\\subtoolsunits\\authenticationtool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.server\\subtools\\subtoolsunits\\pointssimple.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\subtools\\subtoolsunits\\pointssimple.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\pointsitem.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\pointsitem.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\studentsubjectcomponent.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
@@ -31,8 +71,16 @@
       "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\app.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\loginpage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\loginpage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\main.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\api.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\api.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\navigation.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\navigation.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\loadingpagedata.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
@@ -51,16 +99,8 @@
       "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\subjectitem.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\subjectitem.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\student.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
       "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\student.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\components\\api.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
-      "RelativeMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|solutionrelative:fiitflow.client\\src\\components\\api.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{52C07BCD-F9C5-4798-8E40-F05EE9E862DC}|FiitFlow.Client\\FiitFlow.client.esproj|c:\\users\\artyo\\repositories\\fiit-journal\\fiitflow.client\\src\\fiitflow.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -87,12 +127,142 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "StudentDataController.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Controllers\\StudentDataController.cs",
+              "RelativeDocumentMoniker": "FiitFlow.Server\\Controllers\\StudentDataController.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Controllers\\StudentDataController.cs",
+              "RelativeToolTip": "FiitFlow.Server\\Controllers\\StudentDataController.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAAAoAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T15:18:14.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DbUpdateWorker.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\DbUpdateWorker.cs",
+              "RelativeDocumentMoniker": "FiitFlow.Server\\DbUpdateWorker.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\DbUpdateWorker.cs",
+              "RelativeToolTip": "FiitFlow.Server\\DbUpdateWorker.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T14:36:00.289Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PointsService.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\PointsService.cs",
+              "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\PointsService.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\PointsService.cs",
+              "RelativeToolTip": "FiitFlow\\FiitFlow\\PointsService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:48:07.681Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuthenticationTool.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
+              "RelativeDocumentMoniker": "FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
+              "RelativeToolTip": "FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T12:21:49.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PointsSimple.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\SubTools\\SubToolsUnits\\PointsSimple.cs",
+              "RelativeDocumentMoniker": "FiitFlow.Server\\SubTools\\SubToolsUnits\\PointsSimple.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\SubTools\\SubToolsUnits\\PointsSimple.cs",
+              "RelativeToolTip": "FiitFlow.Server\\SubTools\\SubToolsUnits\\PointsSimple.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T09:52:03.312Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IPointsRepository.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\IPointsRepository.cs",
+              "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\Repository\\IPointsRepository.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\IPointsRepository.cs",
+              "RelativeToolTip": "FiitFlow\\FiitFlow\\Repository\\IPointsRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-14T11:22:04.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IGroupRepository.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\IGroupRepository.cs",
+              "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\Repository\\IGroupRepository.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\IGroupRepository.cs",
+              "RelativeToolTip": "FiitFlow\\FiitFlow\\Repository\\IGroupRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T13:19:56.664Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ISubjectRepository.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\ISubjectRepository.cs",
+              "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\Repository\\ISubjectRepository.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\ISubjectRepository.cs",
+              "RelativeToolTip": "FiitFlow\\FiitFlow\\Repository\\ISubjectRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T13:19:34.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IStudentRepository.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\IStudentRepository.cs",
+              "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\Repository\\IStudentRepository.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow\\FiitFlow\\Repository\\IStudentRepository.cs",
+              "RelativeToolTip": "FiitFlow\\FiitFlow\\Repository\\IStudentRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T13:18:22.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Program.cs",
+              "RelativeDocumentMoniker": "FiitFlow.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Program.cs",
+              "RelativeToolTip": "FiitFlow.Server\\Program.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwEAAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T11:53:50.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "FiitFlow.Server\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Controllers\\AuthController.cs",
               "RelativeToolTip": "FiitFlow.Server\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABkAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABcAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-07T14:19:04.503Z",
               "EditorCaption": ""
@@ -105,40 +275,40 @@
               "RelativeDocumentMoniker": "FiitFlow.Server\\Controllers\\StudentSubjectsController.cs",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Server\\Controllers\\StudentSubjectsController.cs",
               "RelativeToolTip": "FiitFlow.Server\\Controllers\\StudentSubjectsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-01T16:14:39.512Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 16,
               "Title": "App.tsx",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\App.tsx",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\App.tsx",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\App.tsx",
               "RelativeToolTip": "FiitFlow.Client\\src\\App.tsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-12-01T13:20:01.482Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 17,
               "Title": "Main.tsx",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\Main.tsx",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\Main.tsx",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\Main.tsx",
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\Main.tsx",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAgwEEAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABYAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-12-10T16:10:45.177Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 19,
               "Title": "Navigation.tsx",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\Navigation.tsx",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\Navigation.tsx",
@@ -146,12 +316,11 @@
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\Navigation.tsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-12-10T16:15:47.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-10T16:15:47.021Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 15,
               "Title": "StudentSubjectComponent.tsx",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\StudentSubjectComponent.tsx",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\StudentSubjectComponent.tsx",
@@ -164,13 +333,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "SubjectsGroup.tsx",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\SubjectsGroup.tsx",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\SubjectsGroup.tsx",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\SubjectsGroup.tsx",
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\SubjectsGroup.tsx",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBUAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAgwEMAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-12-01T13:20:02.545Z",
               "EditorCaption": ""
@@ -183,14 +352,14 @@
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\LoginPage.tsx",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\LoginPage.tsx",
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\LoginPage.tsx",
-              "ViewState": "AgIAABEAAAAAAAAAAAAQwAMAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAGAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-12-06T07:19:43.623Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 20,
               "Title": "LoadingPageData.tsx",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\LoadingPageData.tsx",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\LoadingPageData.tsx",
@@ -198,12 +367,11 @@
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\LoadingPageData.tsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-12-06T19:36:21.666Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-06T19:36:21.666Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 21,
               "Title": "CookieTools.ts",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\CookieTools.ts",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\CookieTools.ts",
@@ -211,24 +379,23 @@
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\CookieTools.ts",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-12-08T11:40:53.275Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-08T11:40:53.275Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "Api.ts",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\Api.ts",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\Api.ts",
               "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\Api.ts",
               "RelativeToolTip": "FiitFlow.Client\\src\\components\\Api.ts",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
               "WhenOpened": "2025-12-06T11:07:08.892Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 24,
               "Title": "Student.ts",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\Student.ts",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\Student.ts",
@@ -240,19 +407,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "SubjectItem.ts",
-              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\SubjectItem.ts",
-              "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\SubjectItem.ts",
-              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\SubjectItem.ts",
-              "RelativeToolTip": "FiitFlow.Client\\src\\components\\SubjectItem.ts",
+              "DocumentIndex": 14,
+              "Title": "PointsItem.ts",
+              "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\PointsItem.ts",
+              "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\PointsItem.ts",
+              "ToolTip": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\PointsItem.ts",
+              "RelativeToolTip": "FiitFlow.Client\\src\\components\\PointsItem.ts",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
-              "WhenOpened": "2025-12-06T16:20:20.619Z"
+              "WhenOpened": "2025-12-06T16:20:20.619Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 22,
               "Title": "StudentSubject.ts",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\components\\StudentSubject.ts",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\components\\StudentSubject.ts",
@@ -264,7 +432,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 25,
               "Title": "fiitflow.css",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\fiitflow.css",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\fiitflow.css",
@@ -276,7 +444,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 23,
               "Title": "App.css",
               "DocumentMoniker": "C:\\Users\\artyo\\repositories\\fiit-journal\\FiitFlow.Client\\src\\App.css",
               "RelativeDocumentMoniker": "FiitFlow.Client\\src\\App.css",

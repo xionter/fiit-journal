@@ -6,10 +6,12 @@ namespace FiitFlow.Repository.Sqlite;
 public class StudentRepository : IStudentRepository
 {
     private readonly AppDbContext _db;
+    private readonly IGroupRepository _groupRepository;
 
-    public StudentRepository(AppDbContext db)
+    public StudentRepository(AppDbContext db, IGroupRepository groupRepository)
     {
         _db = db;
+        _groupRepository = groupRepository;
     }
 
     public async Task<Student?> GetByHashAsync(int id)
@@ -35,10 +37,12 @@ public class StudentRepository : IStudentRepository
             .ToListAsync();
     }
 
-    public async Task<Student> GetOrCreateAsync(string fullName, string groupTitle, int subGroup, Guid groupId)
+    public async Task<Student> GetOrCreateAsync(string firstName, string lastName, string groupTitle, int subGroup)
     {
+        var group = await _groupRepository.GetOrCreateByTitleAsync(groupTitle, subGroup);
+        var fullName = lastName + firstName;
         var existing = await _db.Students
-            .FirstOrDefaultAsync(s => s.GroupId == groupId && s.FullName == fullName);
+            .FirstOrDefaultAsync(s => s.GroupId == group.Id && s.FullName == fullName);
 
         if (existing is not null)
             return existing;
@@ -47,7 +51,7 @@ public class StudentRepository : IStudentRepository
         {
             Id = HashCode.Combine(fullName, groupTitle, subGroup),
             FullName = fullName,
-            GroupId = groupId
+            GroupId = group.Id
         };
 
         _db.Students.Add(student);
