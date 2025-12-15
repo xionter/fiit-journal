@@ -33,9 +33,11 @@ public class PointsService
     {
         foreach (var group in await _groupRepo.GetAllAsync())
         {
-            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
+            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
             var groupConfigPath = Path.Combine(rootPath, "cfg", $"{group.GroupTitle}");
+            _logger.LogInformation("begin DB Update");
             await UpdatePointsForGroupAsync(group.Id, group.GetCurrentSemester(), groupConfigPath);
+            _logger.LogInformation("end DB Update");
         }
     }
 
