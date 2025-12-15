@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Linq;
 using FiitFlow.Parser.Models;
+using System.Collections.Generic;
 
 namespace FiitFlow.Parser.Services
 {
@@ -83,7 +84,7 @@ namespace FiitFlow.Parser.Services
                 RatingScores = new Dictionary<string, double>()
             };
 
-            if (config.Formulas?.SubjectFormulas == null || !config.Formulas.SubjectFormulas.Any())
+            if (config.Subjects == null || !config.Subjects.Any())
             {
                 var groupedTables = searchResult.Tables
                     .GroupBy(t => t.TableName)
@@ -100,10 +101,19 @@ namespace FiitFlow.Parser.Services
                 return studentResults;
             }
 
-            foreach (var subjectFormula in config.Formulas.SubjectFormulas)
+            foreach (var subject in config.Subjects)
             {
+                var subjectTableNames = subject.Tables?
+                    .Select(t => t.Name)
+                    .Where(n => !string.IsNullOrWhiteSpace(n))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToList() ?? new List<string>();
+
+                if (!subjectTableNames.Any())
+                    continue;
+
                 var subjectTables = searchResult.Tables
-                    .Where(t => subjectFormula.TableNames.Contains(t.TableName))
+                    .Where(t => subjectTableNames.Contains(t.TableName, StringComparer.OrdinalIgnoreCase))
                     .ToList();
 
                 if (!subjectTables.Any())
@@ -115,12 +125,12 @@ namespace FiitFlow.Parser.Services
                     Categories = new Dictionary<string, Dictionary<string, object>>()
                 };
 
-                if (subjectFormula.ComponentFormulas?.Any() == true)
+                if (subject.Formula?.ComponentFormulas?.Any() == true)
                 {
                     var components = _calculator.CalculateComponents(
                             subjectTables,
-                            subjectFormula.ComponentFormulas,
-                            subjectFormula.ValueMappings
+                            subject.Formula.ComponentFormulas,
+                            subject.Formula.ValueMappings
                             );
 
                     foreach (var component in components)
@@ -131,13 +141,13 @@ namespace FiitFlow.Parser.Services
                         };
                     }
 
-                    if (!string.IsNullOrWhiteSpace(subjectFormula.FinalFormula))
+                    if (!string.IsNullOrWhiteSpace(subject.Formula.FinalFormula))
                     {
                         subjectResult.CalculatedScore = _calculator.CalculateFinalScore(
-                                subjectFormula.FinalFormula,
+                                subject.Formula.FinalFormula,
                                 components,
                                 subjectTables,
-                                subjectFormula.AggregateMethod
+                                subject.Formula.AggregateMethod
                                 );
 
                         subjectResult.Overall["CalculatedScore"] = subjectResult.CalculatedScore;
@@ -146,14 +156,16 @@ namespace FiitFlow.Parser.Services
 
                 ExtractOverallData(subjectResult, subjectTables);
 
-                studentResults.Subjects[subjectFormula.SubjectName] = subjectResult;
+                studentResults.Subjects[subject.SubjectName] = subjectResult;
 
-                CalculateRatingScore(studentResults, subjectFormula.SubjectName, subjectResult);
+                CalculateRatingScore(studentResults, subject.SubjectName, subjectResult);
             }
 
-            var processedTables = config.Formulas.SubjectFormulas
-                .SelectMany(sf => sf.TableNames)
-                .ToHashSet();
+            var processedTables = config.Subjects
+                .SelectMany(sf => sf.Tables ?? Enumerable.Empty<TableConfig>())
+                .Select(t => t.Name)
+                .Where(n => !string.IsNullOrWhiteSpace(n))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             var remainingTables = searchResult.Tables
                 .Where(t => !processedTables.Contains(t.TableName))

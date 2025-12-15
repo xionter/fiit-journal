@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 using FiitFlow.Parser.Models;
 
 namespace FiitFlow.Parser.Services;
@@ -21,7 +22,14 @@ public class StudentSearchService
     {
         var result = new StudentSearchResult { StudentName = studentName ?? string.Empty };
 
-        foreach (var table in config.Tables)
+        var tables = config.Subjects?
+            .SelectMany(s => s.Tables ?? Enumerable.Empty<TableConfig>())
+            .Where(t => !string.IsNullOrWhiteSpace(t.Name))
+            .GroupBy(t => t.Name, StringComparer.OrdinalIgnoreCase)
+            .Select(g => g.First())
+            .ToList() ?? new List<TableConfig>();
+
+        foreach (var table in tables)
         {
             var tableResults = await ProcessTableAsync(table, studentName);
             result.Tables.AddRange(tableResults);

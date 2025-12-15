@@ -10,6 +10,7 @@ public class ConfigParser
     public ParserConfig Parse(string[] lines)
     {
         var config = new ParserConfig();
+        SubjectConfig currentSubject = null;
         TableConfig currentTable = null;
         SheetConfig currentSheet = null;
 
@@ -19,7 +20,17 @@ public class ConfigParser
             
             if (string.IsNullOrEmpty(trimmedLine))
             {
+                if (currentSubject != null)
+                {
+                    if (currentTable != null && !currentSubject.Tables.Contains(currentTable))
+                        currentSubject.Tables.Add(currentTable);
+
+                    if (!config.Subjects.Any(s => s.SubjectName == currentSubject.SubjectName))
+                        config.Subjects.Add(currentSubject);
+                }
+
                 currentTable = null;
+                currentSubject = null;
                 currentSheet = null;
                 continue;
             }
@@ -38,8 +49,14 @@ public class ConfigParser
             }
             else if (!IsTableProperty(trimmedLine) && currentTable == null)
             {
+                currentSubject = new SubjectConfig
+                {
+                    SubjectName = trimmedLine,
+                    Tables = new List<TableConfig>()
+                };
+
                 currentTable = new TableConfig { Name = trimmedLine };
-                config.Tables.Add(currentTable);
+                currentSubject.Tables.Add(currentTable);
             }
             else if (trimmedLine.StartsWith("http") && currentTable != null && string.IsNullOrEmpty(currentTable.Url))
             {
@@ -54,6 +71,15 @@ public class ConfigParser
             {
                 currentSheet.CategoriesRow = ParseCategoriesRow(trimmedLine);
             }
+        }
+
+        if (currentSubject != null)
+        {
+            if (currentTable != null && !currentSubject.Tables.Contains(currentTable))
+                currentSubject.Tables.Add(currentTable);
+
+            if (!config.Subjects.Any(s => s.SubjectName == currentSubject.SubjectName))
+                config.Subjects.Add(currentSubject);
         }
 
         return config;
