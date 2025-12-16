@@ -319,7 +319,8 @@ namespace FiitFlow.Parser.Services
 
             string cleanValue = value.Trim()
                 .Replace(',', '.')
-                .Replace(" ", "");
+                .Replace(" ", "")
+                .Replace("\u00A0", "");
                 
             return double.TryParse(cleanValue, 
                 System.Globalization.NumberStyles.Any,
@@ -330,8 +331,8 @@ namespace FiitFlow.Parser.Services
         private bool ContainsOperators(string s) =>
             s.Contains('+') || s.Contains('-') || s.Contains('*') || s.Contains('/');
 
-        private bool IsNumericExpression(string s) => double.TryParse(s, out _);
+        private bool IsNumericExpression(string s) => TryParseValue(s, out _);
 
-        private bool IsNumeric(string s) => double.TryParse(s, out _);
+        private bool IsNumeric(string s) => TryParseValue(s, out _);
     }
 }

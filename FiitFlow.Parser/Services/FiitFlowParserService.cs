@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using FiitFlow.Parser.Models;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace FiitFlow.Parser.Services
 {
@@ -207,7 +208,7 @@ namespace FiitFlow.Parser.Services
                                 !key.Contains("проверочные_сумма") && 
                                 !key.Contains("активность_сумма"))
                         {
-                            if (double.TryParse(kvp.Value, out double numericValue))
+                            if (TryParseDoubleInvariant(kvp.Value, out double numericValue))
                             {
                                 string cleanKey = CleanKey(kvp.Key);
                                 if (!totals.ContainsKey(cleanKey) || 
@@ -254,7 +255,7 @@ namespace FiitFlow.Parser.Services
                 {
                     if (kvp.Key.Contains("БРС") || kvp.Key.Contains("Рейтинг"))
                     {
-                        if (double.TryParse(kvp.Value.ToString(), out double brsValue))
+                        if (TryParseDoubleInvariant(kvp.Value, out double brsValue))
                         {
                             ratingScore = brsValue;
                             break;
@@ -277,5 +278,55 @@ namespace FiitFlow.Parser.Services
             string json = await File.ReadAllTextAsync(configPath);
             return JsonSerializer.Deserialize<ParserConfig>(json, options) ?? new ParserConfig();
         }
+
+    private static bool TryParseDoubleInvariant(object? rawValue, out double value)
+    {
+        value = 0;
+
+        switch (rawValue)
+        {
+            case null:
+                return false;
+            case double d:
+                value = d;
+                return true;
+            case float f:
+                value = f;
+                return true;
+            case int i:
+                value = i;
+                return true;
+            case long l:
+                value = l;
+                return true;
+            case decimal dec:
+                value = (double)dec;
+                return true;
+            case string s:
+                return TryParseNormalizedString(s, out value);
+            default:
+                return TryParseNormalizedString(rawValue.ToString() ?? string.Empty, out value);
+        }
     }
+
+    private static bool TryParseNormalizedString(string value, out double number)
+    {
+        number = 0;
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
+
+        var normalized = NormalizeNumber(value);
+        return double.TryParse(
+            normalized,
+            NumberStyles.Any,
+            CultureInfo.InvariantCulture,
+            out number);
+    }
+
+    private static string NormalizeNumber(string value) =>
+        value.Trim()
+             .Replace("\u00A0", string.Empty)
+             .Replace(" ", string.Empty)
+             .Replace(",", ".");
+}
 }

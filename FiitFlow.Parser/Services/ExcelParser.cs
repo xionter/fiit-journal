@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System;
 using FiitFlow.Parser.Models;
+using System.Globalization;
 
 namespace FiitFlow.Parser.Services;
 
@@ -110,7 +111,7 @@ public class ExcelParser
             if (categoryDate != null)
                 categoryName = categoryDate;
 
-            if (!string.IsNullOrEmpty(cellValue) && double.TryParse(cellValue, out _))
+            if (!string.IsNullOrEmpty(cellValue) && TryParseDoubleInvariant(cellValue, out _))
             {
                 var dateValue = TryParseExcelDate(cellValue);
                 if (dateValue != null)
@@ -146,7 +147,7 @@ public class ExcelParser
 
         var cleanValue = value.Trim().EndsWith(".0") ? value.Trim().Substring(0, value.Trim().Length - 2) : value.Trim();
 
-        if (!double.TryParse(cleanValue, out double excelDate))
+        if (!TryParseDoubleInvariant(cleanValue, out double excelDate))
             return null;
 
         try
@@ -192,5 +193,23 @@ public class ExcelParser
         }
 
         return value.Trim();
+    }
+
+    private static bool TryParseDoubleInvariant(string value, out double number)
+    {
+        number = 0;
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
+
+        var normalized = value.Trim()
+            .Replace("\u00A0", string.Empty)
+            .Replace(" ", string.Empty)
+            .Replace(",", ".");
+
+        return double.TryParse(
+            normalized,
+            NumberStyles.Any,
+            CultureInfo.InvariantCulture,
+            out number);
     }
 }
