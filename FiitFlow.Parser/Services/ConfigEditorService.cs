@@ -290,6 +290,12 @@ namespace FiitFlow.Parser.Services
                 sheet.CategoriesRow = NormalizeRow(headerRow);
             });
 
+        public ParserConfig SetSubjectName(string subjectNameOld, string subjectNameNew, string? sheetName = null, string? tableName = null) =>
+            EditSubject(subjectNameOld, tableName, (_, subject, __) =>
+            {
+                subject.SubjectName = subjectNameNew;
+            });
+
         public ParserConfig SetSubjectSheet(string subjectName, string sheetName, string? tableName = null) =>
             EditSubject(subjectName, tableName, (_, __, table) =>
             {

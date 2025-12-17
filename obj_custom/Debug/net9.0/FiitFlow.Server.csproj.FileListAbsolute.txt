@@ -1,0 +1,9 @@
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.csproj.AssemblyReference.cache
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.AssemblyInfoInputs.cache
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.AssemblyInfo.cs
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.csproj.CoreCompileInputs.cache
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\artyo\repositories\fiit-journal\obj_custom\Debug\net9.0\FiitFlow.Server.sourcelink.json

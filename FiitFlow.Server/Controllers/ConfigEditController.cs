@@ -1,4 +1,7 @@
-﻿using FiitFlow.Server.SubTools;
+﻿using FiitFlow.Parser.Models;
+using FiitFlow.Parser.Services;
+using FiitFlow.Server.SubTools;
+using FiitFlow.Server.SubTools.SubToolsUnits;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +26,57 @@ namespace FiitFlow.Server.Controllers
             _authentication = authentication;
         }
 
-        [HttpGet]
-        public 
+        [HttpGet("GetConfigs")]
+        public async Task<ActionResult<IEnumerable<SubjectConfigSimple>>> GetSubjectConfigs(
+            [FromQuery] int id,
+            [FromQuery] string firstName,
+            [FromQuery] string lastName,
+            [FromQuery] string group,
+            [FromQuery] int term,
+            [FromQuery] DateTime dateTime)
+        {
+            var authResponse = await _authentication.FindAuthIdByLoginForm(firstName, lastName, group);
+            if (!authResponse.Accepted)
+                return Unauthorized(new { message = "Данные пользователя неверны", errorCode = "AUTH_REJECTED" });
+            var configEditor = new ConfigEditorService(Path.Combine(
+                "../../../..", $"cfg/{group.Substring(0, 6)}/{lastName} {firstName}.json"));
+            return Ok(configEditor.Load().Subjects.Select(subCon => new SubjectConfigSimple
+            {
+                BaseName = subCon.SubjectName,
+                Name = subCon.SubjectName,
+                Link = subCon.Tables.First().Url
+            }));
+        }
+
+        [HttpPost("SetConfigs")]
+        public async Task<IActionResult> SetSubjectConfigs(
+            [FromQuery] int id,
+            [FromQuery] string firstName,
+            [FromQuery] string lastName,
+            [FromQuery] string group,
+            [FromQuery] int term,
+            [FromQuery] DateTime dateTime,
+            [FromBody] IEnumerable<SubjectConfigSimple> subjectConfigs)
+        {
+            var authResponse = await _authentication.FindAuthIdByLoginForm(firstName, lastName, group);
+            if (!authResponse.Accepted)
+                return Unauthorized(new { message = "Данные пользователя неверны", errorCode = "AUTH_REJECTED" });
+            var configEditor = new ConfigEditorService(Path.Combine(
+                "../../../..", $"cfg/{group.Substring(0, 6)}/{lastName} {firstName}.json"));
+            var beforeSubjects = configEditor.Load().Subjects;
+            foreach (var subjectConfig in subjectConfigs)
+            {
+                if (subjectConfig.BaseName.Length > 0)
+                {
+                    configEditor.SetSubjectName(subjectConfig.BaseName, subjectConfig.Name);
+                    configEditor.SetSubjectUrl(subjectConfig.Name, subjectConfig.Link);
+                }
+                else
+                {
+                    //configEditor.CreateSubject(subjectConfig.Name, "1", subjectConfig.Link); //TODO
+                }
+            }
+            return Ok();
+        }
     }
 }

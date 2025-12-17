@@ -4,7 +4,7 @@ import StudentSubjectComponent from "./components/StudentSubjectComponent"
 import LoginPage from "./components/LoginPage"
 import Main from "./components/Main"
 import "./fiitflow.css"
-import { rootLogin, rootMain } from "./components/Navigation"
+import { rootLogin, rootMain, rootEdit } from "./components/Navigation"
 
 function App() {
     return (
@@ -13,7 +13,7 @@ function App() {
                 <Route path="/" element={<LoginPage />} />
                 <Route path={rootLogin.to} element={<LoginPage />} />
                 <Route path={rootMain.to} element={<Main subjectPeaked={false} isEditing={false} />} />
-                <Route path={`${rootMain.to}/ConfigEditing`} element={<Main subjectPeaked={false} isEditing={true} />} />
+                <Route path={rootEdit.to} element={<Main subjectPeaked={false} isEditing={true} />} />
                 <Route path={`${rootMain.to}/:subjectName`} element={<Main subjectPeaked={true} isEditing={false} />} />
             </Routes>
         </BrowserRouter>

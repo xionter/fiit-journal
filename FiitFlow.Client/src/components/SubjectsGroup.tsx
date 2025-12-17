@@ -1,6 +1,6 @@
 ﻿import { useNavigate } from 'react-router-dom'
 import { Fragment, useEffect, useState, type ReactElement } from "react"
-import { rootMain } from "./Navigation"
+import { rootEdit, rootMain } from "./Navigation"
 import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
 import type PointsItem from "./PointsItem"
@@ -12,28 +12,15 @@ import { string } from 'yup'
 interface SubjectGroupProps {
     student: Student;
     term: number;
-    isEditing: boolean;
 }
 
-function SubjectsGroup({ student, term, isEditing }: SubjectGroupProps) {
+function SubjectsGroup({ student, term }: SubjectGroupProps) {
     const navigate = useNavigate();
     const [points, setPoints] = useState<PointsItem[]>();
-    const [editButton, setEditButton] = useState<ReactElement>();
 
     useEffect(() => {
         populateSubjectPointsDataByStudent();
     }, [term]);
-
-    useEffect(() => {
-        if (isEditing)
-            setEditButton(
-                <div></div>
-            );
-        else
-            setEditButton(
-                <div></div>
-            )
-    }, [isEditing]);
 
     return (
         <LoadingPageData isLoading={points === undefined}>
@@ -60,12 +47,12 @@ function SubjectsGroup({ student, term, isEditing }: SubjectGroupProps) {
                     ))
                 }
             </div>
-            {editButton}
+            <button onClick={() => navigate(rootEdit.to, rootEdit.options)} className="logout-btn">Выход</button>
         </LoadingPageData>
     );
 
     async function populateSubjectPointsDataByStudent() {
-        api.get("StudentSubjects/All", {
+        api.get<PointsItem[]>("StudentSubjects/All", {
             withCredentials: true,
             params: {
                 id: student.id,

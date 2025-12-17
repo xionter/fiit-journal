@@ -5,6 +5,7 @@ import SubjectsGroup from "./SubjectsGroup"
 import type Student from "./Student"
 import { loadStudentCookie, loadSubjectCookie, removeStudentCookie, removeSubjectCookie, saveStudentCookie } from "./CookieTools"
 import StudentSubjectComponent from "./StudentSubjectComponent"
+import SubjectsGroupConfigEditor from "./SubjectsGroupConfigEditor"
 
 interface MainProps {
     subjectPeaked: boolean;
@@ -24,35 +25,7 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
             left: 0,
             behavior: 'smooth'
         });
-        const studentFromCookie = loadStudentCookie();
-        if (studentFromCookie === undefined)
-            goToLogin();
-        else {
-            setCurrentStudent(studentFromCookie);
-            if (subjectPeaked) {
-                const subjectFromCookie = loadSubjectCookie();
-                if (subjectFromCookie !== undefined && subjectFromCookie.subjectName === subjectName)
-                    setCentralBlock(
-                        <Fragment>
-                            <a onClick={goToMain} className="back-link">← Назад к списку предметов</a>
-                            <StudentSubjectComponent
-                                subjectName={subjectFromCookie.subjectName}
-                                student={studentFromCookie}
-                                term={currentTerm}
-                            />
-                        </Fragment>
-                    );
-                else
-                    goToMain();
-            }
-            else
-                setCentralBlock(
-                    <SubjectsGroup
-                        student={studentFromCookie}
-                        term={currentTerm}
-                    />
-                );
-        }
+        setBlockByParams();
     }, [currentTerm, subjectPeaked, isEditing]);
 
     return (
@@ -127,6 +100,45 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
 
     function goToMain() {
         navigate(rootMain.to, rootMain.options);
+    }
+
+    function setBlockByParams() {
+        const studentFromCookie = loadStudentCookie();
+        if (studentFromCookie === undefined)
+            goToLogin();
+        else {
+            setCurrentStudent(studentFromCookie);
+            if (subjectPeaked) {
+                const subjectFromCookie = loadSubjectCookie();
+                if (subjectFromCookie !== undefined && subjectFromCookie.subjectName === subjectName)
+                    setCentralBlock(
+                        <Fragment>
+                            <a onClick={goToMain} className="back-link">← Назад к списку предметов</a>
+                            <StudentSubjectComponent
+                                subjectName={subjectFromCookie.subjectName}
+                                student={studentFromCookie}
+                                term={currentTerm}
+                            />
+                        </Fragment>
+                    );
+                else
+                    goToMain();
+            }
+            else if (isEditing)
+                setCentralBlock(
+                    <Fragment>
+                        <a onClick={goToMain} className="back-link">← Назад к списку предметов</a>
+                        <SubjectsGroupConfigEditor student={studentFromCookie} term={currentTerm} />
+                    </Fragment>
+                );
+            else
+                setCentralBlock(
+                    <SubjectsGroup
+                        student={studentFromCookie}
+                        term={currentTerm}
+                    />
+                );
+        }
     }
 }
 
