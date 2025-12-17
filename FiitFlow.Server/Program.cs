@@ -1,8 +1,10 @@
 
 using FiitFlow;
+using FiitFlow.Parser.Services;
 using FiitFlow.Repository;
 using FiitFlow.Repository.Sqlite;
 using FiitFlow.Server;
+using FiitFlow.Server.Services;
 using FiitFlow.Server.SubTools;
 using FiitFlow.Server.SubTools.SubToolsUnits;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +19,8 @@ namespace FiitFlowReactApp.Server
 
             var policyClient = "AllowLocalhost";
 
-            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../"));
+            var rootPathProvider = new RootPathProvider();
+            var rootPath = rootPathProvider.GetRootPath();
             var dbPath   = Path.Combine(rootPath, "fiitflow.db");
 
             builder.Services.AddDbContext<AppDbContext>(options =>
@@ -28,6 +31,9 @@ namespace FiitFlowReactApp.Server
             builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
             builder.Services.AddScoped<IPointsRepository, PointsRepository>();
 
+            builder.Services.AddSingleton<IRootPathProvider>(rootPathProvider);
+            builder.Services.AddScoped<IStudentConfigService>(sp =>
+                new StudentConfigService(sp.GetRequiredService<IRootPathProvider>().GetRootPath()));
             builder.Services.AddScoped<PointsService, PointsService>();
 
             builder.Services.AddScoped<IAuthentication, AuthenticationTool>();
