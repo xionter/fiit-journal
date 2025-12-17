@@ -12,8 +12,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<LoginPage />} />
                 <Route path={rootLogin.to} element={<LoginPage />} />
-                <Route path={rootMain.to} element={<Main subjectPeaked={false} />} />
-                <Route path={`${rootMain.to}/:subjectName`} element={<Main subjectPeaked={true} />} />
+                <Route path={rootMain.to} element={<Main subjectPeaked={false} isEditing={false} />} />
+                <Route path={`${rootMain.to}/ConfigEditing`} element={<Main subjectPeaked={false} isEditing={true} />} />
+                <Route path={`${rootMain.to}/:subjectName`} element={<Main subjectPeaked={true} isEditing={false} />} />
             </Routes>
         </BrowserRouter>
     )

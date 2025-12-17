@@ -1,5 +1,5 @@
 ﻿import { useNavigate } from 'react-router-dom'
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useState, type ReactElement } from "react"
 import { rootMain } from "./Navigation"
 import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
@@ -12,15 +12,28 @@ import { string } from 'yup'
 interface SubjectGroupProps {
     student: Student;
     term: number;
+    isEditing: boolean;
 }
 
-function SubjectsGroup({ student, term }: SubjectGroupProps) {
+function SubjectsGroup({ student, term, isEditing }: SubjectGroupProps) {
     const navigate = useNavigate();
     const [points, setPoints] = useState<PointsItem[]>();
+    const [editButton, setEditButton] = useState<ReactElement>();
 
     useEffect(() => {
         populateSubjectPointsDataByStudent();
     }, [term]);
+
+    useEffect(() => {
+        if (isEditing)
+            setEditButton(
+                <div></div>
+            );
+        else
+            setEditButton(
+                <div></div>
+            )
+    }, [isEditing]);
 
     return (
         <LoadingPageData isLoading={points === undefined}>
@@ -47,6 +60,7 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                     ))
                 }
             </div>
+            {editButton}
         </LoadingPageData>
     );
 

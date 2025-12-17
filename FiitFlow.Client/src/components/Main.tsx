@@ -7,10 +7,11 @@ import { loadStudentCookie, loadSubjectCookie, removeStudentCookie, removeSubjec
 import StudentSubjectComponent from "./StudentSubjectComponent"
 
 interface MainProps {
-    subjectPeaked: boolean
+    subjectPeaked: boolean;
+    isEditing: boolean;
 }
 
-function Main({ subjectPeaked }: MainProps) {
+function Main({ subjectPeaked, isEditing }: MainProps) {
     const navigate = useNavigate();
     const { subjectName } = useParams();
     const [currentStudent, setCurrentStudent] = useState<Student>();
@@ -52,7 +53,7 @@ function Main({ subjectPeaked }: MainProps) {
                     />
                 );
         }
-    }, [currentTerm, subjectPeaked]);
+    }, [currentTerm, subjectPeaked, isEditing]);
 
     return (
         <Fragment>
