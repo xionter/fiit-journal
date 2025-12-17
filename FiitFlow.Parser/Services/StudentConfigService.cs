@@ -28,6 +28,7 @@ namespace FiitFlow.Parser.Services
 
             var defaultConfigPath = ResolveDefaultConfigPath(groupConfigDirectory, subgroup);
             File.Copy(defaultConfigPath, studentConfigPath);
+            var ConfEditor = new ConfigEditorService(studentConfigPath).SetStudentName(studentFullName);
         }
 
         private string ResolveDefaultConfigPath(string groupConfigDirectory, int subgroup)
