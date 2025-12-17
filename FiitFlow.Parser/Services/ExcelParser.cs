@@ -38,7 +38,17 @@ public class ExcelParser
             if (sheetData == null) continue;
 
             var rows = sheetData.Elements<Row>().ToList();
-            var students = FindStudentInSheet(rows, studentName, sheetConfig, workbookPart);
+
+            int categoriesRow =
+                AutoDetectCategoriesRow(rows, workbookPart)
+                ?? throw new Exception($"Не удалось найти строку категорий в листе {sheet.Name}");
+
+            var students = FindStudentInSheet(
+                    rows,
+                    studentName,
+                    categoriesRow,
+                    workbookPart
+                    );
 
             foreach (var student in students)
             {
@@ -55,17 +65,22 @@ public class ExcelParser
                 sc.Name.Equals(sheet.Name ?? "", StringComparison.OrdinalIgnoreCase));
     }
 
-    private static IEnumerable<Student> FindStudentInSheet(List<Row> rows, string? studentName, SheetConfig sheetConfig, WorkbookPart workbookPart)
+    private static IEnumerable<Student> FindStudentInSheet(
+            List<Row> rows,
+            string? studentName,
+            int categoriesRow,
+            WorkbookPart workbookPart)
+
     {
         if (string.IsNullOrWhiteSpace(studentName))
         {
-            for (var r = sheetConfig.CategoriesRow; r < rows.Count; ++r)
+            for (var r = categoriesRow; r < rows.Count; ++r)
             {
                 var name = GetFirstNonEmptyCellValue(rows[r], workbookPart);
                 if (string.IsNullOrWhiteSpace(name))
                     continue;
 
-                var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, name);
+                var student = ExtractStudentData(rows, r + 1, categoriesRow, workbookPart, name);
                 yield return student;
             }
         }
@@ -80,7 +95,7 @@ public class ExcelParser
                     var value = GetCellValue(cell, workbookPart);
                     if (value.ToLower().Contains(studentName.ToLower()))
                     {
-                        var student = ExtractStudentData(rows, r + 1, sheetConfig.CategoriesRow, workbookPart, studentName);
+                        var student = ExtractStudentData(rows, r + 1, categoriesRow, workbookPart, studentName);
                         yield return student;
                         yield break;
                     }
@@ -207,9 +222,61 @@ public class ExcelParser
             .Replace(",", ".");
 
         return double.TryParse(
-            normalized,
-            NumberStyles.Any,
-            CultureInfo.InvariantCulture,
-            out number);
+                normalized,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out number);
     }
+
+    private static int? AutoDetectCategoriesRow(
+            List<Row> rows,
+            WorkbookPart workbookPart)
+    {
+        for (int i = 0; i < Math.Min(rows.Count, 15); i++)
+        {
+            var values = rows[i]
+                .Elements<Cell>()
+                .Select(c => GetCellValue(c, workbookPart))
+                .Where(v => !string.IsNullOrWhiteSpace(v))
+                .ToList();
+
+            if (values.Count < 3)
+                continue;
+
+            if (values.Count(IsCategoryLike) >= 2)
+                return i + 1;
+        }
+
+        for (int i = 0; i < Math.Min(rows.Count, 15); i++)
+        {
+            var values = rows[i]
+                .Elements<Cell>()
+                .Select(c => GetCellValue(c, workbookPart))
+                .Where(v => !string.IsNullOrWhiteSpace(v))
+                .ToList();
+
+            if (values.Count < 3)
+                continue;
+
+            if (!TryParseDoubleInvariant(values[0], out _))
+                return i + 1;
+        }
+
+        return null;
+    }
+
+    private static bool IsCategoryLike(string value)
+    {
+        value = value.ToLower();
+
+        return value.Contains("дз")
+            || value.Contains("кр")
+            || value.Contains("пров")
+            || value.Contains("акт")
+            || value.Contains("итог")
+            || value.Contains("сумм")
+            || value.Contains("total")
+            || value.Contains("балл");
+    }
+
 }

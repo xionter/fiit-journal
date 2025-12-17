@@ -5,7 +5,7 @@ namespace FiitFlow.Parser.Models
     public class SheetConfig
     {
         public string Name { get; set; } = string.Empty;
-        public int CategoriesRow { get; set; } = 1;
+        public int? CategoriesRow { get; set; }
     }
 
     public class TableConfig
