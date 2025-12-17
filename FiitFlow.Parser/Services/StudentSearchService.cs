@@ -3,16 +3,17 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using FiitFlow.Parser.Models;
+using FiitFlow.Parser.Interfaces;
 
 namespace FiitFlow.Parser.Services;
-public class StudentSearchService
+public class StudentSearchService : IStudentSearchService
 {
-    private readonly ExcelDownloader _excelDownloader;
-    private readonly ExcelParser _excelParser;
+    private readonly IExcelDownloader _excelDownloader;
+    private readonly IExcelParser _excelParser;
 
     public StudentSearchService(
-        ExcelDownloader excelDownloader,
-        ExcelParser excelParser)
+        IExcelDownloader excelDownloader,
+        IExcelParser excelParser)
     {
         _excelDownloader = excelDownloader;
         _excelParser = excelParser;

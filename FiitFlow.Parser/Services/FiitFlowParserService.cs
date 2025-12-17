@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Linq;
 using FiitFlow.Parser.Models;
+using FiitFlow.Parser.Interfaces;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -12,14 +13,17 @@ namespace FiitFlow.Parser.Services
 {
     public class FiitFlowParserService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IStudentSearchService _searchService;
         private readonly FormulaCalculatorService _calculator;
 
-        public FiitFlowParserService(HttpClient? httpClient = null)
+        public FiitFlowParserService(
+                IStudentSearchService searchService,
+                FormulaCalculatorService calculator)
         {
-            _httpClient = httpClient ?? new HttpClient();
-            _calculator = new FormulaCalculatorService();
+            _searchService = searchService;
+            _calculator = calculator;
         }
+
 
         public async Task<StudentSearchResult> ParseAsync(string configPath, string? studentName = null)
         {
@@ -32,18 +36,8 @@ namespace FiitFlow.Parser.Services
             {
                 studentName = config.StudentName;
             }
-
-            var cacheSettings = config.CacheSettings ?? new CacheSettings();
-            var cacheService = new CacheService(cacheSettings.CacheDirectory, cacheSettings.ForceRefresh);
-
-            var excelDownloader = new ExcelDownloader(_httpClient, cacheService);
-
-            var searchService = new StudentSearchService(
-                    excelDownloader,
-                    new ExcelParser()
-                    );
-
-            return await searchService.SearchStudentInAllTablesAsync(config, studentName);
+            
+            return await _searchService.SearchStudentInAllTablesAsync(config, studentName);
         }
 
         public async Task<StudentResults> ParseWithFormulasAsync(string configPath, string? studentName = null)
@@ -58,17 +52,7 @@ namespace FiitFlow.Parser.Services
                 studentName = config.StudentName;
             }
 
-            var cacheSettings = config.CacheSettings ?? new CacheSettings();
-            var cacheService = new CacheService(cacheSettings.CacheDirectory, cacheSettings.ForceRefresh);
-
-            var excelDownloader = new ExcelDownloader(_httpClient, cacheService);
-
-            var searchService = new StudentSearchService(
-                    excelDownloader,
-                    new ExcelParser()
-                    );
-
-            var searchResult = await searchService.SearchStudentInAllTablesAsync(config, studentName);
+            var searchResult = await _searchService.SearchStudentInAllTablesAsync(config, studentName);
 
             return GroupAndCalculateResults(config, searchResult, studentName);
         }
@@ -90,13 +74,13 @@ namespace FiitFlow.Parser.Services
                 var groupedTables = searchResult.Tables
                     .GroupBy(t => t.TableName)
                     .ToDictionary(
-                        g => g.Key,
-                        g => new SubjectResults
-                        {
+                            g => g.Key,
+                            g => new SubjectResults
+                            {
                             Tables = g.ToList(),
                             Categories = new Dictionary<string, Dictionary<string, object>>()
-                        }
-                    );
+                            }
+                            );
 
                 studentResults.Subjects = groupedTables;
                 return studentResults;
@@ -172,13 +156,13 @@ namespace FiitFlow.Parser.Services
                 .Where(t => !processedTables.Contains(t.TableName))
                 .GroupBy(t => t.TableName)
                 .ToDictionary(
-                    g => g.Key,
-                    g => new SubjectResults
-                    {
+                        g => g.Key,
+                        g => new SubjectResults
+                        {
                         Tables = g.ToList(),
                         Categories = new Dictionary<string, Dictionary<string, object>>()
-                    }
-                    );
+                        }
+                        );
 
             foreach (var remaining in remainingTables)
             {
@@ -279,54 +263,54 @@ namespace FiitFlow.Parser.Services
             return JsonSerializer.Deserialize<ParserConfig>(json, options) ?? new ParserConfig();
         }
 
-    private static bool TryParseDoubleInvariant(object? rawValue, out double value)
-    {
-        value = 0;
-
-        switch (rawValue)
+        private static bool TryParseDoubleInvariant(object? rawValue, out double value)
         {
-            case null:
-                return false;
-            case double d:
-                value = d;
-                return true;
-            case float f:
-                value = f;
-                return true;
-            case int i:
-                value = i;
-                return true;
-            case long l:
-                value = l;
-                return true;
-            case decimal dec:
-                value = (double)dec;
-                return true;
-            case string s:
-                return TryParseNormalizedString(s, out value);
-            default:
-                return TryParseNormalizedString(rawValue.ToString() ?? string.Empty, out value);
+            value = 0;
+
+            switch (rawValue)
+            {
+                case null:
+                    return false;
+                case double d:
+                    value = d;
+                    return true;
+                case float f:
+                    value = f;
+                    return true;
+                case int i:
+                    value = i;
+                    return true;
+                case long l:
+                    value = l;
+                    return true;
+                case decimal dec:
+                    value = (double)dec;
+                    return true;
+                case string s:
+                    return TryParseNormalizedString(s, out value);
+                default:
+                    return TryParseNormalizedString(rawValue.ToString() ?? string.Empty, out value);
+            }
         }
+
+        private static bool TryParseNormalizedString(string value, out double number)
+        {
+            number = 0;
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            var normalized = NormalizeNumber(value);
+            return double.TryParse(
+                    normalized,
+                    NumberStyles.Any,
+                    CultureInfo.InvariantCulture,
+                    out number);
+        }
+
+        private static string NormalizeNumber(string value) =>
+            value.Trim()
+            .Replace("\u00A0", string.Empty)
+            .Replace(" ", string.Empty)
+            .Replace(",", ".");
     }
-
-    private static bool TryParseNormalizedString(string value, out double number)
-    {
-        number = 0;
-        if (string.IsNullOrWhiteSpace(value))
-            return false;
-
-        var normalized = NormalizeNumber(value);
-        return double.TryParse(
-            normalized,
-            NumberStyles.Any,
-            CultureInfo.InvariantCulture,
-            out number);
-    }
-
-    private static string NormalizeNumber(string value) =>
-        value.Trim()
-             .Replace("\u00A0", string.Empty)
-             .Replace(" ", string.Empty)
-             .Replace(",", ".");
-}
 }

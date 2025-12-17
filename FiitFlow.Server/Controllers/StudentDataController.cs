@@ -10,11 +10,16 @@ namespace FiitFlowReactApp.Server.Controllers
     {
         private readonly ILogger<StudentDataController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly FiitFlowParserService _parserService;
 
-        public StudentDataController(ILogger<StudentDataController> logger, IConfiguration configuration)
+        public StudentDataController(
+                ILogger<StudentDataController> logger,
+                IConfiguration configuration,
+                FiitFlowParserService parserService)
         {
             _logger = logger;
             _configuration = configuration;
+            _parserService = parserService;
         }
 
         [HttpGet("{studentName}")]
@@ -22,45 +27,37 @@ namespace FiitFlowReactApp.Server.Controllers
         {
             try
             {
-                _logger.LogInformation($"Student name: {studentName}");
-                _logger.LogInformation($"Current directory: {Directory.GetCurrentDirectory()}");
-
-                using var httpClient = new HttpClient();
-                var parserService = new FiitFlowParserService(httpClient);
-
-                var possiblePaths = new[]
-                {
-                    "../FiitFlow.Parser/config.json",
-                    "../../../FiitFlow.Parser/config.json",
-                    "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/config.json"
-                };
-
-                string configPath = null;
-                foreach (var path in possiblePaths)
-                {
-                    var fullPath = Path.GetFullPath(path);
-                    _logger.LogInformation($"Checking: {fullPath}");
-                    if (System.IO.File.Exists(fullPath))
-                    {
-                        configPath = fullPath;
-                        break;
-                    }
-                }
-
+                var configPath = FindConfigPath();
                 if (configPath == null)
-                {
-                    return NotFound("Config file not found in any expected location");
-                }
+                    return NotFound("Config file not found");
 
-                _logger.LogInformation($"Using config: {configPath}");
-                var result = await parserService.ParseAsync(configPath, studentName);
+                var result =
+                    await _parserService.ParseAsync(configPath, studentName);
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error running parser");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                return StatusCode(500, ex.Message);
             }
+        }
+        private string? FindConfigPath()
+        {
+            var possiblePaths = new[]
+            {
+                "../FiitFlow.Parser/config.json",
+                "../../../FiitFlow.Parser/config.json",
+                "/home/xionter/proga/c-sharp/study/fiit-journal/FiitFlow.Parser/config.json"
+            };
+
+            foreach (var path in possiblePaths)
+            {
+                var fullPath = Path.GetFullPath(path);
+                if (System.IO.File.Exists(fullPath))
+                    return fullPath;
+            }
+            return null;
         }
     }
 }

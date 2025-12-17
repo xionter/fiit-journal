@@ -5,13 +5,14 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Globalization;
 using System;
 using FiitFlow.Parser.Models;
-using System.Globalization;
+using FiitFlow.Parser.Interfaces;
 
 namespace FiitFlow.Parser.Services;
 
-public class ExcelParser
+public class ExcelParser : IExcelParser
 {
     public IEnumerable<Student> FindStudents(string filePath, string? studentName, TableConfig tableConfig)
     {
