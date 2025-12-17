@@ -1,4 +1,3 @@
-
 using FiitFlow;
 using FiitFlow.Parser.Services;
 using FiitFlow.Repository;
@@ -8,7 +7,8 @@ using FiitFlow.Domain.Extensions;
 using FiitFlow.Server.SubTools;
 using FiitFlow.Server.SubTools.SubToolsUnits;
 using Microsoft.EntityFrameworkCore;
-
+using FiitFlow.Parser.Interfaces;
+using FiitFlow.Parser.Services;
 namespace FiitFlowReactApp.Server
 {
     public class Program
@@ -62,7 +62,20 @@ namespace FiitFlowReactApp.Server
             });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            
+            builder.Services.AddSingleton<HttpClient>();
 
+            builder.Services.AddSingleton<CacheService>(sp =>
+                    new CacheService("./Cache", false));
+
+            builder.Services.AddSingleton<IExcelDownloader, ExcelDownloader>();
+            builder.Services.AddSingleton<IExcelParser, ExcelParser>();
+
+            builder.Services.AddSingleton<IStudentSearchService, StudentSearchService>();
+
+            builder.Services.AddSingleton<FormulaCalculatorService>();
+
+            builder.Services.AddSingleton<FiitFlowParserService>();
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())

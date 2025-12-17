@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using ParserConfig = FiitFlow.Parser.Models.ParserConfig;
-using FiitFlow.Parser.Services;
 using Microsoft.EntityFrameworkCore.Update.Internal;
-
+using FiitFlow.Parser.Services;
+using FiitFlow.Parser.Interfaces;
 
 namespace FiitFlow;
 
@@ -18,6 +18,15 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
+        var httpClient = new HttpClient();
+        var cacheService = new CacheService("./Cache", false);
+        IExcelDownloader excelDownloader = new ExcelDownloader(httpClient, cacheService);
+        IExcelParser excelParser = new ExcelParser();
+        IStudentSearchService studentSearchService = new StudentSearchService(excelDownloader, excelParser);
+        var formulaCalculator = new FormulaCalculatorService();
+
+        var fiitFlowParserService = new FiitFlowParserService(studentSearchService,formulaCalculator);
+
         var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
         var dbPath = Path.Combine(rootPath, "fiitflow.db");
         var cfgBasePath = Path.Combine(rootPath, "cfg");
@@ -38,9 +47,10 @@ public class Program
         IPointsRepository pointsRepo = new PointsRepository(db);
 
         var logger = NullLoggerFactory.Instance.CreateLogger<PointsService>();
-        var pointsService = new PointsService(logger, pointsRepo, studentRepo, subjectRepo, groupRepo);
+
+        var pointsService = new PointsService(logger, pointsRepo, studentRepo, subjectRepo, groupRepo, fiitFlowParserService);
         await studentRepo.GetOrCreateAsync("Дарья", "Макарова", "ФТ-201", 2);
-        
+
         await pointsService.UpdateAll();
 
         var allGroups = await groupRepo.GetAllAsync();
@@ -101,8 +111,8 @@ public class Program
         foreach (var point in samplePoints)
         {
             Console.WriteLine($"Студент: {point.Student?.FullName ?? "N/A"}, " +
-                             $"Предмет: {point.Subject?.Title ?? "N/A"}, " +
-                             $"Баллы: {point.Value}, Семестр: {point.Semester}");
+                    $"Предмет: {point.Subject?.Title ?? "N/A"}, " +
+                    $"Баллы: {point.Value}, Семестр: {point.Semester}");
         }
     }
 

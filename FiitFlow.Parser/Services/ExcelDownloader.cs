@@ -3,10 +3,11 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FiitFlow.Parser.Models;
+using FiitFlow.Parser.Interfaces;
 
 namespace FiitFlow.Parser.Services
 {
-    public class ExcelDownloader
+    public class ExcelDownloader : IExcelDownloader
     {
         private readonly HttpClient _httpClient;
         private readonly CacheService _cacheService;
