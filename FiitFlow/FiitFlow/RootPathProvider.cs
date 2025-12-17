@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace FiitFlow.Server.Services
+namespace FiitFlow.Domain.Extensions
 {
     public interface IRootPathProvider
     {
