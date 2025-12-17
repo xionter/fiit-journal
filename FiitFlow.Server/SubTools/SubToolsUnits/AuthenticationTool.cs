@@ -1,4 +1,5 @@
 ﻿
+using FiitFlow.Parser.Services;
 using FiitFlow.Repository;
 using System.Text.RegularExpressions;
 
@@ -21,7 +22,18 @@ namespace FiitFlow.Server.SubTools.SubToolsUnits
                 return new AuthResponse<int>(false, 0, "Incorrect login data form");
             var groupTitle = groupFull.Substring(0, 6);
             var subgroup = int.Parse(groupFull.Substring(7));
+            var fullName = $"{lastName} {firstName}";
             var student = await _studentRepository.GetOrCreateAsync(firstName, lastName, groupTitle, subgroup);
+            var cfgPath = Path.Combine(Extensions.GetRootPath(), $"{groupTitle}/{fullName}.json");
+            if (!File.Exists(cfgPath))
+            {
+                var defCfg = Path.Combine(Extensions.GetRootPath(), "cfg" ,groupTitle, $"default{Int32.Parse(groupTitle[^1].ToString())}");
+   
+                Console.WriteLine($"Default config path: {defCfg}");
+                var cfgEd = new ConfigEditorService(defCfg).CreateNewConfigFromStudentName(fullName);
+                
+                Console.WriteLine(cfgEd);
+            }
             if (student == null)
                 return new AuthResponse<int>(false, 0, "User was not found");
             return new AuthResponse<int>(true, student.Id, string.Empty);

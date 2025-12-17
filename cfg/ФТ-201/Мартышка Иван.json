@@ -1,0 +1,8 @@
+﻿{
+  "StudentName": "Мартышка Иван",
+  "CacheSettings": {
+    "CacheDirectory": "./Cache",
+    "ForceRefresh": true
+  },
+  "Subjects": []
+}

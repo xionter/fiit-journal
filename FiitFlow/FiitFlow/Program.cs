@@ -18,7 +18,7 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../.."));
+        var rootPath = Extensions.GetRootPath(); ;
         var dbPath = Path.Combine(rootPath, "fiitflow.db");
         var cfgBasePath = Path.Combine(rootPath, "cfg");
 

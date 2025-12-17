@@ -307,5 +307,39 @@ namespace FiitFlow.Parser.Services
 
                 cfg.Subjects.RemoveAll(f => NameComparer.Equals(f.SubjectName, subjectName));
             });
+
+
+        public string CreateNewConfigFromStudentName(string? studentName, bool overwrite = false)
+        {
+            var dir = Path.GetDirectoryName(_configPath)
+                ?? throw new InvalidOperationException("Invalid config path.");
+
+            var path = Path.Combine(dir, studentName + ".json");
+
+            lock (_sync)
+            {
+                Directory.CreateDirectory(dir);
+
+                if (File.Exists(path) && !overwrite)
+                    throw new InvalidOperationException("Config already exists.");
+
+                var cfg = new ParserConfig { StudentName = studentName ?? string.Empty };
+                EnsureCollections(cfg);
+
+                var json = JsonSerializer.Serialize(cfg, JsonOptions);
+
+                var tmp = path + ".tmp";
+                File.WriteAllText(tmp, json, Encoding.UTF8);
+
+                if (File.Exists(path))
+                {
+                    try { File.Replace(tmp, path, null); return path; }
+                    catch { File.Delete(path); }
+                }
+
+                File.Move(tmp, path);
+                return path;
+            }
+        }
     }
 }

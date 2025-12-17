@@ -47,4 +47,8 @@ public static class Extensions
         var firstName = string.Join(' ', parts.Skip(1));
         return (firstName, lastName);
     }
+
+    public static string GetRootPath() => 
+        Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
+    
 }
