@@ -1,13 +1,12 @@
 ﻿import { useNavigate } from 'react-router-dom'
-import { Fragment, useEffect, useState, type ReactElement } from "react"
+import { useEffect, useState, } from "react"
 import { rootEdit, rootMain } from "./Navigation"
 import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
 import type PointsItem from "./PointsItem"
 import api from "./Api"
 import type StudentSubject from "./StudentSubject"
-import { loadSubjectCookie, saveSubjectCookie, removeSubjectCookie } from "./CookieTools"
-import { string } from 'yup'
+import { saveSubjectCookie } from "./CookieTools"
 
 interface SubjectGroupProps {
     student: Student;
@@ -42,7 +41,7 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                                 <span>Последнее обновление: {lastUPDFormat(subpoint)}</span>
                                 <span>Преподаватель: {subpoint.teacher}</span>
                             </div>
-                            <button onClick={() => setCurrentSubject({ subjectName: subpoint.subject, student: student, term: term })} className="btn">Подробнее</button>
+                            <button onClick={() => setCurrentSubject({ subjectName: subpoint.subject, student: student, term: term, score: subpoint.score })} className="btn">Подробнее</button>
                         </div>
                     ))
                 }

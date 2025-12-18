@@ -39,15 +39,17 @@ public class StudentSearchService : IStudentSearchService
         return result;
     }
 
-    public async Task<StudentSearchResult> SearchStudentInTableAsync(ParserConfig config, string tableName)
+    public async Task<StudentSearchResult> SearchStudentInTableAsync(ParserConfig config, string subjectName)
     {
         var result = new StudentSearchResult { StudentName = config.StudentName };
-        var table = config.Subjects?
-            .SelectMany(s => s.Tables ?? Enumerable.Empty<TableConfig>())
-            .Where(t => t.Name == tableName).First();
+        var tables = config.Subjects?.Where(s => s.SubjectName == subjectName)
+            .SelectMany(s => s.Tables).ToList() ?? new List<TableConfig>(); ;
 
-        var tableResults = await ProcessTableAsync(table, config.StudentName);
-        result.Tables.AddRange(tableResults);
+        foreach (var table in tables)
+        {
+            var tableResults = await ProcessTableAsync(table, config.StudentName);
+            result.Tables.AddRange(tableResults);
+        }
 
         return result;
     }

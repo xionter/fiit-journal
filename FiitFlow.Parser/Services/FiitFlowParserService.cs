@@ -29,10 +29,10 @@ namespace FiitFlow.Parser.Services
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
-            var configEditor = new ConfigEditorService(configPath);
-            configEditor.SetCache("", false);
+            //var configEditor = new ConfigEditorService(configPath);
+            //configEditor.SetCache("", false);
             var config = await LoadJsonConfigAsync(configPath);
-            configEditor.SetCache("", true);
+            //configEditor.SetCache("", true);
             if (string.IsNullOrWhiteSpace(studentName))
             {
                 studentName = config.StudentName;

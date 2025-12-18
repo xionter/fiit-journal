@@ -16,7 +16,7 @@ namespace FiitFlow;
 
 public class Program
 {
-    public static async Task Main(string[] args)
+    public static async Task Main2(string[] args)
     {
         var httpClient = new HttpClient();
         var cacheService = new CacheService("./Cache", false);

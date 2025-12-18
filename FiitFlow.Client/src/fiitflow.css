@@ -443,6 +443,12 @@ footer {
     gap: 10px;
 }
 
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .login-form .form-group {
     margin-bottom: 20px;
 }
@@ -525,11 +531,12 @@ footer {
     }
 
     .footer-content {
-        flex-direction: column;
+        flex-direction: row;
         gap: 20px;
     }
 
     .footer-section {
+        flex-direction: column;
         min-width: 100%;
     }
 

@@ -1,120 +1,86 @@
 import type StudentSubject from "./StudentSubject"
-import type Student from "./Student"
 import LoadingPageData from "./LoadingPageData"
 import api from "./Api"
+import { useEffect, useState } from "react"
 
-function StudentSubjectComponent({ subjectName, student, term }: StudentSubject) {
+interface SubjectTableResult {
+    studentName: string;
+    tableName: string;
+    tableUrl: string;
+    sheetName: string;
+    data: Record<string, string>;
+}
+
+interface StudentSubjectResult {
+    studentName: string;
+    tables: SubjectTableResult[];
+}
+
+function StudentSubjectComponent({ subjectName, student, term, score }: StudentSubject) {
+    const [subjectInfo, setSubjectInfo] = useState<StudentSubjectResult>();
+
+    useEffect(() => {
+        populateSubjectPointsDataByStudent();
+    }, []);
+
     return (
-        <LoadingPageData isLoading={false}>
+        <LoadingPageData isLoading={subjectInfo === undefined}>
             <div className="subject-header">
-                <h1 className="subject-title">Алгебра и геометрия {term}</h1>
-                <div className="subject-score-large">95</div>
+                <h1 className="subject-title">{subjectName}</h1>
+                <div className="subject-score-large">{score}</div>
             </div>
 
             <div className="progress-bar">
-                <div className="progress-fill" style={{ width: "95%" }} ></div>
+                <div className="progress-fill" style={{ width: `${score}%` }} ></div>
             </div>
             <div className="progress-text">
                 <span>0 баллов</span>
                 <span>100 баллов</span>
             </div>
 
-            <h2 className="page-title">Детализация баллов</h2>
+            <h2 className="page-title">Детализация</h2>
 
             <table className="details-table">
                 <thead>
                     <tr>
-                        <th>Тип работы</th>
-                        <th>Название</th>
-                        <th>Баллы</th>
-                        <th>Максимум</th>
-                        <th>Дата</th>
+                        <th>Лист</th>
+                        <th>Столбец</th>
+                        <th>Данные</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Компьютерный практикум</td>
-                        <td>Практикум 1</td>
-                        <td className="score-good">7.8</td>
-                        <td>8</td>
-                        <td>12.03.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Компьютерный практикум</td>
-                        <td>Практикум 2</td>
-                        <td className="score-good">2</td>
-                        <td>2</td>
-                        <td>19.03.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Компьютерный практикум</td>
-                        <td>Практикум 3</td>
-                        <td className="score-good">1.8</td>
-                        <td>2</td>
-                        <td>26.03.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Компьютерный практикум</td>
-                        <td>Практикум 4</td>
-                        <td className="score-good">2</td>
-                        <td>2</td>
-                        <td>02.04.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Контрольные работы</td>
-                        <td>Сумма контрольных</td>
-                        <td className="score-medium">22.2</td>
-                        <td>26</td>
-                        <td>15.04.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Активность</td>
-                        <td>Участие в семинарах</td>
-                        <td className="score-medium">5</td>
-                        <td>6</td>
-                        <td>20.04.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Шеarn</td>
-                        <td>Онлайн-курс</td>
-                        <td className="score-good">5</td>
-                        <td>5</td>
-                        <td>25.04.2023</td>
-                    </tr>
-                    <tr>
-                        <td>Экзамен</td>
-                        <td>Итоговый экзамен</td>
-                        <td className="score-good">55</td>
-                        <td>55</td>
-                        <td>10.05.2023</td>
-                    </tr>
+                    {subjectInfo?.tables.map((table, tIndex) => Object.entries(table.data).map(([tag, val], index) => (
+                        <tr key={tIndex * 100 + index}>
+                            <td>{table.sheetName}</td>
+                            <td>{tag}</td>
+                            <td>{val}</td>
+                        </tr>
+                    )))}
                 </tbody>
             </table>
 
             <div className="formula-section">
-                <h3 className="formula-title">Формула расчета итогового балла</h3>
-                <div className="formula">
-                    Итоговый балл = (Компьютерный практикум / 14 * 15) + (Контрольные работы / 26 * 20) +
-                    (Активность / 6 * 5) + (Ulеarn / 5 * 5) + (Экзамен / 55 * 55)
-                </div>
-                <p>В текущем семестре: (13.6 / 14 * 15) + (22.2 / 26 * 20) + (5 / 6 * 5) + (5 / 5 * 5) + (55 / 55 * 55) = 95</p>
+                <h3 className="formula-title">Формула</h3>
+                <div className="formula">Формула будет добавлена позже</div>
+                <p>В текущем семестре: {score}</p>
             </div>
         </LoadingPageData>
     );
 
     async function populateSubjectPointsDataByStudent() {
-        api.get(`StudentSubjects/All`, {
+        api.get(`StudentSubjects/SubjectInfo`, {
             params: {
                 id: student.id,
                 firstName: student.firstName,
                 lastName: student.lastName,
                 group: student.group,
                 term: term,
+                subjectName: subjectName,
                 time: Date.now(),
             }
         }).then(response => {
             if (response.status == 200) {
-                const a = (response.data);
+                setSubjectInfo(response.data);
             }
         });
     }

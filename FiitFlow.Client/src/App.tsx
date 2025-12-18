@@ -1,6 +1,4 @@
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
-import SubjectsGroup from "./components/SubjectsGroup"
-import StudentSubjectComponent from "./components/StudentSubjectComponent"
 import LoginPage from "./components/LoginPage"
 import Main from "./components/Main"
 import "./fiitflow.css"

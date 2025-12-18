@@ -3,10 +3,9 @@ import { useNavigate, useParams } from "react-router-dom"
 import { rootLogin, rootMain } from "./Navigation"
 import SubjectsGroup from "./SubjectsGroup"
 import type Student from "./Student"
-import { loadStudentCookie, loadSubjectCookie, removeStudentCookie, removeSubjectCookie, saveStudentCookie } from "./CookieTools"
+import { loadStudentCookie, loadSubjectCookie, removeSubjectCookie } from "./CookieTools"
 import StudentSubjectComponent from "./StudentSubjectComponent"
 import SubjectsGroupConfigEditor from "./SubjectsGroupConfigEditor"
-import { number } from "yup"
 
 interface MainProps {
     subjectPeaked: boolean;
@@ -17,7 +16,7 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
     const navigate = useNavigate();
     const { subjectName } = useParams();
     const [currentStudent, setCurrentStudent] = useState<Student>();
-    const [currentTerm, setCurrentTerm] = useState<number>(1);
+    const [currentTerm, setCurrentTerm] = useState<number>(3);
     const [centralBlock, setCentralBlock] = useState<ReactElement>();
 
     useEffect(() => {
@@ -34,12 +33,12 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
             <header>
                 <div className="div-container">
                     <div className="header-content">
-                        <div className="logo">
+                        <div onClick={goToMain} className="logo">
                             <span className="logo-icon">📊</span>
                             FIITFLOW
                         </div>
                         <div className="semester-select">
-                            <select defaultValue={defaultTerm()} onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
+                            <select value={currentTerm} onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
                                 {
                                     [1, 2, 3, 4].map(num => (
                                         <option key={num} value={num}>Семестр {num}</option>
@@ -64,15 +63,6 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                         <div className="footer-section">
                             <h3>FIITFLOW</h3>
                             <p>Единая система для отслеживания учебных баллов студентов ФИИТ</p>
-                        </div>
-                        <div className="footer-section">
-                            <h3>Навигация</h3>
-                            <ul>
-                                <li><a href="index.html">Главная</a></li>
-                                <li><a href="subjects.html">Предметы</a></li>
-                                <li><a href="analytics.html">Аналитика</a></li>
-                                <li><a href="settings.html">Настройки</a></li>
-                            </ul>
                         </div>
                         <div className="footer-section">
                             <h3>Контакты</h3>
@@ -111,7 +101,7 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
             setCurrentStudent(studentFromCookie);
             if (subjectPeaked) {
                 const subjectFromCookie = loadSubjectCookie();
-                if (subjectFromCookie !== undefined && subjectFromCookie.subjectName === subjectName)
+                if (subjectFromCookie !== undefined) // && subjectFromCookie.subjectName === subjectName)
                     setCentralBlock(
                         <Fragment>
                             <a onClick={goToMain} className="back-link">← Назад к списку предметов</a>
@@ -119,6 +109,7 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                                 subjectName={subjectFromCookie.subjectName}
                                 student={studentFromCookie}
                                 term={currentTerm}
+                                score={subjectFromCookie.score}
                             />
                         </Fragment>
                     );
@@ -142,9 +133,9 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
         }
     }
 
-    function defaultTerm() {
+    function defaultTerm(studentGroup: string) {
         const month = new Date().getMonth() + 1;
-        return Number(currentStudent?.group.at(4)) * 2 + (9 > month && month > 1 ? 2 : 1);
+        return Number(studentGroup.at(3)) * 2 - (9 > month && month > 1 ? 0 : 1);
     }
 }
 

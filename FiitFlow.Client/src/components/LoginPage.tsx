@@ -1,9 +1,8 @@
 ﻿import { useNavigate } from 'react-router-dom'
-import { Fragment, useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
-import type Student from "./Student"
 import api from "./Api"
 import { saveStudentCookie, loadStudentCookie } from "./CookieTools"
 import { rootMain } from "./Navigation"

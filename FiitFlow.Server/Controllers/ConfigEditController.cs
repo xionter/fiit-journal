@@ -50,7 +50,7 @@ namespace FiitFlow.Server.Controllers
                 Name = subCon.SubjectName,
                 Link = subCon.Tables.First().Url,
                 Formula = subCon.Formula.FinalFormula ?? "",
-                Sheets = subCon.Tables.First().Sheets.Select(s => (s.Name, s.CategoriesRow ?? 1))
+                Sheets = subCon.Tables.First().Sheets.Select(s => new SheetSimple { sheetName = s.Name, headerRow = s.CategoriesRow ?? 1 }).ToArray()
             });
             _logger.LogCritical(result.Count().ToString());
             return Ok(result);
@@ -87,7 +87,12 @@ namespace FiitFlow.Server.Controllers
                 }
                 if (subjectConfig.BaseName.Length == 0 || removed)
                 {
-                    configEditor.CreateSubject(subjectConfig.Name, "1", subjectConfig.Link, subjectConfig.Sheets, subjectConfig.Formula);
+                    configEditor.CreateSubject(
+                        subjectConfig.Name,
+                        "1",
+                        subjectConfig.Link,
+                        subjectConfig.Sheets.Select(s => (s.sheetName, s.headerRow)),
+                        subjectConfig.Formula);
                 }
             }
             foreach (var befSub in beforeSubjects)
