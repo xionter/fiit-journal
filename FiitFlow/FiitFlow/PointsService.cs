@@ -39,7 +39,9 @@ public class PointsService
         {
             var rootPath = new RootPathProvider().GetRootPath();
             var groupConfigPath = Path.Combine(rootPath, "cfg", $"{group.GroupTitle}");
+            _logger.LogInformation("begin DB Update");
             await UpdatePointsForGroupAsync(group.Id, group.GetCurrentSemester(), groupConfigPath);
+            _logger.LogInformation("end DB Update");
         }
     }
 

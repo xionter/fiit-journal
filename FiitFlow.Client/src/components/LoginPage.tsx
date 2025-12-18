@@ -25,12 +25,22 @@ export default function LoginPage() {
     const {
         register,
         handleSubmit,
+        setValue,
         setError,
         formState: { errors, isValid, isSubmitting }
     } = useForm<FormInputs>({
         resolver: yupResolver(schema),
         mode: "onChange"
     });
+
+    useEffect(() => {
+        const studentFromCookie = loadStudentCookie();
+        if (studentFromCookie !== undefined) {
+            setValue("lastName", studentFromCookie.lastName);
+            setValue("firstName", studentFromCookie.firstName);
+            setValue("group", studentFromCookie.group);
+        }
+    }, [])
 
     return (
         <div className="login-container">

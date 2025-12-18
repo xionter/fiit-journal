@@ -29,7 +29,38 @@ namespace FiitFlow.Parser.Services
             if (string.IsNullOrWhiteSpace(configPath))
                 throw new ArgumentException("Config path is empty.", nameof(configPath));
 
-            _configPath = configPath;
+            _configPath = ResolveConfigPath(configPath);
+        }
+
+        private static string ResolveConfigPath(string configPath)
+        {
+            if (Path.IsPathRooted(configPath))
+                return configPath;
+
+            var baseDirectories = new[]
+            {
+                AppContext.BaseDirectory,
+                Directory.GetCurrentDirectory()
+            };
+
+            foreach (var baseDir in baseDirectories)
+            {
+                var candidate = Path.GetFullPath(configPath, baseDir);
+                if (File.Exists(candidate))
+                    return candidate;
+            }
+
+            var dirInfo = new DirectoryInfo(AppContext.BaseDirectory);
+            while (dirInfo?.Parent != null)
+            {
+                var candidate = Path.GetFullPath(configPath, dirInfo.Parent.FullName);
+                if (File.Exists(candidate))
+                    return candidate;
+
+                dirInfo = dirInfo.Parent;
+            }
+
+            return Path.GetFullPath(configPath, AppContext.BaseDirectory);
         }
 
         public IReadOnlyList<string> ListSubjects() =>
@@ -52,8 +83,8 @@ namespace FiitFlow.Parser.Services
                 if (string.IsNullOrWhiteSpace(json))
                     return new ParserConfig();
 
-                var cfg = JsonSerializer.Deserialize<ParserConfig>(json, JsonOptions);
-                return cfg ?? new ParserConfig();
+                var cfg = JsonSerializer.Deserialize<ParserConfig>(json, JsonOptions) ?? new ParserConfig();
+                return NormalizeConfig(cfg);
             }
         }
 
@@ -101,6 +132,38 @@ namespace FiitFlow.Parser.Services
                 Save(cfg);
                 return cfg;
             }
+        }
+
+        private static ParserConfig NormalizeConfig(ParserConfig config)
+        {
+            config.Subjects ??= new List<SubjectConfig>();
+            config.Subjects.RemoveAll(s => s is null);
+
+            foreach (var subject in config.Subjects)
+            {
+                subject.SubjectName ??= string.Empty;
+                subject.Tables ??= new List<TableConfig>();
+                subject.Tables.RemoveAll(t => t is null);
+
+                foreach (var table in subject.Tables)
+                {
+                    table.Name ??= string.Empty;
+                    table.Url ??= string.Empty;
+                    table.Sheets ??= new List<SheetConfig>();
+                    table.Sheets.RemoveAll(sh => sh is null);
+
+                    foreach (var sheet in table.Sheets)
+                    {
+                        sheet.Name ??= string.Empty;
+                        sheet.CategoriesRow = NormalizeRow(sheet.CategoriesRow ?? 0);
+                    }
+                }
+
+                subject.Formula ??= new SubjectFormula();
+                subject.Formula.ComponentFormulas ??= new Dictionary<string, string>();
+            }
+
+            return config;
         }
 
         private static void EnsureCollections(ParserConfig config)
@@ -224,8 +287,7 @@ namespace FiitFlow.Parser.Services
             string subjectName,
             string tableName,
             string url,
-            string sheetName,
-            int headerRow,
+            IEnumerable<(string sheetName, int headerRow)> sheets,
             string finalFormula,
             Dictionary<string, string>? componentFormulas = null,
             Dictionary<string, string>? valueMappings = null,
@@ -240,14 +302,11 @@ namespace FiitFlow.Parser.Services
                 var subject = EnsureSubject(cfg, subjectName, allowExisting: false);
                 var table = EnsureTable(subject, tableName);
                 table.Url = url ?? string.Empty;
-                table.Sheets = new List<SheetConfig>
+                table.Sheets = sheets.Select(sheet => new SheetConfig
                 {
-                    new SheetConfig
-                    {
-                        Name = string.IsNullOrWhiteSpace(sheetName) ? "Sheet 1" : sheetName,
-                        CategoriesRow = NormalizeRow(headerRow)
-                    }
-                };
+                    Name = string.IsNullOrWhiteSpace(sheet.sheetName) ? "Sheet 1" : sheet.sheetName,
+                    CategoriesRow = NormalizeRow(sheet.headerRow)
+                }).ToList();
 
                 subject.Formula = new SubjectFormula
                 {
@@ -288,6 +347,12 @@ namespace FiitFlow.Parser.Services
             {
                 var sheet = EnsureSheet(table, sheetName);
                 sheet.CategoriesRow = NormalizeRow(headerRow);
+            });
+
+        public ParserConfig SetSubjectName(string subjectNameOld, string subjectNameNew, string? sheetName = null, string? tableName = null) =>
+            EditSubject(subjectNameOld, tableName, (_, subject, __) =>
+            {
+                subject.SubjectName = subjectNameNew;
             });
 
         public ParserConfig SetSubjectSheet(string subjectName, string sheetName, string? tableName = null) =>

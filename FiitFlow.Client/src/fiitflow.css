@@ -1,6 +1,7 @@
 :root {
     --primary: #9d4edd;
     --secondary: #6a9aff;
+    --secondary-add: #9acaff;
     --accent: #7e5bef;
     --light: #f0f4ff;
     --dark: #7c3aed;
@@ -235,6 +236,23 @@ main {
 
 .btn-outline:hover {
     background: var(--light);
+}
+
+.add-subject-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-subject-btn:hover {
+    background: var(--secondary-add);
 }
 
 /* Tables */

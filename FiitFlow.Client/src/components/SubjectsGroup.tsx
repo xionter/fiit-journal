@@ -1,6 +1,6 @@
 ﻿import { useNavigate } from 'react-router-dom'
-import { Fragment, useEffect, useState } from "react"
-import { rootMain } from "./Navigation"
+import { Fragment, useEffect, useState, type ReactElement } from "react"
+import { rootEdit, rootMain } from "./Navigation"
 import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
 import type PointsItem from "./PointsItem"
@@ -47,11 +47,12 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                     ))
                 }
             </div>
+            <a onClick={() => navigate(rootEdit.to, rootEdit.options)} className="back-link">Редактировать</a>
         </LoadingPageData>
     );
 
     async function populateSubjectPointsDataByStudent() {
-        api.get("StudentSubjects/All", {
+        api.get<PointsItem[]>("StudentSubjects/All", {
             withCredentials: true,
             params: {
                 id: student.id,

@@ -14,7 +14,7 @@ namespace FiitFlow.Domain.Extensions
 
         public RootPathProvider()
         {
-            _rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", ".."));
+            _rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
         }
 
         public string GetRootPath() => _rootPath;
