@@ -47,7 +47,7 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                     ))
                 }
             </div>
-            <button onClick={() => navigate(rootEdit.to, rootEdit.options)} className="logout-btn">Выход</button>
+            <a onClick={() => navigate(rootEdit.to, rootEdit.options)} className="back-link">Редактировать</a>
         </LoadingPageData>
     );
 
