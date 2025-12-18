@@ -27,6 +27,7 @@ export default function LoginPage() {
         handleSubmit,
         setValue,
         setError,
+        trigger,
         formState: { errors, isValid, isSubmitting }
     } = useForm<FormInputs>({
         resolver: yupResolver(schema),
@@ -39,8 +40,9 @@ export default function LoginPage() {
             setValue("lastName", studentFromCookie.lastName);
             setValue("firstName", studentFromCookie.firstName);
             setValue("group", studentFromCookie.group);
+            trigger();
         }
-    }, [])
+    }, []);
 
     return (
         <div className="login-container">
