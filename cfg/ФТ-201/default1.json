@@ -1,8 +1,8 @@
 ﻿{
-  "StudentName": "Мартышка Иван",
+  "StudentName": "",
   "CacheSettings": {
     "CacheDirectory": "./Cache",
-    "ForceRefresh": true
+    "ForceRefresh": false
   },
   "Subjects": [
     {
@@ -10,7 +10,7 @@
       "Tables": [
         {
           "Name": "МАТАН ПРАКТИКА",
-          "Url": "https://docs.google.com/spreadsheets/d/1I74SHN9EzrDtnmdKAPkwtVnHmLJzz2T2EYxibm2qFRM/edit",
+          "Url": "https://docs.google.com/spreadsheets/d/1WzRj0FTGb50Tz-epNJhXnQZCCE1Onn9lLimjcVo0pbs/edit?usp=sharing",
           "Sheets": [
             {
               "Name": "Sheet 1",
@@ -36,18 +36,18 @@
         }
       ],
       "Formula": {
-        "FinalFormula": "ДЗ + КР + Пров + Акт",
+        "FinalFormula": "ДЗ + КР + Проверочные + Активность",
         "ComponentFormulas": {
           "ДЗ": "ДЗ",
           "КР": "КР",
-          "Пров": "Пров",
-          "Акт": "Акт"
+          "Проверочные": "Проверочные",
+          "Активность": "Активность"
         },
         "ValueMappings": {
           "ДЗ": "ДЗ",
           "КР": "КР",
-          "Пров": "Пров",
-          "Акт": "Акт"
+          "Проверочные": "Проверочные",
+          "Активность": "Активность"
         },
         "AggregateMethod": ""
       }
@@ -84,7 +84,7 @@
           "Url": "https://docs.google.com/spreadsheets/d/1WLpM4NhY3dnseuwHWLIVAsB8dFi-sXIzWL3_YToBcLE/edit?pli=1&gid=313135890#gid=313135890",
           "Sheets": [
             {
-              "Name": "Sheet 2",
+              "Name": "Sheet 1",
               "CategoriesRow": 1
             }
           ]

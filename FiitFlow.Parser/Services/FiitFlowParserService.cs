@@ -25,19 +25,20 @@ namespace FiitFlow.Parser.Services
         }
 
 
-        public async Task<StudentSearchResult> ParseAsync(string configPath, string? studentName = null)
+        public async Task<StudentSearchResult> ParseAsync(string configPath, string tableName, string? studentName = null)
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
-
+            var configEditor = new ConfigEditorService(configPath);
+            configEditor.SetCache("", false);
             var config = await LoadJsonConfigAsync(configPath);
-
+            configEditor.SetCache("", true);
             if (string.IsNullOrWhiteSpace(studentName))
             {
                 studentName = config.StudentName;
             }
             
-            return await _searchService.SearchStudentInAllTablesAsync(config, studentName);
+            return await _searchService.SearchStudentInTableAsync(config, tableName);
         }
 
         public async Task<StudentResults> ParseWithFormulasAsync(string configPath, string? studentName = null)

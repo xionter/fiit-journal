@@ -42,6 +42,8 @@ namespace FiitFlowReactApp.Server.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+
         private string? FindConfigPath()
         {
             var possiblePaths = new[]

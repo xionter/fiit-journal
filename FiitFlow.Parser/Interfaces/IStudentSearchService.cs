@@ -7,6 +7,9 @@ namespace FiitFlow.Parser.Interfaces
         Task<StudentSearchResult> SearchStudentInAllTablesAsync(
             ParserConfig config,
             string? studentName = null);
+
+        Task<StudentSearchResult> SearchStudentInTableAsync(
+            ParserConfig config, string table);
     }
 }
 

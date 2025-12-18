@@ -39,6 +39,19 @@ public class StudentSearchService : IStudentSearchService
         return result;
     }
 
+    public async Task<StudentSearchResult> SearchStudentInTableAsync(ParserConfig config, string tableName)
+    {
+        var result = new StudentSearchResult { StudentName = config.StudentName };
+        var table = config.Subjects?
+            .SelectMany(s => s.Tables ?? Enumerable.Empty<TableConfig>())
+            .Where(t => t.Name == tableName).First();
+
+        var tableResults = await ProcessTableAsync(table, config.StudentName);
+        result.Tables.AddRange(tableResults);
+
+        return result;
+    }
+
     private async Task<IReadOnlyList<TableResult>> ProcessTableAsync(TableConfig table, string? studentName)
     {
         var tableResults = new List<TableResult>();

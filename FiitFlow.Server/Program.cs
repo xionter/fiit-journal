@@ -75,6 +75,9 @@ namespace FiitFlowReactApp.Server
 
             builder.Services.AddSingleton<FormulaCalculatorService>();
 
+            builder.Logging
+                .AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
+
             builder.Services.AddSingleton<FiitFlowParserService>();
             var app = builder.Build();
 
@@ -83,6 +86,7 @@ namespace FiitFlowReactApp.Server
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 db.Database.EnsureCreated();
             }
+            
 
             app.UseDefaultFiles();
             app.MapStaticAssets();
