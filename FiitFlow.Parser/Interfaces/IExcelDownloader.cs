@@ -1,4 +1,5 @@
+using FiitFlow.Parser.Models;
 public interface IExcelDownloader
 {
-    Task<string> DownloadAsync(string url, string outputPath);
+    Task<string> DownloadAsync(TableConfig table);
 }

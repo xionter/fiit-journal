@@ -4,11 +4,13 @@ using FiitFlow.Parser.Services;
 using FiitFlow.Parser.Models;
 using System.Globalization;
 using Microsoft.Extensions.Logging;
+using FiitFlow.Domain.Extensions;
 
 namespace FiitFlow;
 
 public class PointsService
 {
+    private readonly FiitFlowParserService _parserService;
     private readonly ILogger<PointsService> _logger;
     private readonly IPointsRepository _pointsRepo;
     private readonly IStudentRepository _studentRepo;
@@ -16,24 +18,26 @@ public class PointsService
     private readonly IGroupRepository _groupRepo;
 
     public PointsService(
-        ILogger<PointsService> logger,
-        IPointsRepository pointsRepo,
-        IStudentRepository studentRepo,
-        ISubjectRepository subjectRepo,
-        IGroupRepository groupRepo)
+            ILogger<PointsService> logger,
+            IPointsRepository pointsRepo,
+            IStudentRepository studentRepo,
+            ISubjectRepository subjectRepo,
+            IGroupRepository groupRepo,
+            FiitFlowParserService parserService)
     {
         _pointsRepo = pointsRepo;
         _studentRepo = studentRepo;
         _subjectRepo = subjectRepo;
         _groupRepo = groupRepo;
         _logger = logger;
+        _parserService = parserService;
     }
 
     public async Task UpdateAll()
     {
         foreach (var group in await _groupRepo.GetAllAsync())
         {
-            var rootPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."));
+            var rootPath = new RootPathProvider().GetRootPath();
             var groupConfigPath = Path.Combine(rootPath, "cfg", $"{group.GroupTitle}");
             _logger.LogInformation("begin DB Update");
             await UpdatePointsForGroupAsync(group.Id, group.GetCurrentSemester(), groupConfigPath);
@@ -56,7 +60,6 @@ public class PointsService
 
             var collectedPoints = new List<Points>();
             var subjectCache = new Dictionary<string, Subject>();
-            var parserService = new FiitFlowParserService();
             int processedCount = 0;
 
             foreach (var student in students)
@@ -67,7 +70,7 @@ public class PointsService
                     var studentConfigPath = Path.Combine(configPath, $"{student.FullName}.json");
                     var confEditor = new ConfigEditorService(studentConfigPath);
                     confEditor.SetCache("./Cache", true);
-                    var studentResult = await parserService.ParseWithFormulasAsync(studentConfigPath, student.FullName);
+                    var studentResult = await _parserService.ParseWithFormulasAsync(studentConfigPath, student.FullName);
                     
                     if (studentResult?.Subjects == null || !studentResult.Subjects.Any())
                     {
