@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "S:\\fiit-journal\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\studentconfigservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\studentconfigservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|s:\\fiit-journal\\fiitflow.server\\subtools\\subtoolsunits\\authenticationtool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\subtools\\subtoolsunits\\authenticationtool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\studentsearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\studentsearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\fiitflowparserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\fiitflowparserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|s:\\fiit-journal\\fiitflow.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,20 +27,12 @@
       "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\fiitflowparserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\fiitflowparserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|s:\\fiit-journal\\fiitflow.server\\controllers\\studentdatacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\controllers\\studentdatacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\configeditorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\configeditorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\studentsearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\studentsearchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\configparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,14 +65,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|s:\\fiit-journal\\fiitflow\\fiitflow\\pointsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{53611A64-4EE5-4310-B3AF-A82A373D75DF}|FiitFlow\\FiitFlow\\FiitFlow.csproj|solutionrelative:fiitflow\\fiitflow\\pointsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|s:\\fiit-journal\\fiitflow.server\\subtools\\subtoolsunits\\authenticationtool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|solutionrelative:fiitflow.server\\subtools\\subtoolsunits\\authenticationtool.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|s:\\fiit-journal\\fiitflow.parser\\services\\studentconfigservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{37E8DFCC-504E-49FC-B829-19D7F63AC0B4}|FiitFlow.Parser\\FiitFlow.Parser.csproj|solutionrelative:fiitflow.parser\\services\\studentconfigservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0C8A337D-96B8-4598-8A06-376B47379942}|FiitFlow.Server\\FiitFlow.Server.csproj|s:\\fiit-journal\\fiitflow.server\\subtools\\iauthentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -130,21 +130,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "FiitFlowParserService.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\FiitFlowParserService.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Services\\FiitFlowParserService.cs",
               "ToolTip": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\FiitFlowParserService.cs",
               "RelativeToolTip": "FiitFlow.Parser\\Services\\FiitFlowParserService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAQwBQAAAA0AAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAQwCgAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-15T15:16:56.401Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -160,7 +159,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "StudentDataController.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Server\\Controllers\\StudentDataController.cs",
               "RelativeDocumentMoniker": "FiitFlow.Server\\Controllers\\StudentDataController.cs",
@@ -168,12 +167,11 @@
               "RelativeToolTip": "FiitFlow.Server\\Controllers\\StudentDataController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAgwCIAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T08:02:57.108Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:02:57.108Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "ConfigEditorService.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\ConfigEditorService.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Services\\ConfigEditorService.cs",
@@ -181,12 +179,11 @@
               "RelativeToolTip": "FiitFlow.Parser\\Services\\ConfigEditorService.cs",
               "ViewState": "AgIAALYAAAAAAAAAAAAhwNcAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T12:01:47.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T12:01:47.868Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "GroupEntity.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\domain\\GroupEntity.cs",
               "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\domain\\GroupEntity.cs",
@@ -194,12 +191,11 @@
               "RelativeToolTip": "FiitFlow\\FiitFlow\\domain\\GroupEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-14T13:27:44.529Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-14T13:27:44.529Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "ParserConfig.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Models\\ParserConfig.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Models\\ParserConfig.cs",
@@ -207,12 +203,11 @@
               "RelativeToolTip": "FiitFlow.Parser\\Models\\ParserConfig.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T12:04:03.554Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T12:04:03.554Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "FormulasConfig.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Models\\FormulasConfig.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Models\\FormulasConfig.cs",
@@ -220,12 +215,11 @@
               "RelativeToolTip": "FiitFlow.Parser\\Models\\FormulasConfig.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T12:04:11.609Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T12:04:11.609Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "RootPathProvider.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\RootPathProvider.cs",
               "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\RootPathProvider.cs",
@@ -233,12 +227,11 @@
               "RelativeToolTip": "FiitFlow\\FiitFlow\\RootPathProvider.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T18:23:17.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T18:23:17.387Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "ConfigParser.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\ConfigParser.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Services\\ConfigParser.cs",
@@ -246,25 +239,23 @@
               "RelativeToolTip": "FiitFlow.Parser\\Services\\ConfigParser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T12:01:50.675Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T12:01:50.675Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "StudentSearchService.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\StudentSearchService.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Services\\StudentSearchService.cs",
               "ToolTip": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\StudentSearchService.cs",
               "RelativeToolTip": "FiitFlow.Parser\\Services\\StudentSearchService.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAgwDIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwCwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T08:07:54.402Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:07:54.402Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ExcelParser.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\ExcelParser.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Services\\ExcelParser.cs",
@@ -272,12 +263,11 @@
               "RelativeToolTip": "FiitFlow.Parser\\Services\\ExcelParser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T08:04:36.52Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:04:36.52Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "OutputConfig.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Models\\OutputConfig.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Models\\OutputConfig.cs",
@@ -285,25 +275,23 @@
               "RelativeToolTip": "FiitFlow.Parser\\Models\\OutputConfig.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T08:04:29.503Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:04:29.503Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Server\\Program.cs",
               "RelativeDocumentMoniker": "FiitFlow.Server\\Program.cs",
               "ToolTip": "S:\\fiit-journal\\FiitFlow.Server\\Program.cs",
               "RelativeToolTip": "FiitFlow.Server\\Program.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAcwEYAAABPAAAAAAAAAA==",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAmwEYAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T18:25:03.359Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T18:25:03.359Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\Program.cs",
               "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\Program.cs",
@@ -311,8 +299,7 @@
               "RelativeToolTip": "FiitFlow\\FiitFlow\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-13T08:30:00.921Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-13T08:30:00.921Z"
             },
             {
               "$type": "Document",
@@ -328,19 +315,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 0,
               "Title": "StudentConfigService.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\StudentConfigService.cs",
               "RelativeDocumentMoniker": "FiitFlow.Parser\\Services\\StudentConfigService.cs",
               "ToolTip": "S:\\fiit-journal\\FiitFlow.Parser\\Services\\StudentConfigService.cs",
               "RelativeToolTip": "FiitFlow.Parser\\Services\\StudentConfigService.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAIwBAAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAowCcAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T18:11:46.217Z"
+              "WhenOpened": "2025-12-17T18:11:46.217Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "PointsService.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow\\FiitFlow\\PointsService.cs",
               "RelativeDocumentMoniker": "FiitFlow\\FiitFlow\\PointsService.cs",
@@ -348,8 +336,7 @@
               "RelativeToolTip": "FiitFlow\\FiitFlow\\PointsService.cs",
               "ViewState": "AgIAACoAAAAAAAAAAAAowEgAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-13T08:31:51.52Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-13T08:31:51.52Z"
             },
             {
               "$type": "Document",
@@ -377,16 +364,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 1,
               "Title": "AuthenticationTool.cs",
               "DocumentMoniker": "S:\\fiit-journal\\FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
               "RelativeDocumentMoniker": "FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
               "ToolTip": "S:\\fiit-journal\\FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
               "RelativeToolTip": "FiitFlow.Server\\SubTools\\SubToolsUnits\\AuthenticationTool.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACsAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCAAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T18:11:42.041Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T18:11:42.041Z"
             },
             {
               "$type": "Document",

@@ -40,12 +40,16 @@ namespace FiitFlow.Server.Controllers
                 return Unauthorized(new { message = "Данные пользователя неверны", errorCode = "AUTH_REJECTED" });
             var configEditor = new ConfigEditorService(Path.Combine(
                 "../../../..", $"cfg/{group.Substring(0, 6)}/{lastName} {firstName}.json"));
-            return Ok(configEditor.Load().Subjects.Select(subCon => new SubjectConfigSimple
+            var result = configEditor.Load().Subjects.Select(subCon => new SubjectConfigSimple
             {
                 BaseName = subCon.SubjectName,
                 Name = subCon.SubjectName,
-                Link = subCon.Tables.First().Url
-            }));
+                Link = subCon.Tables.First().Url,
+                Formula = subCon.Formula.FinalFormula ?? "",
+                Sheets = subCon.Tables.First().Sheets.Select(s => (s.Name, s.CategoriesRow ?? 1))
+            });
+            _logger.LogCritical(result.Count().ToString());
+            return Ok(result);
         }
 
         [HttpPost("SetConfigs")]
@@ -66,15 +70,26 @@ namespace FiitFlow.Server.Controllers
             var beforeSubjects = configEditor.Load().Subjects;
             foreach (var subjectConfig in subjectConfigs)
             {
-                if (subjectConfig.BaseName.Length > 0)
+                var removed = false;
+                if (subjectConfig.BaseName.Length > 0 && beforeSubjects
+                    .Where(bef => bef.SubjectName == subjectConfig.BaseName)
+                    .Select(bef =>
+                    bef.SubjectName != subjectConfig.Name ||
+                    bef.Tables.First().Url != subjectConfig.Link ||
+                    bef.Formula.FinalFormula != subjectConfig.Formula).FirstOrDefault(false))
                 {
-                    configEditor.SetSubjectName(subjectConfig.BaseName, subjectConfig.Name);
-                    configEditor.SetSubjectUrl(subjectConfig.Name, subjectConfig.Link);
+                    configEditor.RemoveSubject(subjectConfig.BaseName);
+                    removed = true;
                 }
-                else
+                if (subjectConfig.BaseName.Length == 0 || removed)
                 {
-                    //configEditor.CreateSubject(subjectConfig.Name, "1", subjectConfig.Link); //TODO
+                    configEditor.CreateSubject(subjectConfig.Name, "1", subjectConfig.Link, subjectConfig.Sheets, subjectConfig.Formula);
                 }
+            }
+            foreach (var befSub in beforeSubjects)
+            {
+                if (subjectConfigs.Where(subCon => subCon.BaseName == befSub.SubjectName).Count() == 0)
+                    configEditor.RemoveSubject(befSub.SubjectName);
             }
             return Ok();
         }

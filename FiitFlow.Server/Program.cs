@@ -38,6 +38,20 @@ namespace FiitFlowReactApp.Server
 
             builder.Services.AddScoped<IAuthentication, AuthenticationTool>();
 
+            builder.Services.AddSingleton<HttpClient>();
+
+            builder.Services.AddSingleton<CacheService>(sp =>
+                    new CacheService("./Cache", false));
+
+            builder.Services.AddSingleton<IExcelDownloader, ExcelDownloader>();
+            builder.Services.AddSingleton<IExcelParser, ExcelParser>();
+
+            builder.Services.AddSingleton<IStudentSearchService, StudentSearchService>();
+
+            builder.Services.AddSingleton<FormulaCalculatorService>();
+
+            builder.Services.AddSingleton<FiitFlowParserService>();
+
             builder.Services.AddHostedService<DbUpdateWorker>();
 
             builder.Services.AddControllers();
@@ -62,23 +76,9 @@ namespace FiitFlowReactApp.Server
             });
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-            
-            builder.Services.AddSingleton<HttpClient>();
 
-            builder.Services.AddSingleton<CacheService>(sp =>
-                    new CacheService("./Cache", false));
+            builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
 
-            builder.Services.AddSingleton<IExcelDownloader, ExcelDownloader>();
-            builder.Services.AddSingleton<IExcelParser, ExcelParser>();
-
-            builder.Services.AddSingleton<IStudentSearchService, StudentSearchService>();
-
-            builder.Services.AddSingleton<FormulaCalculatorService>();
-
-            builder.Logging
-                .AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.None);
-
-            builder.Services.AddSingleton<FiitFlowParserService>();
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -86,7 +86,6 @@ namespace FiitFlowReactApp.Server
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 db.Database.EnsureCreated();
             }
-            
 
             app.UseDefaultFiles();
             app.MapStaticAssets();

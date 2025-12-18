@@ -224,8 +224,7 @@ namespace FiitFlow.Parser.Services
             string subjectName,
             string tableName,
             string url,
-            string sheetName,
-            int headerRow,
+            IEnumerable<(string sheetName, int headerRow)> sheets,
             string finalFormula,
             Dictionary<string, string>? componentFormulas = null,
             Dictionary<string, string>? valueMappings = null,
@@ -240,14 +239,11 @@ namespace FiitFlow.Parser.Services
                 var subject = EnsureSubject(cfg, subjectName, allowExisting: false);
                 var table = EnsureTable(subject, tableName);
                 table.Url = url ?? string.Empty;
-                table.Sheets = new List<SheetConfig>
+                table.Sheets = sheets.Select(sheet => new SheetConfig
                 {
-                    new SheetConfig
-                    {
-                        Name = string.IsNullOrWhiteSpace(sheetName) ? "Sheet 1" : sheetName,
-                        CategoriesRow = NormalizeRow(headerRow)
-                    }
-                };
+                    Name = string.IsNullOrWhiteSpace(sheet.sheetName) ? "Sheet 1" : sheet.sheetName,
+                    CategoriesRow = NormalizeRow(sheet.headerRow)
+                }).ToList();
 
                 subject.Formula = new SubjectFormula
                 {
