@@ -83,8 +83,8 @@ namespace FiitFlow.Parser.Services
                 if (string.IsNullOrWhiteSpace(json))
                     return new ParserConfig();
 
-                var cfg = JsonSerializer.Deserialize<ParserConfig>(json, JsonOptions);
-                return cfg ?? new ParserConfig();
+                var cfg = JsonSerializer.Deserialize<ParserConfig>(json, JsonOptions) ?? new ParserConfig();
+                return NormalizeConfig(cfg);
             }
         }
 
@@ -132,6 +132,38 @@ namespace FiitFlow.Parser.Services
                 Save(cfg);
                 return cfg;
             }
+        }
+
+        private static ParserConfig NormalizeConfig(ParserConfig config)
+        {
+            config.Subjects ??= new List<SubjectConfig>();
+            config.Subjects.RemoveAll(s => s is null);
+
+            foreach (var subject in config.Subjects)
+            {
+                subject.SubjectName ??= string.Empty;
+                subject.Tables ??= new List<TableConfig>();
+                subject.Tables.RemoveAll(t => t is null);
+
+                foreach (var table in subject.Tables)
+                {
+                    table.Name ??= string.Empty;
+                    table.Url ??= string.Empty;
+                    table.Sheets ??= new List<SheetConfig>();
+                    table.Sheets.RemoveAll(sh => sh is null);
+
+                    foreach (var sheet in table.Sheets)
+                    {
+                        sheet.Name ??= string.Empty;
+                        sheet.CategoriesRow = NormalizeRow(sheet.CategoriesRow ?? 0);
+                    }
+                }
+
+                subject.Formula ??= new SubjectFormula();
+                subject.Formula.ComponentFormulas ??= new Dictionary<string, string>();
+            }
+
+            return config;
         }
 
         private static void EnsureCollections(ParserConfig config)
