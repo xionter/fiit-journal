@@ -1,0 +1,33 @@
+{
+  "studentName": "Макарова Дарья",
+  "cacheSettings": {
+    "cacheDirectory": "./Tests/Cache",
+    "forceRefresh": false
+  },
+  "subjects": [
+    {
+      "subjectName": "МАТАН",
+      "tables": [
+        {
+          "name": "МАТАН ПРАКТИКА",
+          "url": "https://docs.google.com/spreadsheets/d/1I74SHN9EzrDtnmdKAPkwtVnHmLJzz2T2EYxibm2qFRM/edit?gid=0#gid=0",
+          "sheets": [
+            {
+              "name": "Sheet 1"
+            },
+            {
+              "name": "ДЗ"
+            }
+          ]
+        }
+      ],
+      "formula": {
+        "finalFormula": "Сумма",
+        "componentFormulas": {
+          "Итого": "Сумма"
+        }
+      }
+    }
+  ]
+}
+

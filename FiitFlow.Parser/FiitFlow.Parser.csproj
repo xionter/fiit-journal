@@ -12,6 +12,25 @@
     <PackageReference Include="EPPlus" Version="5.8.12" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.72.0.3938" />
     <PackageReference Include="Google.Apis.Sheets.v4" Version="1.70.0.3819" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="NUnit" Version="4.4.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.0.0" />
+  </ItemGroup>
+    
+  <ItemGroup>
+      <None Include="Tests/Data/*.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+
+      <None Include="Tests/Data/*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+  </ItemGroup>
+
+  <ItemGroup>
+      <None Include="Tests/Data/**/*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
   </ItemGroup>
 
 </Project>
