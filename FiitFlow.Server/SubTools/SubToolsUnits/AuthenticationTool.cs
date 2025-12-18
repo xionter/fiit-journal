@@ -23,6 +23,7 @@ namespace FiitFlow.Server.SubTools.SubToolsUnits
                 return new AuthResponse<int>(false, 0, "Incorrect login data form");
             var groupTitle = groupFull.Substring(0, 6);
             var subgroup = int.Parse(groupFull.Substring(7));
+
             var student = await _studentRepository.GetOrCreateAsync(firstName, lastName, groupTitle, subgroup);
             if (student == null)
                 return new AuthResponse<int>(false, 0, "User was not found");
