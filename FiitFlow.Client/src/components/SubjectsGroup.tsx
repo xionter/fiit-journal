@@ -39,7 +39,7 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                                 <span>100</span>
                             </div>
                             <div className="subject-details">
-                                <span>Последнее обновление: {subpoint.lastUpdate.toLocaleString()}</span>
+                                <span>Последнее обновление: {lastUPDFormat(subpoint)}</span>
                                 <span>Преподаватель: {subpoint.teacher}</span>
                             </div>
                             <button onClick={() => setCurrentSubject({ subjectName: subpoint.subject, student: student, term: term })} className="btn">Подробнее</button>
@@ -72,6 +72,11 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
     function setCurrentSubject(subject: StudentSubject) {
         saveSubjectCookie(subject, 5);
         navigate(`${rootMain.to}/${subject.subjectName}`, rootMain.options);
+    }
+
+    function lastUPDFormat(subpoint: PointsItem) {
+        const lupd = subpoint.lastUpdate.toLocaleString();
+        return lupd.replace("T", " ").substring(0, lupd.lastIndexOf("."));
     }
 }
 
