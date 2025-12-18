@@ -61,28 +61,31 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
     const navigate = useNavigate();
     const [baseSubCon, setBaseSubCon] = useState<SubjectConfigInput[]>();
 
-    useEffect(() => {
-        loadStudentConfigSubjects();
-    }, []);
-
     const {
         control,
         register,
         handleSubmit,
+        setValue,
         setError,
+        trigger,
         formState: { errors, isValid, isSubmitting }
     } = useForm<FormSubjects>({
         resolver: yupResolver(schema),
-        mode: "onChange",
-        defaultValues: {
-            subjects: baseSubCon
-        }
+        mode: "onChange"
     });
 
     const { fields: subjectFields, append, remove } = useFieldArray({
         control,
         name: "subjects"
     });
+
+    useEffect(() => {
+        loadStudentConfigSubjects();
+        if (baseSubCon !== undefined) {
+            setValue("subjects", baseSubCon);
+            trigger();
+        }
+    }, []);
 
     return (
         <LoadingPageData isLoading={baseSubCon === undefined}>

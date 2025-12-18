@@ -6,6 +6,7 @@ import type Student from "./Student"
 import { loadStudentCookie, loadSubjectCookie, removeStudentCookie, removeSubjectCookie, saveStudentCookie } from "./CookieTools"
 import StudentSubjectComponent from "./StudentSubjectComponent"
 import SubjectsGroupConfigEditor from "./SubjectsGroupConfigEditor"
+import { number } from "yup"
 
 interface MainProps {
     subjectPeaked: boolean;
@@ -38,7 +39,7 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                             FIITFLOW
                         </div>
                         <div className="semester-select">
-                            <select onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
+                            <select defaultValue={defaultTerm()} onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
                                 {
                                     [1, 2, 3, 4].map(num => (
                                         <option key={num} value={num}>Семестр {num}</option>
@@ -139,6 +140,11 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                     />
                 );
         }
+    }
+
+    function defaultTerm() {
+        const month = new Date().getMonth() + 1;
+        return Number(currentStudent?.group.at(4)) * 2 + (9 > month && month > 1 ? 2 : 1);
     }
 }
 
