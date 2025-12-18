@@ -1,0 +1,45 @@
+﻿{
+  "StudentName": "",
+  "CacheSettings": {
+    "CacheDirectory": "./Cache",
+    "ForceRefresh": false
+  },
+  "Subjects": [
+    {
+      "SubjectName": "НАНД",
+      "Tables": [
+        {
+          "Name": "НАНД",
+          "Url": "https://docs.google.com/spreadsheets/u/0/d/1sxTe8wt9Ffq1nsDC-duOoSI3AYlRJIB6tcRYrr-FOlA/htmlview#gid=0",
+          "Sheets": [
+            { "Name": "Sheet 1" }
+          ]
+        }
+      ],
+      "Formula": {
+        "FinalFormula": "Итог",
+        "ComponentFormulas": {
+          "Итог": "Итог"
+        }
+      }
+    },
+    {
+      "SubjectName": "ОПД",
+      "Tables": [
+        {
+          "Name": "ОПД",
+          "Url": "https://docs.google.com/spreadsheets/d/1-KxUACTY4bpp03l7Bj2rAtvYm2ja-UpSyFzPfp1sOYI/edit",
+          "Sheets": [
+            { "Name": "Sheet 1" }
+          ]
+        }
+      ],
+      "Formula": {
+        "FinalFormula": "Итог",
+        "ComponentFormulas": {
+          "Итог": "Итог"
+        }
+      }
+    }
+  ]
+}
