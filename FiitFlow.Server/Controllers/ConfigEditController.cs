@@ -2,6 +2,7 @@
 using FiitFlow.Parser.Services;
 using FiitFlow.Server.SubTools;
 using FiitFlow.Server.SubTools.SubToolsUnits;
+using FiitFlow.Domain.Extensions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,15 +16,18 @@ namespace FiitFlow.Server.Controllers
         private readonly ILogger<ConfigEditController> _logger;
         private readonly IConfiguration _configuration;
         private readonly IAuthentication _authentication;
+        private readonly IRootPathProvider _rootPathProvider;
 
         public ConfigEditController(
             ILogger<ConfigEditController> logger,
             IConfiguration configuration,
-            IAuthentication authentication)
+            IAuthentication authentication,
+            IRootPathProvider rootPathProvider)
         {
             _logger = logger;
             _configuration = configuration;
             _authentication = authentication;
+            _rootPathProvider = rootPathProvider;
         }
 
         [HttpGet("GetConfigs")]
@@ -39,7 +43,7 @@ namespace FiitFlow.Server.Controllers
             if (!authResponse.Accepted)
                 return Unauthorized(new { message = "Данные пользователя неверны", errorCode = "AUTH_REJECTED" });
             var configEditor = new ConfigEditorService(Path.Combine(
-                "../../../..", $"cfg/{group.Substring(0, 6)}/{lastName} {firstName}.json"));
+                _rootPathProvider.GetRootPath(), "cfg", group.Substring(0, 6), $"{lastName} {firstName}.json"));
             var result = configEditor.Load().Subjects.Select(subCon => new SubjectConfigSimple
             {
                 BaseName = subCon.SubjectName,
@@ -66,7 +70,7 @@ namespace FiitFlow.Server.Controllers
             if (!authResponse.Accepted)
                 return Unauthorized(new { message = "Данные пользователя неверны", errorCode = "AUTH_REJECTED" });
             var configEditor = new ConfigEditorService(Path.Combine(
-                "../../../..", $"cfg/{group.Substring(0, 6)}/{lastName} {firstName}.json"));
+                _rootPathProvider.GetRootPath(), "cfg", group.Substring(0, 6), $"{lastName} {firstName}.json"));
             var beforeSubjects = configEditor.Load().Subjects;
             foreach (var subjectConfig in subjectConfigs)
             {
