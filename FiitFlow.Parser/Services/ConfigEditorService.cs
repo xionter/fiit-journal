@@ -29,7 +29,38 @@ namespace FiitFlow.Parser.Services
             if (string.IsNullOrWhiteSpace(configPath))
                 throw new ArgumentException("Config path is empty.", nameof(configPath));
 
-            _configPath = configPath;
+            _configPath = ResolveConfigPath(configPath);
+        }
+
+        private static string ResolveConfigPath(string configPath)
+        {
+            if (Path.IsPathRooted(configPath))
+                return configPath;
+
+            var baseDirectories = new[]
+            {
+                AppContext.BaseDirectory,
+                Directory.GetCurrentDirectory()
+            };
+
+            foreach (var baseDir in baseDirectories)
+            {
+                var candidate = Path.GetFullPath(configPath, baseDir);
+                if (File.Exists(candidate))
+                    return candidate;
+            }
+
+            var dirInfo = new DirectoryInfo(AppContext.BaseDirectory);
+            while (dirInfo?.Parent != null)
+            {
+                var candidate = Path.GetFullPath(configPath, dirInfo.Parent.FullName);
+                if (File.Exists(candidate))
+                    return candidate;
+
+                dirInfo = dirInfo.Parent;
+            }
+
+            return Path.GetFullPath(configPath, AppContext.BaseDirectory);
         }
 
         public IReadOnlyList<string> ListSubjects() =>
