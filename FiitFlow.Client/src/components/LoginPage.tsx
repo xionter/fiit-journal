@@ -100,18 +100,22 @@ export default function LoginPage() {
     }
 
     async function checkStudentLogin(studentLogin: FormInputs) {
-        return api.post<number>(`Auth/login`, {
-            firstName: studentLogin.firstName,
-            lastName: studentLogin.lastName,
-            group: studentLogin.group,
-            time: Date.now()
-        }, {
-            withCredentials: true
-        }).then((response: any) => {
-	   	const session = response.data;              // это число
-  	localStorage.setItem("session", String(session));
-  // если у тебя роут после логина другой, подставь свой
-  	  window.location.href = "/";                 // или navigate("/")
-})
-}
+        try {
+            const response = await api.post<number>(`Auth/login`, {
+                firstName: studentLogin.firstName,
+                lastName: studentLogin.lastName,
+                group: studentLogin.group,
+                time: Date.now()
+            }, {
+                withCredentials: true
+            });
+
+            const session = response.data; // это число
+            localStorage.setItem("session", String(session));
+            return session;
+        } catch (err) {
+            console.error("Login failed", err);
+            return undefined;
+        }
+    }
 }
