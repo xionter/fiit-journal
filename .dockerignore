@@ -1,0 +1,15 @@
+/.git
+/.idea
+/.vscode
+/*.user
+/*.db*
+Cache
+fiitflow.db*
+**/bin
+**/obj
+**/node_modules
+FiitFlow.Client/dist
+FiitFlow.Client/.env.local
+FiitFlow.Client/*.user
+*.log
+*.DS_Store

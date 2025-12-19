@@ -8,8 +8,9 @@ RUN dotnet publish FiitFlow.Server/FiitFlow.Server.csproj -c Release -o /app/pub
 # run
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS run
 WORKDIR /app
-ENV ASPNETCORE_URLS=http://0.0.0.0:8080
+RUN mkdir -p /data /app/cfg
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080 \
+    FIITFLOW_ROOT_PATH=/app
 EXPOSE 8080
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet","FiitFlow.Server.dll"]
-
