@@ -21,11 +21,12 @@ namespace FiitFlowReactApp.Server
 
             var rootPathProvider = new RootPathProvider();
             var rootPath = rootPathProvider.GetRootPath();
-	    var dbPath = Environment.GetEnvironmentVariable("FIITFLOW_DB_PATH") ?? Path.Combine("/data", "fiitflow.db");
-            builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlite($"Data Source={dbPath}"));
+            var dbPath = Environment.GetEnvironmentVariable("FIITFLOW_DB_PATH")
+          	?? "/data/fiitflow.db";
 
-            builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+	    builder.Services.AddDbContext<AppDbContext>(o =>
+    		o.UseSqlite($"Data Source={dbPath}"));
+	    builder.Services.AddScoped<IGroupRepository, GroupRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
             builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
             builder.Services.AddScoped<IPointsRepository, PointsRepository>();

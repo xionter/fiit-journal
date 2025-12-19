@@ -1,8 +1,0 @@
-﻿{
-  "StudentName": "",
-  "CacheSettings": {
-    "CacheDirectory": "./Cache",
-    "ForceRefresh": true
-  },
-  "Subjects": []
-}
