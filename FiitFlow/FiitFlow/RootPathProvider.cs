@@ -16,7 +16,7 @@ namespace FiitFlow.Domain.Extensions
 
         public RootPathProvider()
         {
-            var candidates = new List<string?>
+            var seeds = new List<string?>
             {
                 Environment.GetEnvironmentVariable("FIITFLOW_ROOT_PATH"),
                 AppContext.BaseDirectory,
@@ -24,16 +24,27 @@ namespace FiitFlow.Domain.Extensions
                 Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../.."))
             };
 
-            var normalizedCandidates = candidates
+            // Walk up from each seed to find a directory that actually contains cfg/
+            var normalizedCandidates = seeds
                 .Where(c => !string.IsNullOrWhiteSpace(c))
                 .Select(Path.GetFullPath)
+                .SelectMany(ExpandWithParents)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
-            // Prefer a location that actually contains cfg/ so container mounts are resolved correctly.
             _rootPath = normalizedCandidates
                 .FirstOrDefault(c => Directory.Exists(Path.Combine(c, "cfg")))
                 ?? normalizedCandidates.First();
+        }
+
+        private static IEnumerable<string> ExpandWithParents(string path)
+        {
+            var current = new DirectoryInfo(path);
+            while (current != null)
+            {
+                yield return current.FullName;
+                current = current.Parent;
+            }
         }
 
         public string GetRootPath() => _rootPath;
