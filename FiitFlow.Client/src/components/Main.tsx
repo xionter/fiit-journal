@@ -1,5 +1,5 @@
 ﻿import { useEffect, useState, Fragment, type ReactElement } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { rootLogin, rootMain, rootEdit } from "./Navigation"
 import SubjectsGroup from "./SubjectsGroup"
 import type Student from "./Student"
@@ -14,7 +14,7 @@ interface MainProps {
 
 function Main({ subjectPeaked, isEditing }: MainProps) {
     const navigate = useNavigate();
-    const { subjectName } = useParams();
+    //const { subjectName } = useParams();
     const [currentStudent, setCurrentStudent] = useState<Student>();
     const [currentTerm, setCurrentTerm] = useState<number>(3);
     const [centralBlock, setCentralBlock] = useState<ReactElement>();
@@ -142,10 +142,10 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
         }
     }
 
-    function defaultTerm(studentGroup: string) {
-        const month = new Date().getMonth() + 1;
-        return Number(studentGroup.at(3)) * 2 - (9 > month && month > 1 ? 0 : 1);
-    }
+    //function defaultTerm(studentGroup: string) {
+      //  const month = new Date().getMonth() + 1;
+        //return Number(studentGroup.at(3)) * 2 - (9 > month && month > 1 ? 0 : 1);
+    //}
 }
 
 export default Main;

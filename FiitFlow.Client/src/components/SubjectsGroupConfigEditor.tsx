@@ -4,7 +4,7 @@ import * as yup from "yup"
 import type Student from "./Student"
 import api from "./Api"
 import { rootMain } from "./Navigation"
-import { useForm, useFieldArray, type UseFormRegister, type FieldErrors, type Control, type TriggerConfig, type UseFormTrigger } from "react-hook-form";
+import { useForm, useFieldArray, type UseFormRegister, type FieldErrors, type Control, type UseFormTrigger } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingPageData from "./LoadingPageData"
 

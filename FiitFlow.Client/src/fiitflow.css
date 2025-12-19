@@ -1,4 +1,4 @@
-:root {
+п»ї:root {
     --primary: #9d4edd;
     --secondary: #6a9aff;
     --secondary-add: #9acaff;
@@ -631,7 +631,7 @@ footer {
         font-size: 18px;
     }
 
-/* Страница редактирования */
+/* РЎС‚СЂР°РЅРёС†Р° СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ */
 .page-header {
     margin-bottom: 30px;
 }
@@ -731,7 +731,7 @@ footer {
     text-align: right;
 }
 
-/* Утилитные классы */
+/* РЈС‚РёР»РёС‚РЅС‹Рµ РєР»Р°СЃСЃС‹ */
 .btn-sm {
     margin-bottom: 10px;
     padding: 6px 12px;
@@ -783,7 +783,7 @@ footer {
     font-style: italic;
 }
 
-/* Адаптивность */
+/* РђРґР°РїС‚РёРІРЅРѕСЃС‚СЊ */
 @media (max-width: 768px) {
     .edit-subject-btn {
         bottom: 20px;
@@ -822,7 +822,7 @@ footer {
     }
 }
 
-/* Анимации для кнопок */
+/* РђРЅРёРјР°С†РёРё РґР»СЏ РєРЅРѕРїРѕРє */
 @keyframes fadeOut {
     from {
         opacity: 1;
@@ -842,12 +842,12 @@ footer {
     cursor: not-allowed;
 }
 
-/* Улучшенные стили для инпутов */
+/* РЈР»СѓС‡С€РµРЅРЅС‹Рµ СЃС‚РёР»Рё РґР»СЏ РёРЅРїСѓС‚РѕРІ */
 .input {
     transition: all 0.3s ease;
 }
 
-/* Адаптивность для информационной сетки */
+/* РђРґР°РїС‚РёРІРЅРѕСЃС‚СЊ РґР»СЏ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ СЃРµС‚РєРё */
 @media (max-width: 768px) {
     .info-grid {
         grid-template-columns: 1fr;
@@ -870,7 +870,7 @@ footer {
     }
 }
 
-/* Стили для кнопки добавления предмета (одинаковые с save-btn) */
+/* РЎС‚РёР»Рё РґР»СЏ РєРЅРѕРїРєРё РґРѕР±Р°РІР»РµРЅРёСЏ РїСЂРµРґРјРµС‚Р° (РѕРґРёРЅР°РєРѕРІС‹Рµ СЃ save-btn) */
 .add-subject-main-btn {
     padding: 15px 40px;
     font-size: 18px;
@@ -897,7 +897,7 @@ footer {
         transform: none !important;
     }
 
-/* Сделать одинаковые контейнеры для обеих кнопок */
+/* РЎРґРµР»Р°С‚СЊ РѕРґРёРЅР°РєРѕРІС‹Рµ РєРѕРЅС‚РµР№РЅРµСЂС‹ РґР»СЏ РѕР±РµРёС… РєРЅРѕРїРѕРє */
 .save-section,
 .add-subject-header {
     text-align: center;
@@ -905,14 +905,14 @@ footer {
     border-top: 2px solid var(--border);
 }
 
-/* Убрать фон и бордер у add-subject-header */
+/* РЈР±СЂР°С‚СЊ С„РѕРЅ Рё Р±РѕСЂРґРµСЂ Сѓ add-subject-header */
 .add-subject-header {
     background: none;
     border: none;
     padding: 20px 0 30px 0;
 }
 
-/* Анимация успеха для обеих кнопок */
+/* РђРЅРёРјР°С†РёСЏ СѓСЃРїРµС…Р° РґР»СЏ РѕР±РµРёС… РєРЅРѕРїРѕРє */
 @keyframes successPulse {
     0% {
         transform: scale(1);
@@ -932,7 +932,7 @@ footer {
     background: linear-gradient(135deg, var(--success), #45a049) !important;
 }
 
-/* Стили для секции сохранения */
+/* РЎС‚РёР»Рё РґР»СЏ СЃРµРєС†РёРё СЃРѕС…СЂР°РЅРµРЅРёСЏ */
 .save-section {
     padding-top: 30px;
     border-top: 2px solid var(--border);
@@ -955,7 +955,7 @@ footer {
         cursor: not-allowed;
     }
 
-/* Анимации для кнопок */
+/* РђРЅРёРјР°С†РёРё РґР»СЏ РєРЅРѕРїРѕРє */
 @keyframes fadeOut {
     from {
         opacity: 1;

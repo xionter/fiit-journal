@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LoginPage from "./components/LoginPage"
 import Main from "./components/Main"
 import "./fiitflow.css"
@@ -16,11 +16,6 @@ function App() {
             </Routes>
         </BrowserRouter>
     )
-}
-
-function ReAddress() {
-    const navigate = useNavigate();
-    return <div onLoadStart={() => navigate(rootLogin.to, rootLogin.options)}></div>;
 }
 
 export default App;

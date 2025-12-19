@@ -2,7 +2,7 @@ import type StudentSubject from "./StudentSubject"
 import LoadingPageData from "./LoadingPageData"
 import api from "./Api"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 interface SubjectTableResult {
     studentName: string;
