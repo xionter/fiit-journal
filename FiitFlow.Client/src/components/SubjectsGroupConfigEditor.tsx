@@ -67,7 +67,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
         trigger,
         formState: { errors, isValid, isSubmitting }
     } = useForm<FormSubjects>({
-        resolver: yupResolver(schema),
+        resolver: yupResolver<FormSubjects, yup.ObjectSchema<FormSubjects>, FormSubjects>(schema),
         mode: "onChange",
         defaultValues: { subjects: [] }
     });
@@ -173,7 +173,6 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                             className="btn btn-primary add-subject-main-btn"
                             onClick={() => {
                                 append({ baseName: "", name: "", link: "", formula: "", sheets: [{ sheetName: "Sheet 1", headerRow: 1 }] });
-                                trigger();
                             }}
                         >
                             + Добавить новый предмет
