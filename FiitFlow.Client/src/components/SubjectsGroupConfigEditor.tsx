@@ -21,7 +21,7 @@ interface SheetInput {
 }
 
 interface SubjectConfigInput {
-    baseName: string;
+    baseName: string | null;
     name: string;
     link: string;
     formula: string;
@@ -43,12 +43,12 @@ const sheetSchema = yup.object({
 })
 
 const subjectSchema = yup.object({
-    baseName: yup.string().required(),
+    baseName: yup.string().default("").notRequired(),
     name: yup.string().required("Название предмета"), //.matches(/^[А-ЯЁа-яё \_\-\.]+$/, "Неверный формат"),
     link: yup.string().url("Неверный формат ссылки").required("Ссылка на таблицу").matches(googleSheetRegex, "Неверный формат"),
     formula: yup.string().required("Формула для подсчета баллов"), //.matches(googleSheetRegex, "Неверный формат"),
     sheets: yup.array().of(sheetSchema).min(1, "Добавьте хотя бы один лист").required()
-});
+}).required();
 
 const schema = yup.object({
     subjects: yup.array().of(subjectSchema).min(1, "Данных вашей группы ещё нет в базе, ткните куру").required()

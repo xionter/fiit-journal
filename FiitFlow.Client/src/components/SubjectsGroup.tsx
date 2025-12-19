@@ -22,7 +22,11 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
     }, [term]);
 
     return (
-        <LoadingPageData isLoading={points === undefined}>
+        <LoadingPageData
+            isLoading={points === undefined}
+            isLoaded={points !== undefined && points.length > 0}
+            message="Здесь пока пусто... Вероятно, данные ещё не успели подгрузиться, попробуйте обновить страницу через пару минут)"
+        >
             <h1 className="page-title">Мои предметы</h1>
             <div className="subjects-grid">
                 {
