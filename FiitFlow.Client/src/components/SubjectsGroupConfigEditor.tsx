@@ -21,7 +21,7 @@ interface SheetInput {
 }
 
 interface SubjectConfigInput {
-    baseName: string;
+    baseName?: string | null;
     name: string;
     link: string;
     formula: string;
@@ -43,7 +43,7 @@ const sheetSchema: yup.ObjectSchema<SheetInput> = yup.object({
 })
 
 const subjectSchema: yup.ObjectSchema<SubjectConfigInput> = yup.object({
-    baseName: yup.string().default("").required(),
+    baseName: yup.string().nullable().optional().default("").notRequired(),
     name: yup.string().required("Название предмета"), //.matches(/^[А-ЯЁа-яё \_\-\.]+$/, "Неверный формат"),
     link: yup.string().url("Неверный формат ссылки").required("Ссылка на таблицу").matches(googleSheetRegex, "Неверный формат"),
     formula: yup.string().required("Формула для подсчета баллов"), //.matches(googleSheetRegex, "Неверный формат"),
@@ -62,13 +62,14 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
         control,
         register,
         handleSubmit,
-        setValue,
+        reset,
         setError,
         trigger,
         formState: { errors, isValid, isSubmitting }
     } = useForm<FormSubjects>({
         resolver: yupResolver(schema),
-        mode: "onChange"
+        mode: "onChange",
+        defaultValues: { subjects: [] }
     });
 
     const { fields: subjectFields, append, remove } = useFieldArray({
@@ -81,8 +82,8 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
     }, []);
 
     useEffect(() => {
-        if (baseSubCon !== undefined) {
-            setValue("subjects", baseSubCon);
+        if (baseSubCon && baseSubCon.length > 0) {
+            reset({ subjects: baseSubCon });
             trigger();
         }
     }, [baseSubCon]);
@@ -187,7 +188,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                             <button
                                 type="submit"
                                 className="btn btn-primary add-subject-main-btn"
-                                disabled={!isValid || isSubmitting}
+                                disabled={(!isValid) || isSubmitting}
                             >
                                 {isSubmitting ? "Отправка..." : "Сохранить"}
                             </button>
