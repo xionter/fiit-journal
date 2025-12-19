@@ -21,7 +21,7 @@ interface SheetInput {
 }
 
 interface SubjectConfigInput {
-    baseName: string | null;
+    baseName: string;
     name: string;
     link: string;
     formula: string;
@@ -32,7 +32,7 @@ interface FormSubjects {
     subjects: SubjectConfigInput[];
 }
 
-const sheetSchema = yup.object({
+const sheetSchema: yup.ObjectSchema<SheetInput> = yup.object({
     sheetName: yup.string().required("Имя листа обязательно"),
     headerRow: yup.number()
         .typeError("Номер строки заголовка — число")
@@ -42,16 +42,16 @@ const sheetSchema = yup.object({
         .required("Укажите номер строки заголовка"),
 })
 
-const subjectSchema = yup.object({
-    baseName: yup.string().default("").notRequired(),
+const subjectSchema: yup.ObjectSchema<SubjectConfigInput> = yup.object({
+    baseName: yup.string().default("").required(),
     name: yup.string().required("Название предмета"), //.matches(/^[А-ЯЁа-яё \_\-\.]+$/, "Неверный формат"),
     link: yup.string().url("Неверный формат ссылки").required("Ссылка на таблицу").matches(googleSheetRegex, "Неверный формат"),
     formula: yup.string().required("Формула для подсчета баллов"), //.matches(googleSheetRegex, "Неверный формат"),
     sheets: yup.array().of(sheetSchema).min(1, "Добавьте хотя бы один лист").required()
 }).required();
 
-const schema = yup.object({
-    subjects: yup.array().of(subjectSchema).min(1, "Данных вашей группы ещё нет в базе, ткните куру").required()
+const schema: yup.ObjectSchema<FormSubjects> = yup.object({
+    subjects: yup.array().of(subjectSchema).min(1, "Данных вашей группы ещё нет в базе, ткните куру").required("Список")
 }).required();
 
 export default function SubjectsGroupConfigEditor({ student, term }: ConfigEditorProps) {
