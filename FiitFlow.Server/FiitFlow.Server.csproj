@@ -12,8 +12,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FiitFlow.Parser\FiitFlow.Parser.csproj" />
-    <ProjectReference Include="..\fiitflowreactapp.client\FiitFlow.client.esproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="..\fiitflowreactapp.client\FiitFlow.client.esproj" Condition="'$(ExcludeClientBuild)' != 'true'">
+    	<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\FiitFlow\FiitFlow\FiitFlow.csproj" />
   </ItemGroup>

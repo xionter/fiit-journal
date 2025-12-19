@@ -21,8 +21,7 @@ namespace FiitFlowReactApp.Server
 
             var rootPathProvider = new RootPathProvider();
             var rootPath = rootPathProvider.GetRootPath();
-            var dbPath   = Path.Combine(rootPath, "fiitflow.db");
-
+	    var dbPath = Environment.GetEnvironmentVariable("FIITFLOW_DB_PATH") ?? Path.Combine("/data", "fiitflow.db");
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite($"Data Source={dbPath}"));
 

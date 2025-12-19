@@ -209,7 +209,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                 term: term,
                 time: Date.now()
             }
-        }).then(response => {
+        }) .then((response: any) => {
             if (response.status == 200)
                 return response.data;
             return null;
@@ -234,7 +234,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                 term: term,
                 time: Date.now(),
             }
-        }).then(response => {
+        }).then((response: any) => {
             if (response.status == 200) {
                 setBaseSubCon(response.data);
             }

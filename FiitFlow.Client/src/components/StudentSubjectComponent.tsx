@@ -86,7 +86,7 @@ function StudentSubjectComponent({ subjectName, student, term, score }: StudentS
                 subjectName: subjectName,
                 time: Date.now(),
             }
-        }).then(response => {
+        }).then((response: any) => {
             if (response.status == 200) {
                 setSubjectInfo(response.data);
             }

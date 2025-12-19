@@ -60,7 +60,7 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                 term: term,
                 time: Date.now(),
             }
-        }).then(response => {
+        }).then((response: any) => {
             if (response.status == 200) {
                 setPoints(response.data);
             }

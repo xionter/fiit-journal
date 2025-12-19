@@ -107,10 +107,11 @@ export default function LoginPage() {
             time: Date.now()
         }, {
             withCredentials: true
-        }).then(response => {
-            if (response.status == 200)
-                return response.data;
-            return null;
-        });
-    }
+        }).then((response: any) => {
+	   	const session = response.data;              // это число
+  	localStorage.setItem("session", String(session));
+  // если у тебя роут после логина другой, подставь свой
+  	  window.location.href = "/";                 // или navigate("/")
+})
+}
 }
