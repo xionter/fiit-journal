@@ -80,7 +80,9 @@ namespace FiitFlow.Server.Controllers
                     .Select(bef =>
                     bef.SubjectName != subjectConfig.Name ||
                     bef.Tables.First().Url != subjectConfig.Link ||
-                    bef.Formula.FinalFormula != subjectConfig.Formula).FirstOrDefault(false))
+                    bef.Formula.FinalFormula != subjectConfig.Formula ||
+                    !bef.Tables.First().Sheets.Select(s => new SheetSimple { sheetName = s.Name, headerRow = s.CategoriesRow ?? 1 })
+                        .ToArray().Equals(subjectConfig.Sheets)).FirstOrDefault(false))
                 {
                     configEditor.RemoveSubject(subjectConfig.BaseName);
                     removed = true;
@@ -94,11 +96,6 @@ namespace FiitFlow.Server.Controllers
                         subjectConfig.Sheets.Select(s => (s.sheetName, s.headerRow)),
                         subjectConfig.Formula);
                 }
-            }
-            foreach (var befSub in beforeSubjects)
-            {
-                if (subjectConfigs.Where(subCon => subCon.BaseName == befSub.SubjectName).Count() == 0)
-                    configEditor.RemoveSubject(befSub.SubjectName);
             }
             return Ok();
         }

@@ -2,6 +2,7 @@ import type StudentSubject from "./StudentSubject"
 import LoadingPageData from "./LoadingPageData"
 import api from "./Api"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 
 interface SubjectTableResult {
     studentName: string;
@@ -63,6 +64,13 @@ function StudentSubjectComponent({ subjectName, student, term, score }: StudentS
                 <h3 className="formula-title">Формула</h3>
                 <div className="formula">Формула будет добавлена позже</div>
                 <p>В текущем семестре: {score}</p>
+            </div>
+            <div className="formula-section">
+                <h3 className="formula-title">Исходная таблица</h3>
+                {subjectInfo?.tables.length !== undefined && subjectInfo?.tables.length > 0 ?
+                    <div className="formula"><a href={subjectInfo?.tables[0].tableUrl}>{subjectInfo?.tables[0].tableUrl}</a></div> :
+                    <div></div>
+                }
             </div>
         </LoadingPageData>
     );

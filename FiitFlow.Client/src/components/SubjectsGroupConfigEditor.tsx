@@ -4,7 +4,7 @@ import * as yup from "yup"
 import type Student from "./Student"
 import api from "./Api"
 import { rootMain } from "./Navigation"
-import { useForm, useFieldArray, type UseFormRegister, type FieldErrors, type Control } from "react-hook-form";
+import { useForm, useFieldArray, type UseFormRegister, type FieldErrors, type Control, type TriggerConfig, type UseFormTrigger } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import LoadingPageData from "./LoadingPageData"
 
@@ -44,9 +44,9 @@ const sheetSchema = yup.object({
 
 const subjectSchema = yup.object({
     baseName: yup.string().required(),
-    name: yup.string().required("Название предмета").matches(/^[А-ЯЁа-яё -\.]+$/, "Неверный формат"),
+    name: yup.string().required("Название предмета"), //.matches(/^[А-ЯЁа-яё \_\-\.]+$/, "Неверный формат"),
     link: yup.string().url("Неверный формат ссылки").required("Ссылка на таблицу").matches(googleSheetRegex, "Неверный формат"),
-    formula: yup.string().required("Формула для подсчета баллов").matches(googleSheetRegex, "Неверный формат"),
+    formula: yup.string().required("Формула для подсчета баллов"), //.matches(googleSheetRegex, "Неверный формат"),
     sheets: yup.array().of(sheetSchema).min(1, "Добавьте хотя бы один лист").required()
 });
 
@@ -89,47 +89,124 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
 
     return (
         <LoadingPageData isLoading={baseSubCon === undefined}>
-            <form onSubmit={handleSubmit(data => onSubmit(data))} className="login-form">
-                {subjectFields.map((subjectField, subjectIndex) => (
-                    <SubjectEditor
-                        key={subjectField.id}
-                        subjectBaseName={subjectField.baseName}
-                        subjectIndex={subjectIndex}
-                        control={control}
-                        register={register}
-                        errors={errors}
-                        onRemove={() => remove(subjectIndex)}
-                    />
-                ))}
+            <div className="edit-container">
+                <div className="edit-instructions">
+                    <h3>📝 Инструкция по настройке</h3>
+                    <ol>
+                        <li>Укажите название предмета</li>
+                        <li>Вставьте ссылку на Google таблицу с баллами</li>
+                        <li>Укажите формулу для подсчета итогового балла</li>
+                        <li>Настройте листы таблицы (имя листа и строку с заголовками)</li>
+                        <li>Нажмите "Сохранить изменения"</li>
+                    </ol>
+                </div>
+                <form onSubmit={handleSubmit(data => onSubmit(data))} className="login-form">
+                    {subjectFields.map((subjectField, subjectIndex) => (
+                        <div key={subjectField.id} className="subject-card edit-card">
+                            <div className="subject-name">{subjectField.baseName}</div>
 
-                <button
-                    type="button"
-                    className="add-subject-btn"
-                    onClick={() => append({ baseName: "", name: "", link: "", formula: "", sheets: [{ sheetName: "Sheet 1", headerRow: 1 }] })}
-                > + </button>
+                            <div className="form-group">
+                                <label>Предмет</label>
+                                <input
+                                    {...register(`subjects.${subjectIndex}.name`)}
+                                    className={`input ${errors.subjects?.[subjectIndex]?.name ? 'input-error' : ''}`}
+                                    placeholder="Введите название предмета"
+                                />
+                                {errors.subjects?.[subjectIndex]?.name && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.subjects[subjectIndex]!.name!.message}
+                                    </p>
+                                )}
+                            </div>
 
-                <button
-                    type="submit"
-                    className="login-btn"
-                    disabled={!isValid || isSubmitting}
-                >
-                    {isSubmitting ? "Отправка..." : "Сохранить"}
-                </button>
+                            <div className="form-group">
+                                <label>Ссылка на таблицу</label>
+                                <input
+                                    {...register(`subjects.${subjectIndex}.link`)}
+                                    className={`input ${errors.subjects?.[subjectIndex]?.link ? 'input-error' : ''}`}
+                                    placeholder="Вставьте ссылку на таблицу"
+                                />
+                                {errors.subjects?.[subjectIndex]?.link && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.subjects[subjectIndex]!.link!.message}
+                                    </p>
+                                )}
+                            </div>
 
-                {errors.root && (
-                    <p className="text-red-500 text-sm">{errors.root.message}</p>
-                )}
-            </form>
+                            <div className="form-group">
+                                <label>Формула подсчета</label>
+                                <input
+                                    {...register(`subjects.${subjectIndex}.formula`)}
+                                    className={`input ${errors.subjects?.[subjectIndex]?.formula ? 'input-error' : ''}`}
+                                    placeholder="Введите формулу"
+                                />
+                                {errors.subjects?.[subjectIndex]?.formula && (
+                                    <p className="text-red-500 text-sm">
+                                        {errors.subjects[subjectIndex]!.formula!.message}
+                                    </p>
+                                )}
+                            </div>
+
+                            <SubjectSheetsEditor
+                                key={subjectField.id}
+                                subjectIndex={subjectIndex}
+                                control={control}
+                                register={register}
+                                errors={errors}
+                                trigger={trigger}
+                            />
+
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={() => { remove(subjectIndex); trigger(); }}
+                            >
+                                Удалить предмет
+                            </button>
+                        </div>
+                    ))}
+
+                    <div className="add-subject-header">
+                        <button
+                            type="button"
+                            className="btn btn-primary add-subject-main-btn"
+                            onClick={() => {
+                                append({ baseName: "", name: "", link: "", formula: "", sheets: [{ sheetName: "Sheet 1", headerRow: 1 }] });
+                                trigger();
+                            }}
+                        >
+                            + Добавить новый предмет
+                        </button>
+                    </div>
+
+                    <div className="save-section">
+                        <div className="submit-section">
+                            {errors.root && (
+                                <p className="error-text global-error">{errors.root.message}</p>
+                            )}
+                            <button
+                                type="submit"
+                                className="btn btn-primary add-subject-main-btn"
+                                disabled={!isValid || isSubmitting}
+                            >
+                                {isSubmitting ? "Отправка..." : "Сохранить"}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </LoadingPageData>
     );
 
     async function onSubmit(data: FormSubjects) {
-        const isOk = await api.post(`ConfigEdit/SetConfigs`, data, {
+        const isOk = await api.post(`ConfigEdit/SetConfigs`, data.subjects, {
             withCredentials: true,
             params: {
+                id: student.id,
                 firstName: student.firstName,
                 lastName: student.lastName,
                 group: student.group,
+                term: term,
                 time: Date.now()
             }
         }).then(response => {
@@ -167,15 +244,14 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
 }
 
 interface SubjectEditorProps {
-    subjectBaseName: string
     subjectIndex: number;
     control: Control<FormSubjects>;
     register: UseFormRegister<FormSubjects>;
     errors: FieldErrors<FormSubjects>;
-    onRemove: () => void;
+    trigger: UseFormTrigger<FormSubjects>;
 }
 
-function SubjectEditor({ subjectBaseName, subjectIndex, control, register, errors, onRemove }: SubjectEditorProps) {
+function SubjectSheetsEditor({ subjectIndex, control, register, errors, trigger }: SubjectEditorProps) {
     const {
         fields: sheetFields,
         append: appendSheet,
@@ -186,117 +262,65 @@ function SubjectEditor({ subjectBaseName, subjectIndex, control, register, error
     });
 
     return (
-        <div className="subject-card">
-            <div className="subject-name">{subjectBaseName}</div>
+        <div className="form-group">
+            <label>Листы</label>
+            {sheetFields.map((sheetField, sheetIndex) => {
+                const sheetError = errors.subjects?.[subjectIndex]?.sheets?.[sheetIndex];
 
-            <div className="form-group">
-                <label>Предмет</label>
-                <input
-                    {...register(`subjects.${subjectIndex}.name`)}
-                    className={`input ${errors.subjects?.[subjectIndex]?.name ? 'input-error' : ''}`}
-                    placeholder="Введите название предмета"
-                />
-                {errors.subjects?.[subjectIndex]?.name && (
-                    <p className="text-red-500 text-sm">
-                        {errors.subjects[subjectIndex]!.name!.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="form-group">
-                <label>Ссылка на таблицу</label>
-                <input
-                    {...register(`subjects.${subjectIndex}.link`)}
-                    className={`input ${errors.subjects?.[subjectIndex]?.link ? 'input-error' : ''}`}
-                    placeholder="Вставьте ссылку на таблицу"
-                />
-                {errors.subjects?.[subjectIndex]?.link && (
-                    <p className="text-red-500 text-sm">
-                        {errors.subjects[subjectIndex]!.link!.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="form-group">
-                <label>Формула подсчета</label>
-                <input
-                    {...register(`subjects.${subjectIndex}.formula`)}
-                    className={`input ${errors.subjects?.[subjectIndex]?.formula ? 'input-error' : ''}`}
-                    placeholder="Введите формулу"
-                />
-                {errors.subjects?.[subjectIndex]?.formula && (
-                    <p className="text-red-500 text-sm">
-                        {errors.subjects[subjectIndex]!.formula!.message}
-                    </p>
-                )}
-            </div>
-
-            <div className="form-group">
-                <label>Листы</label>
-                {sheetFields.map((sheetField, sheetIndex) => {
-                    const sheetError = errors.subjects?.[subjectIndex]?.sheets?.[sheetIndex];
-
-                    return (
-                        <div key={sheetField.id}>
-                            <div className="form-group">
-                                <label>Имя листа</label>
-                                <input
-                                    {...register(
-                                        `subjects.${subjectIndex}.sheets.${sheetIndex}.sheetName`
-                                    )}
-                                    className={`input ${sheetError?.sheetName ? "input-error" : ""
-                                        }`}
-                                />
-                                {sheetError?.sheetName && (
-                                    <p className="error-text">
-                                        {sheetError.sheetName.message}
-                                    </p>
+                return (
+                    <div key={sheetField.id} className="sheet-card">
+                        <div className="form-group">
+                            <label>Имя листа</label>
+                            <input
+                                {...register(
+                                    `subjects.${subjectIndex}.sheets.${sheetIndex}.sheetName`
                                 )}
-                            </div>
-
-                            <div className="form-group">
-                                <label>Строка заголовка</label>
-                                <input
-                                    type="number"
-                                    {...register(
-                                        `subjects.${subjectIndex}.sheets.${sheetIndex}.headerRow`,
-                                        { valueAsNumber: true }
-                                    )}
-                                    className={`input ${sheetError?.headerRow ? "input-error" : ""
-                                        }`}
-                                />
-                                {sheetError?.headerRow && (
-                                    <p className="error-text">
-                                        {sheetError.headerRow.message}
-                                    </p>
-                                )}
-                            </div>
-
-                            {sheetFields.length > 1 && (
-                                <button
-                                    type="button"
-                                    onClick={() => removeSheet(sheetIndex)}
-                                >
-                                    Удалить лист
-                                </button>
+                                className={`input ${sheetError?.sheetName ? "input-error" : ""
+                                    }`}
+                            />
+                            {sheetError?.sheetName && (
+                                <p className="error-text">
+                                    {sheetError.sheetName.message}
+                                </p>
                             )}
                         </div>
-                    );
-                })}
-                <button
-                    type="button"
-                    onClick={() => appendSheet({ sheetName: "", headerRow: 1 })}
-                >
-                    Добавить лист
-                </button>
-            </div>
 
+                        <div className="form-group">
+                            <label>Строка заголовка</label>
+                            <input
+                                type="number"
+                                {...register(
+                                    `subjects.${subjectIndex}.sheets.${sheetIndex}.headerRow`,
+                                    { valueAsNumber: true }
+                                )}
+                                className={`input ${sheetError?.headerRow ? "input-error" : ""
+                                    }`}
+                            />
+                            {sheetError?.headerRow && (
+                                <p className="error-text">
+                                    {sheetError.headerRow.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {sheetFields.length > 1 && (
+                            <button
+                                type="button"
+                                className="btn btn-outline btn-sm"
+                                onClick={() => { removeSheet(sheetIndex); trigger(); }}
+                            >
+                                Удалить лист
+                            </button>
+                        )}
+                    </div>
+                );
+            })}
             <button
                 type="button"
-                className="login-btn secondary"
-                onClick={onRemove}
+                className="btn btn-sm"
+                onClick={() => { appendSheet({ sheetName: "", headerRow: 1 }); trigger(); }}
             >
-                Удалить
+                Добавить лист
             </button>
         </div>
     );

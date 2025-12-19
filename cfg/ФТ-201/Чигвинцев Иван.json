@@ -9,7 +9,7 @@
       "SubjectName": "МАТАН",
       "Tables": [
         {
-          "Name": "МАТАН ПРАКТИКА",
+          "Name": "1",
           "Url": "https://docs.google.com/spreadsheets/d/1I74SHN9EzrDtnmdKAPkwtVnHmLJzz2T2EYxibm2qFRM/edit",
           "Sheets": [
             {
@@ -37,18 +37,8 @@
       ],
       "Formula": {
         "FinalFormula": "ДЗ + КР + Пров + Акт",
-        "ComponentFormulas": {
-          "ДЗ": "ДЗ",
-          "КР": "КР",
-          "Пров": "Пров",
-          "Акт": "Акт"
-        },
-        "ValueMappings": {
-          "ДЗ": "ДЗ",
-          "КР": "КР",
-          "Пров": "Пров",
-          "Акт": "Акт"
-        },
+        "ComponentFormulas": {},
+        "ValueMappings": null,
         "AggregateMethod": ""
       }
     },
@@ -56,7 +46,7 @@
       "SubjectName": "ТЕРВЕР_ЛЕКЦИИ",
       "Tables": [
         {
-          "Name": "ТЕРВЕР ЛЕКЦИИ",
+          "Name": "1",
           "Url": "https://docs.google.com/spreadsheets/d/1scEvVafOyAIplbic1muuj_hqM94zrscdMO43NnlRzrE/edit?pli=1&gid=1452851029#gid=1452851029",
           "Sheets": [
             {
@@ -68,10 +58,7 @@
       ],
       "Formula": {
         "FinalFormula": "Итого (без халявы)",
-        "ComponentFormulas": {
-          "Пятиминутки": "Пятиминутки",
-          "Доклады": "Доклады"
-        },
+        "ComponentFormulas": {},
         "ValueMappings": null,
         "AggregateMethod": ""
       }
@@ -80,7 +67,7 @@
       "SubjectName": "ТЕРВЕР_ПРАКТИКА",
       "Tables": [
         {
-          "Name": "ТЕРВЕР ПРАКТИКА",
+          "Name": "1",
           "Url": "https://docs.google.com/spreadsheets/d/1WLpM4NhY3dnseuwHWLIVAsB8dFi-sXIzWL3_YToBcLE/edit?pli=1&gid=313135890#gid=313135890",
           "Sheets": [
             {
@@ -92,35 +79,7 @@
       ],
       "Formula": {
         "FinalFormula": "Сумма",
-        "ComponentFormulas": {
-          "Задачи": "Задачи",
-          "Тесты": "Тесты"
-        },
-        "ValueMappings": null,
-        "AggregateMethod": ""
-      }
-    },
-    {
-      "SubjectName": "СЕТИ",
-      "Tables": [
-        {
-          "Name": "СЕТИ",
-          "Url": "https://docs.google.com/spreadsheets/d/1aJVxome_Y6lPbFCFX_8bF-mGfQj87y_e4W09wYmxt0k/edit?gid=0#gid=0",
-          "Sheets": [
-            {
-              "Name": "Sheet 1",
-              "CategoriesRow": 1
-            }
-          ]
-        }
-      ],
-      "Formula": {
-        "FinalFormula": "Итог",
-        "ComponentFormulas": {
-          "Аттестация": "Аттестация",
-          "Практические": "Sum",
-          "ДЗ": "ДЗ1 [15]"
-        },
+        "ComponentFormulas": {},
         "ValueMappings": null,
         "AggregateMethod": ""
       }
@@ -129,7 +88,7 @@
       "SubjectName": "ПРОЕКТИРОВАНИЕ_C#",
       "Tables": [
         {
-          "Name": "ПРОЕКТИРОВАНИЕ НА ЯЗЫКЕ C#",
+          "Name": "1",
           "Url": "https://docs.google.com/spreadsheets/d/1rbmTuUc2R12VCZUuTFWuxYlUoqGxAPmpXhKfd9rL5IE/edit?gid=0#gid=0",
           "Sheets": [
             {
@@ -145,11 +104,7 @@
       ],
       "Formula": {
         "FinalFormula": "Итого в БРС",
-        "ComponentFormulas": {
-          "Активность": "Акт",
-          "Упражнения": "Упр",
-          "Домашние задания": "ДЗ"
-        },
+        "ComponentFormulas": {},
         "ValueMappings": null,
         "AggregateMethod": ""
       }
@@ -158,7 +113,7 @@
       "SubjectName": "ПЯТИМИНУТКИ_ТЕРВЕР",
       "Tables": [
         {
-          "Name": "ПЯТИМИНУТКИ ТЕРВЕР",
+          "Name": "1",
           "Url": "https://docs.google.com/spreadsheets/d/15dAjMY6HDQ_W3fFUggxb-t-zYy1m8Ky-MDs-Lj3hE_g/edit?gid=257235976#gid=257235976",
           "Sheets": [
             {
@@ -175,10 +130,6 @@
             },
             {
               "Name": "Sheet 4",
-              "CategoriesRow": 1
-            },
-            {
-              "Name": "Sheet 5",
               "CategoriesRow": 1
             },
             {
@@ -226,11 +177,9 @@
       ],
       "Formula": {
         "FinalFormula": "ИТОГО",
-        "ComponentFormulas": {
-          "Пятиминутки": "ИТОГО"
-        },
+        "ComponentFormulas": {},
         "ValueMappings": null,
-        "AggregateMethod": "SUM"
+        "AggregateMethod": ""
       }
     }
   ]

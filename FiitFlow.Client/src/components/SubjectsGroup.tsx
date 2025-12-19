@@ -1,6 +1,6 @@
 ﻿import { useNavigate } from 'react-router-dom'
 import { useEffect, useState, } from "react"
-import { rootEdit, rootMain } from "./Navigation"
+import { rootMain } from "./Navigation"
 import LoadingPageData from "./LoadingPageData"
 import type Student from "./Student"
 import type PointsItem from "./PointsItem"
@@ -41,12 +41,11 @@ function SubjectsGroup({ student, term }: SubjectGroupProps) {
                                 <span>Последнее обновление: {lastUPDFormat(subpoint)}</span>
                                 <span>Преподаватель: {subpoint.teacher}</span>
                             </div>
-                            <button onClick={() => setCurrentSubject({ subjectName: subpoint.subject, student: student, term: term, score: subpoint.score })} className="btn">Подробнее</button>
+                            <button onClick={() => setCurrentSubject({ subjectName: subpoint.subject, student: student, term: term, score: subpoint.score })} className="btn" style={{marginTop: "15px"}}>Подробнее</button>
                         </div>
                     ))
                 }
             </div>
-            <a onClick={() => navigate(rootEdit.to, rootEdit.options)} className="back-link">Редактировать</a>
         </LoadingPageData>
     );
 

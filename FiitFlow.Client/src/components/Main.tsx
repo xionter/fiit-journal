@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState, Fragment, type ReactElement } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { rootLogin, rootMain } from "./Navigation"
+import { rootLogin, rootMain, rootEdit } from "./Navigation"
 import SubjectsGroup from "./SubjectsGroup"
 import type Student from "./Student"
 import { loadStudentCookie, loadSubjectCookie, removeSubjectCookie } from "./CookieTools"
@@ -38,16 +38,24 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                             FIITFLOW
                         </div>
                         <div className="semester-select">
-                            <select value={currentTerm} onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
-                                {
-                                    [1, 2, 3, 4].map(num => (
-                                        <option key={num} value={num}>Семестр {num}</option>
-                                    ))
-                                }
-                            </select>
+                            {subjectPeaked || isEditing ? (
+                                <nav>
+                                    <ul>
+                                        <li><a onClick={goToMain}>Главная</a></li>
+                                    </ul>
+                                </nav>
+                            ) : (
+                                <select value={currentTerm} onChange={(event) => setCurrentTerm(Number(event.target.value))} className="semester-dropdown">
+                                    {
+                                        [1, 2, 3, 4].map(num => (
+                                            <option key={num} value={num}>Семестр {num}</option>
+                                        ))
+                                    }
+                                </select>
+                            )}
                         </div>
                         <div className="user-info">
-                            <div className="user-avatar">ФИИТ</div>
+                            <div className="user-avatar">{currentStudent?.group.substring(0, currentStudent.group.indexOf("-"))}</div>
                             <span>{currentStudent?.lastName} {currentStudent?.firstName}</span>
                             <button onClick={() => { logoutReset(); goToLogin(); } } className="logout-btn">Выход</button>
                         </div>
@@ -63,14 +71,6 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                         <div className="footer-section">
                             <h3>FIITFLOW</h3>
                             <p>Единая система для отслеживания учебных баллов студентов ФИИТ</p>
-                        </div>
-                        <div className="footer-section">
-                            <h3>Контакты</h3>
-                            <ul>
-                                <li>Email: support@fiitflow.ru</li>
-                                <li>Телеграм: @fiitflow_support</li>
-                                <li>Кампус: УрФУ, корпус ФИИТ</li>
-                            </ul>
                         </div>
                     </div>
                     <div className="copyright">
@@ -108,7 +108,7 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                             <StudentSubjectComponent
                                 subjectName={subjectFromCookie.subjectName}
                                 student={studentFromCookie}
-                                term={currentTerm}
+                                term={subjectFromCookie.term}
                                 score={subjectFromCookie.score}
                             />
                         </Fragment>
@@ -119,16 +119,25 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
             else if (isEditing)
                 setCentralBlock(
                     <Fragment>
-                        <a onClick={goToMain} className="back-link">← Назад к списку предметов</a>
+                        <div className="page-header">
+                            <a onClick={goToMain} className="back-link">← Назад к предметам</a>
+                            <h1 className="page-title">Редактирование предметов</h1>
+                        </div>
                         <SubjectsGroupConfigEditor student={studentFromCookie} term={currentTerm} />
                     </Fragment>
                 );
             else
                 setCentralBlock(
-                    <SubjectsGroup
-                        student={studentFromCookie}
-                        term={currentTerm}
-                    />
+                    <Fragment>
+                        <a onClick={() => navigate(rootEdit.to, rootEdit.options)} className="edit-subject-btn">
+                            <span>✏️</span>
+                            Изменить или добавить
+                        </a>
+                        <SubjectsGroup
+                            student={studentFromCookie}
+                            term={currentTerm}
+                        />
+                    </Fragment>
                 );
         }
     }
