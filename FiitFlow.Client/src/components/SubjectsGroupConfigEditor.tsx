@@ -72,7 +72,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
         defaultValues: { subjects: [] }
     });
 
-    const { fields: subjectFields, append, remove } = useFieldArray({
+    const { fields: subjectFields, append } = useFieldArray({
         control,
         name: "subjects"
     });

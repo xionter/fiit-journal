@@ -25,8 +25,8 @@ public class StudentSearchService : IStudentSearchService
 
         var tables = config.Subjects?
             .SelectMany(s => s.Tables ?? Enumerable.Empty<TableConfig>())
-            .Where(t => !string.IsNullOrWhiteSpace(t.Name))
-            .GroupBy(t => t.Name, StringComparer.OrdinalIgnoreCase)
+            .Where(t => !string.IsNullOrWhiteSpace(t.Name) || !string.IsNullOrWhiteSpace(t.Url))
+            .GroupBy(t => GetTableDedupKey(t), StringComparer.OrdinalIgnoreCase)
             .Select(g => g.First())
             .ToList() ?? new List<TableConfig>();
 
@@ -85,5 +85,12 @@ public class StudentSearchService : IStudentSearchService
         }
 
         return tableResults;
+    }
+
+    private static string GetTableDedupKey(TableConfig table)
+    {
+        var url = table.Url?.Trim() ?? string.Empty;
+        var name = table.Name?.Trim() ?? string.Empty;
+        return $"{url}|{name}";
     }
 }
