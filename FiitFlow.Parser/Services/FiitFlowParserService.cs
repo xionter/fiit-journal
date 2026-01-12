@@ -89,17 +89,17 @@ namespace FiitFlow.Parser.Services
 
             foreach (var subject in config.Subjects)
             {
-                var subjectTableNames = subject.Tables?
-                    .Select(t => t.Name)
-                    .Where(n => !string.IsNullOrWhiteSpace(n))
+                var subjectTableKeys = subject.Tables?
+                    .Select(t => GetTableKey(t.Name, t.Url))
+                    .Where(k => !string.IsNullOrWhiteSpace(k))
                     .Distinct(StringComparer.OrdinalIgnoreCase)
                     .ToList() ?? new List<string>();
 
-                if (!subjectTableNames.Any())
+                if (!subjectTableKeys.Any())
                     continue;
 
                 var subjectTables = searchResult.Tables
-                    .Where(t => subjectTableNames.Contains(t.TableName, StringComparer.OrdinalIgnoreCase))
+                    .Where(t => subjectTableKeys.Contains(GetTableKey(t.TableName, t.TableUrl), StringComparer.OrdinalIgnoreCase))
                     .ToList();
 
                 if (!subjectTables.Any())
@@ -149,13 +149,13 @@ namespace FiitFlow.Parser.Services
 
             var processedTables = config.Subjects
                 .SelectMany(sf => sf.Tables ?? Enumerable.Empty<TableConfig>())
-                .Select(t => t.Name)
-                .Where(n => !string.IsNullOrWhiteSpace(n))
+                .Select(t => GetTableKey(t.Name, t.Url))
+                .Where(k => !string.IsNullOrWhiteSpace(k))
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             var remainingTables = searchResult.Tables
-                .Where(t => !processedTables.Contains(t.TableName))
-                .GroupBy(t => t.TableName)
+                .Where(t => !processedTables.Contains(GetTableKey(t.TableName, t.TableUrl)))
+                .GroupBy(t => GetTableKey(t.TableName, t.TableUrl))
                 .ToDictionary(
                         g => g.Key,
                         g => new SubjectResults
@@ -171,6 +171,13 @@ namespace FiitFlow.Parser.Services
             }
 
             return studentResults;
+        }
+
+        private static string GetTableKey(string? name, string? url)
+        {
+            var cleanName = name?.Trim() ?? string.Empty;
+            var cleanUrl = url?.Trim() ?? string.Empty;
+            return string.IsNullOrWhiteSpace(cleanUrl) ? cleanName : $"{cleanName}|{cleanUrl}";
         }
 
         private void ExtractOverallData(SubjectResults subjectResult, List<TableResult> tables)

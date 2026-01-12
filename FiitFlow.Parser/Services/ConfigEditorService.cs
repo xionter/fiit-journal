@@ -302,11 +302,24 @@ namespace FiitFlow.Parser.Services
                 var subject = EnsureSubject(cfg, subjectName, allowExisting: false);
                 var table = EnsureTable(subject, tableName);
                 table.Url = url ?? string.Empty;
-                table.Sheets = sheets.Select(sheet => new SheetConfig
+                var sheetList = sheets?
+                    .Select(sheet => new SheetConfig
+                    {
+                        Name = string.IsNullOrWhiteSpace(sheet.sheetName) ? "Sheet 1" : sheet.sheetName,
+                        CategoriesRow = NormalizeRow(sheet.headerRow)
+                    })
+                    .ToList() ?? new List<SheetConfig>();
+
+                if (sheetList.Count == 0)
                 {
-                    Name = string.IsNullOrWhiteSpace(sheet.sheetName) ? "Sheet 1" : sheet.sheetName,
-                    CategoriesRow = NormalizeRow(sheet.headerRow)
-                }).ToList();
+                    sheetList.Add(new SheetConfig
+                    {
+                        Name = "Sheet 1",
+                        CategoriesRow = 1
+                    });
+                }
+
+                table.Sheets = sheetList;
 
                 subject.Formula = new SubjectFormula
                 {

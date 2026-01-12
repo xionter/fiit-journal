@@ -61,6 +61,14 @@ public class ExcelParser : IExcelParser
 
     private static SheetConfig? GetSheetConfig(TableConfig tableConfig, Sheet sheet, int index)
     {
+        if (tableConfig.Sheets == null || tableConfig.Sheets.Count == 0)
+        {
+            return new SheetConfig
+            {
+                Name = sheet.Name ?? $"Sheet {index + 1}"
+            };
+        }
+
         return tableConfig.Sheets.FirstOrDefault(sc => 
                 sc.Name.Equals($"Sheet {index + 1}", StringComparison.OrdinalIgnoreCase) || 
                 sc.Name.Equals(sheet.Name ?? "", StringComparison.OrdinalIgnoreCase));

@@ -81,8 +81,10 @@ namespace FiitFlow.Server.Controllers
                     bef.SubjectName != subjectConfig.Name ||
                     bef.Tables.First().Url != subjectConfig.Link ||
                     bef.Formula.FinalFormula != subjectConfig.Formula ||
-                    !bef.Tables.First().Sheets.Select(s => new SheetSimple { sheetName = s.Name, headerRow = s.CategoriesRow ?? 1 })
-                        .ToArray().Equals(subjectConfig.Sheets)).FirstOrDefault(false))
+                    !SheetsEqual(
+                        bef.Tables.First().Sheets.Select(s => new SheetSimple { sheetName = s.Name, headerRow = s.CategoriesRow ?? 1 })
+                            .ToArray(),
+                        subjectConfig.Sheets)).FirstOrDefault(false))
                 {
                     configEditor.RemoveSubject(subjectConfig.BaseName);
                     removed = true;
@@ -98,6 +100,25 @@ namespace FiitFlow.Server.Controllers
                 }
             }
             return Ok();
+        }
+
+        private static bool SheetsEqual(SheetSimple[]? left, SheetSimple[]? right)
+        {
+            left ??= Array.Empty<SheetSimple>();
+            right ??= Array.Empty<SheetSimple>();
+
+            if (left.Length != right.Length)
+                return false;
+
+            for (var i = 0; i < left.Length; i++)
+            {
+                if (!string.Equals(left[i].sheetName, right[i].sheetName, StringComparison.OrdinalIgnoreCase))
+                    return false;
+                if (left[i].headerRow != right[i].headerRow)
+                    return false;
+            }
+
+            return true;
         }
     }
 }
