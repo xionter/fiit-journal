@@ -41,6 +41,14 @@ function StudentSubjectComponent({ subjectName, student, term, score }: StudentS
 
             <h2 className="page-title">Детализация</h2>
 
+            <div className="formula-section">
+                <h3 className="formula-title">Исходная таблица</h3>
+                {subjectInfo?.tables.length !== undefined && subjectInfo?.tables.length > 0 ?
+                    <div className="formula"><a href={subjectInfo?.tables[0].tableUrl}>{subjectInfo?.tables[0].tableUrl}</a></div> :
+                    <div></div>
+                }
+            </div>
+
             <table className="details-table">
                 <thead>
                     <tr>
@@ -64,13 +72,6 @@ function StudentSubjectComponent({ subjectName, student, term, score }: StudentS
                 <h3 className="formula-title">Формула</h3>
                 <div className="formula">Формула будет добавлена позже</div>
                 <p>В текущем семестре: {score}</p>
-            </div>
-            <div className="formula-section">
-                <h3 className="formula-title">Исходная таблица</h3>
-                {subjectInfo?.tables.length !== undefined && subjectInfo?.tables.length > 0 ?
-                    <div className="formula"><a href={subjectInfo?.tables[0].tableUrl}>{subjectInfo?.tables[0].tableUrl}</a></div> :
-                    <div></div>
-                }
             </div>
         </LoadingPageData>
     );

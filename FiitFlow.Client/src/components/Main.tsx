@@ -34,7 +34,9 @@ function Main({ subjectPeaked, isEditing }: MainProps) {
                 <div className="div-container">
                     <div className="header-content">
                         <div onClick={goToMain} className="logo">
-                            <span className="logo-icon">📊</span>
+                            <svg viewBox="0 0 24 24" width="32" height="32" aria-label="logo-icon">
+                                <path fill="#ffffff" d="./assets/major_logo_en.svg" />
+                            </svg>
                             FIITFLOW
                         </div>
                         <div className="semester-select">

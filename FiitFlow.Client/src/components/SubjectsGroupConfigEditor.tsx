@@ -21,7 +21,7 @@ interface SheetInput {
 }
 
 interface SubjectConfigInput {
-    baseName?: string | null;
+    baseName: string;
     name: string;
     link: string;
     formula: string;
@@ -43,7 +43,7 @@ const sheetSchema: yup.ObjectSchema<SheetInput> = yup.object({
 })
 
 const subjectSchema: yup.ObjectSchema<SubjectConfigInput> = yup.object({
-    baseName: yup.string().nullable().optional().default("").notRequired(),
+    baseName: yup.string().default(""), //.nullable().optional().default("").notRequired(),
     name: yup.string().required("Название предмета"), //.matches(/^[А-ЯЁа-яё \_\-\.]+$/, "Неверный формат"),
     link: yup.string().url("Неверный формат ссылки").required("Ссылка на таблицу").matches(googleSheetRegex, "Неверный формат"),
     formula: yup.string().required("Формула для подсчета баллов"), //.matches(googleSheetRegex, "Неверный формат"),
@@ -51,7 +51,7 @@ const subjectSchema: yup.ObjectSchema<SubjectConfigInput> = yup.object({
 }).required();
 
 const schema: yup.ObjectSchema<FormSubjects> = yup.object({
-    subjects: yup.array().of(subjectSchema).min(1, "Данных вашей группы ещё нет в базе, ткните куру").required("Список")
+    subjects: yup.array().of(subjectSchema).min(1, "Данных вашей группы ещё нет в базе, ткните куру").required("Список изменён некоректно")
 }).required();
 
 export default function SubjectsGroupConfigEditor({ student, term }: ConfigEditorProps) {
@@ -67,7 +67,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
         trigger,
         formState: { errors, isValid, isSubmitting }
     } = useForm<FormSubjects>({
-        resolver: yupResolver<FormSubjects, yup.ObjectSchema<FormSubjects>, FormSubjects>(schema),
+        resolver: yupResolver(schema),
         mode: "onChange",
         defaultValues: { subjects: [] }
     });
@@ -89,7 +89,9 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
     }, [baseSubCon]);
 
     return (
-        <LoadingPageData isLoading={baseSubCon === undefined}>
+        <LoadingPageData
+            isLoading={baseSubCon === undefined}
+        >
             <div className="edit-container">
                 <div className="edit-instructions">
                     <h3>📝 Инструкция по настройке</h3>
@@ -157,13 +159,13 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                                 trigger={trigger}
                             />
 
-                            <button
-                                type="button"
-                                className="btn btn-danger"
-                                onClick={() => { remove(subjectIndex); trigger(); }}
-                            >
-                                Удалить предмет
-                            </button>
+                            {/*<button*/}
+                            {/*    type="button"*/}
+                            {/*    className="btn btn-danger"*/}
+                            {/*    onClick={() => { remove(subjectIndex); trigger(); }}*/}
+                            {/*>*/}
+                            {/*    Удалить предмет*/}
+                            {/*</button>*/}
                         </div>
                     ))}
 
@@ -173,26 +175,48 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                             className="btn btn-primary add-subject-main-btn"
                             onClick={() => {
                                 append({ baseName: "", name: "", link: "", formula: "", sheets: [{ sheetName: "Sheet 1", headerRow: 1 }] });
+                                trigger();
                             }}
                         >
                             + Добавить новый предмет
                         </button>
+                        {errors.subjects && (
+                            <p className="text-red-500 text-sm">
+                                {errors.subjects!.message}
+                            </p>
+                        )}
                     </div>
 
-                    <div className="save-section">
-                        <div className="submit-section">
-                            {errors.root && (
-                                <p className="error-text global-error">{errors.root.message}</p>
-                            )}
-                            <button
-                                type="submit"
-                                className="btn btn-primary add-subject-main-btn"
-                                disabled={(!isValid) || isSubmitting}
-                            >
-                                {isSubmitting ? "Отправка..." : "Сохранить"}
-                            </button>
-                        </div>
-                    </div>
+                    {/*<div className="save-section">*/}
+                    {/*    <div className="submit-section">*/}
+                    {/*        {errors.root && (*/}
+                    {/*            <p className="error-text global-error">{errors.root.message}</p>*/}
+                    {/*        )}*/}
+                    {/*        <button*/}
+                    {/*            type="submit"*/}
+                    {/*            className="btn btn-primary add-subject-main-btn"*/}
+                    {/*            disabled={(!isValid) || isSubmitting}*/}
+                    {/*        >*/}
+                    {/*            {isSubmitting ? "Отправка..." : "Сохранить"}*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
+                    {/*</div>*/}
+                    <button
+                        type="submit"
+                        className="edit-subject-btn"
+                        disabled={(!isValid) || isSubmitting}
+                    >
+                        {isSubmitting ? "Отправка..." : "Сохранить"}
+                    </button>
+                    <button
+                        className="edit-subject-btn"
+                        style={{ right: "auto", left: "30px" }}
+                        onClick={() => window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: 'smooth'
+                        })}
+                    >⇑</button>
                 </form>
             </div>
         </LoadingPageData>
