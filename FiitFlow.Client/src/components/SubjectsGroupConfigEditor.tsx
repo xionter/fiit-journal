@@ -72,7 +72,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
         defaultValues: { subjects: [] }
     });
 
-    const { fields: subjectFields, append } = useFieldArray({
+    const { fields: subjectFields, append, remove } = useFieldArray({
         control,
         name: "subjects"
     });
@@ -159,7 +159,7 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                                 trigger={trigger}
                             />
 
-                            {subjectField.baseName.length > 0 && (
+                            {subjectField.baseName.length == 0 && (
                                 <button
                                     type="button"
                                     className="btn btn-danger"
