@@ -7,13 +7,11 @@ namespace FiitFlow.Parser.Tests
     {
         public static StudentSearchService CreateStudentSearchService()
         {
-            var cache = new CacheService("./Tests/Cache", forceRefresh: false);
             var httpClient = new HttpClient();
-            var downloader = new ExcelDownloader(httpClient, cache);
+            var downloader = new ExcelDownloader(httpClient);
             var parser = new ExcelParser();
 
             return new StudentSearchService(downloader, parser);
         }
     }
 }
-

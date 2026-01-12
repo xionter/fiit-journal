@@ -39,13 +39,11 @@ public class ConfigParser
             {
                 config.StudentName = trimmedLine.Substring("Студент:".Length).Trim();
             }
-            else if (trimmedLine.StartsWith("CacheDirectory:"))
+            else if (trimmedLine.StartsWith("CacheDirectory:", StringComparison.OrdinalIgnoreCase) ||
+                     trimmedLine.StartsWith("ForceRefresh:", StringComparison.OrdinalIgnoreCase))
             {
-                config.CacheSettings.CacheDirectory = trimmedLine.Substring("CacheDirectory:".Length).Trim();
-            }
-            else if (trimmedLine.StartsWith("ForceRefresh:"))
-            {
-                config.CacheSettings.ForceRefresh = bool.Parse(trimmedLine.Substring("ForceRefresh:".Length).Trim());
+                // Игнорируем устаревшие директивы кэша, чтобы не превращать их в названия предметов
+                continue;
             }
             else if (!IsTableProperty(trimmedLine) && currentTable == null)
             {
@@ -88,7 +86,8 @@ public class ConfigParser
     private static bool IsTableProperty(string line) => 
         line.StartsWith("http") || line.StartsWith("Sheet") || 
         line.StartsWith("Строка с категориями:") ||
-        line.StartsWith("CacheDirectory:") || line.StartsWith("ForceRefresh:");
+        line.StartsWith("CacheDirectory:", StringComparison.OrdinalIgnoreCase) ||
+        line.StartsWith("ForceRefresh:", StringComparison.OrdinalIgnoreCase);
 
     private static int ParseCategoriesRow(string line)
     {

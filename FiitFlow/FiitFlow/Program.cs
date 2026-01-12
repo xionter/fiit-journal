@@ -19,8 +19,7 @@ public class Program
     public static async Task Main2(string[] args)
     {
         var httpClient = new HttpClient();
-        var cacheService = new CacheService("./Cache", false);
-        IExcelDownloader excelDownloader = new ExcelDownloader(httpClient, cacheService);
+        IExcelDownloader excelDownloader = new ExcelDownloader(httpClient);
         IExcelParser excelParser = new ExcelParser();
         IStudentSearchService studentSearchService = new StudentSearchService(excelDownloader, excelParser);
         var formulaCalculator = new FormulaCalculatorService();
@@ -124,7 +123,8 @@ public class Program
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            IgnoreUnknownProperties = true
         };
 
         var json = await File.ReadAllTextAsync(path);

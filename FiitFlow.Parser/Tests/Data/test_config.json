@@ -1,9 +1,5 @@
 {
   "studentName": "Макарова Дарья",
-  "cacheSettings": {
-    "cacheDirectory": "./Tests/Cache",
-    "forceRefresh": false
-  },
   "subjects": [
     {
       "subjectName": "МАТАН",
@@ -30,4 +26,3 @@
     }
   ]
 }
-

@@ -41,9 +41,6 @@ namespace FiitFlowReactApp.Server
 
             builder.Services.AddSingleton<HttpClient>();
 
-            builder.Services.AddSingleton<CacheService>(sp =>
-                    new CacheService("./Cache", false));
-
             builder.Services.AddSingleton<IExcelDownloader, ExcelDownloader>();
             builder.Services.AddSingleton<IExcelParser, ExcelParser>();
 

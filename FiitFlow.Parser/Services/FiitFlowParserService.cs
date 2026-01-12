@@ -29,10 +29,8 @@ namespace FiitFlow.Parser.Services
         {
             if (!File.Exists(configPath))
                 throw new FileNotFoundException($"Конфиг не найден: {configPath}");
-            //var configEditor = new ConfigEditorService(configPath);
-            //configEditor.SetCache("", false);
+
             var config = await LoadJsonConfigAsync(configPath);
-            //configEditor.SetCache("", true);
             if (string.IsNullOrWhiteSpace(studentName))
             {
                 studentName = config.StudentName;
@@ -257,7 +255,8 @@ namespace FiitFlow.Parser.Services
             var options = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                PropertyNameCaseInsensitive = true
+                PropertyNameCaseInsensitive = true,
+                IgnoreUnknownProperties = true
             };
 
             string json = await File.ReadAllTextAsync(configPath);

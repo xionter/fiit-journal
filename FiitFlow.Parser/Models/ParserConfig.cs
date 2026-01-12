@@ -15,16 +15,9 @@ namespace FiitFlow.Parser.Models
         public List<SheetConfig> Sheets { get; set; } = new();
     }
 
-    public class CacheSettings
-    {
-        public string CacheDirectory { get; set; } = "./Cache";
-        public bool ForceRefresh { get; set; } = false;
-    }
-
     public class ParserConfig
     {
         public string StudentName { get; set; } = string.Empty;
-        public CacheSettings CacheSettings { get; set; } = new CacheSettings();
         public List<SubjectConfig> Subjects { get; set; } = new();
     }
 }

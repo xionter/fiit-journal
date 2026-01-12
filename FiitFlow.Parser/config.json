@@ -1,9 +1,5 @@
 ﻿{
   "StudentName": "Чигвинцев Иван",
-  "CacheSettings": {
-    "CacheDirectory": "./Cache",
-    "ForceRefresh": false
-  },
   "Subjects": [
     {
       "SubjectName": "МАТАН",

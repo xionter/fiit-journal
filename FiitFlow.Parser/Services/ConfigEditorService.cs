@@ -21,7 +21,8 @@ namespace FiitFlow.Parser.Services
             ReadCommentHandling = JsonCommentHandling.Skip,
             AllowTrailingCommas = true,
             WriteIndented = true,
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            IgnoreUnknownProperties = true
         };
 
         public ConfigEditorService(string configPath)
@@ -275,13 +276,6 @@ namespace FiitFlow.Parser.Services
 
         public ParserConfig SetStudentName(string name) =>
             Edit(cfg => cfg.StudentName = name ?? string.Empty);
-
-        public ParserConfig SetCache(string cacheDirectory, bool forceRefresh) =>
-            Edit(cfg =>
-            {
-                cfg.CacheSettings.CacheDirectory = string.IsNullOrWhiteSpace(cacheDirectory) ? "./Cache" : cacheDirectory;
-                cfg.CacheSettings.ForceRefresh = forceRefresh;
-            });
 
         public ParserConfig CreateSubject(
             string subjectName,

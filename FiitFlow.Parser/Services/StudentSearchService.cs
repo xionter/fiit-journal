@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using FiitFlow.Parser.Models;
 using FiitFlow.Parser.Interfaces;
 
@@ -57,10 +58,11 @@ public class StudentSearchService : IStudentSearchService
     private async Task<IReadOnlyList<TableResult>> ProcessTableAsync(TableConfig table, string? studentName)
     {
         var tableResults = new List<TableResult>();
+        string? filePath = null;
         
         try
         {
-            var filePath = await _excelDownloader.DownloadAsync(table);
+            filePath = await _excelDownloader.DownloadAsync(table);
             
             var students = _excelParser.FindStudents(filePath, studentName, table);
             
@@ -82,6 +84,20 @@ public class StudentSearchService : IStudentSearchService
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка при обработке таблицы {table.Name}: {ex.Message}");
+        }
+        finally
+        {
+            if (!string.IsNullOrWhiteSpace(filePath) && File.Exists(filePath))
+            {
+                try
+                {
+                    File.Delete(filePath);
+                }
+                catch
+                {
+                    // ignore cleanup errors
+                }
+            }
         }
 
         return tableResults;

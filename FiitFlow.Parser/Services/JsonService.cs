@@ -10,6 +10,8 @@ class JsonService
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
+            IgnoreUnknownProperties = true,
             WriteIndented = true
         };
         string json = File.ReadAllText(filePath);
