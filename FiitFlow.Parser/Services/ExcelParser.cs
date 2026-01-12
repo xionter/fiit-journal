@@ -40,14 +40,19 @@ public class ExcelParser : IExcelParser
 
             var rows = sheetData.Elements<Row>().ToList();
 
-            int categoriesRow =
-                AutoDetectCategoriesRow(rows, workbookPart)
-                ?? throw new Exception($"Не удалось найти строку категорий в листе {sheet.Name}");
+            int? categoriesRow = sheetConfig.CategoriesRow;
+            if (!categoriesRow.HasValue || categoriesRow.Value <= 0)
+            {
+                categoriesRow = AutoDetectCategoriesRow(rows, workbookPart);
+            }
+
+            if (!categoriesRow.HasValue)
+                throw new Exception($"Не удалось найти строку категорий в листе {sheet.Name}");
 
             var students = FindStudentInSheet(
                     rows,
                     studentName,
-                    categoriesRow,
+                    categoriesRow.Value,
                     workbookPart
                     );
 

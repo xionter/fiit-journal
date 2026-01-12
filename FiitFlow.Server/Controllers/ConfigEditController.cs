@@ -71,33 +71,78 @@ namespace FiitFlow.Server.Controllers
                 return Unauthorized(new { message = "Данные пользователя неверны", errorCode = "AUTH_REJECTED" });
             var configEditor = new ConfigEditorService(Path.Combine(
                 _rootPathProvider.GetRootPath(), "cfg", group.Substring(0, 6), $"{lastName} {firstName}.json"));
-            var beforeSubjects = configEditor.Load().Subjects;
             foreach (var subjectConfig in subjectConfigs)
             {
-                var removed = false;
-                if (subjectConfig.BaseName.Length > 0 && beforeSubjects
-                    .Where(bef => bef.SubjectName == subjectConfig.BaseName)
-                    .Select(bef =>
-                    bef.SubjectName != subjectConfig.Name ||
-                    bef.Tables.First().Url != subjectConfig.Link ||
-                    bef.Formula.FinalFormula != subjectConfig.Formula ||
-                    !SheetsEqual(
-                        bef.Tables.First().Sheets.Select(s => new SheetSimple { sheetName = s.Name, headerRow = s.CategoriesRow ?? 1 })
-                            .ToArray(),
-                        subjectConfig.Sheets)).FirstOrDefault(false))
-                {
-                    configEditor.RemoveSubject(subjectConfig.BaseName);
-                    removed = true;
-                }
-                if (subjectConfig.BaseName.Length == 0 || removed)
+                var baseName = subjectConfig.BaseName?.Trim() ?? string.Empty;
+                var desiredName = subjectConfig.Name?.Trim() ?? string.Empty;
+
+                if (string.IsNullOrWhiteSpace(baseName))
                 {
                     configEditor.CreateSubject(
-                        subjectConfig.Name,
+                        desiredName,
                         "1",
                         subjectConfig.Link,
                         subjectConfig.Sheets.Select(s => (s.sheetName, s.headerRow)),
                         subjectConfig.Formula);
+                    continue;
                 }
+
+                configEditor.Edit(cfg =>
+                {
+                    var subject = cfg.Subjects.FirstOrDefault(s =>
+                        string.Equals(s.SubjectName, baseName, StringComparison.OrdinalIgnoreCase));
+
+                    if (subject == null)
+                    {
+                        var newSubject = new SubjectConfig
+                        {
+                            SubjectName = desiredName,
+                            Tables = new List<TableConfig>
+                            {
+                                new TableConfig
+                                {
+                                    Name = "1",
+                                    Url = subjectConfig.Link ?? string.Empty,
+                                    Sheets = subjectConfig.Sheets
+                                        .Select(s => new SheetConfig
+                                        {
+                                            Name = s.sheetName ?? string.Empty,
+                                            CategoriesRow = s.headerRow
+                                        })
+                                        .ToList()
+                                }
+                            },
+                            Formula = new SubjectFormula
+                            {
+                                FinalFormula = subjectConfig.Formula ?? string.Empty
+                            }
+                        };
+                        cfg.Subjects.Add(newSubject);
+                        return;
+                    }
+
+                    if (!string.Equals(subject.SubjectName, desiredName, StringComparison.OrdinalIgnoreCase))
+                        subject.SubjectName = desiredName;
+
+                    subject.Formula ??= new SubjectFormula();
+                    subject.Formula.FinalFormula = subjectConfig.Formula ?? string.Empty;
+
+                    var table = subject.Tables.FirstOrDefault();
+                    if (table == null)
+                    {
+                        table = new TableConfig { Name = "1" };
+                        subject.Tables.Add(table);
+                    }
+
+                    table.Url = subjectConfig.Link ?? string.Empty;
+                    table.Sheets = subjectConfig.Sheets
+                        .Select(s => new SheetConfig
+                        {
+                            Name = s.sheetName ?? string.Empty,
+                            CategoriesRow = s.headerRow
+                        })
+                        .ToList();
+                });
             }
             return Ok();
         }
