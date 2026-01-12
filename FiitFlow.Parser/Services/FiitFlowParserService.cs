@@ -127,17 +127,26 @@ namespace FiitFlow.Parser.Services
                         };
                     }
 
-                    if (!string.IsNullOrWhiteSpace(subject.Formula.FinalFormula))
-                    {
-                        subjectResult.CalculatedScore = _calculator.CalculateFinalScore(
-                                subject.Formula.FinalFormula,
-                                components,
-                                subjectTables,
-                                subject.Formula.AggregateMethod
-                                );
+                    subjectResult.CalculatedScore = _calculator.CalculateFinalScore(
+                            subject.Formula.FinalFormula ?? string.Empty,
+                            components,
+                            subjectTables,
+                            subject.Formula.AggregateMethod
+                            );
+                }
+                else if (!string.IsNullOrWhiteSpace(subject.Formula?.FinalFormula))
+                {
+                    subjectResult.CalculatedScore = _calculator.CalculateFinalScore(
+                            subject.Formula.FinalFormula,
+                            new Dictionary<string, double>(),
+                            subjectTables,
+                            subject.Formula.AggregateMethod
+                            );
+                }
 
-                        subjectResult.Overall["CalculatedScore"] = subjectResult.CalculatedScore;
-                    }
+                if (subjectResult.CalculatedScore > 0)
+                {
+                    subjectResult.Overall["CalculatedScore"] = subjectResult.CalculatedScore;
                 }
 
                 ExtractOverallData(subjectResult, subjectTables);

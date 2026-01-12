@@ -88,6 +88,7 @@ public class PointsService
                         if (finalScore <= 0)
                         {
                             Console.WriteLine($"  {subjectName}: нет баллов");
+                            LogNoScoreDebug(student.FullName, subjectName, subjectData, studentResult.RatingScores);
                             continue;
                         }
 
@@ -178,6 +179,38 @@ public class PointsService
         }
 
         return 0;
+    }
+
+    private static void LogNoScoreDebug(
+        string studentName,
+        string subjectName,
+        SubjectResults subjectData,
+        Dictionary<string, double> ratingScores)
+    {
+        var ratingScore = ratingScores.TryGetValue(subjectName, out var score) ? score : 0;
+        var extractedKeys = new List<string>();
+
+        if (subjectData.Overall.TryGetValue("ExtractedData", out var extractedDataObj) &&
+            extractedDataObj is Dictionary<string, object> extractedData)
+        {
+            extractedKeys = extractedData.Keys.OrderBy(k => k).ToList();
+        }
+
+        var tableSummaries = subjectData.Tables.Select(t =>
+        {
+            var keys = t.Data.Keys.Take(20).ToList();
+            var keysSuffix = t.Data.Count > keys.Count ? "..." : string.Empty;
+            return $"{t.TableName} [{t.SheetName}] keys={t.Data.Count} sample={string.Join(", ", keys)}{keysSuffix}";
+        });
+
+        Console.WriteLine(
+            $"    DEBUG no-score: студент='{studentName}', предмет='{subjectName}', " +
+            $"calc={subjectData.CalculatedScore:F2}, rating={ratingScore:F2}, " +
+            $"extractedKeys={string.Join(", ", extractedKeys)}");
+        foreach (var tableSummary in tableSummaries)
+        {
+            Console.WriteLine($"    DEBUG table: {tableSummary}");
+        }
     }
 
     public Task<IReadOnlyList<Points>> GetStudentPointsAsync(int studentId)
