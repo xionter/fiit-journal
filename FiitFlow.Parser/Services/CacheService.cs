@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using FiitFlow.Parser.Models;
 
 namespace FiitFlow.Parser.Services
@@ -19,8 +21,8 @@ namespace FiitFlow.Parser.Services
 
         public string GetCachedFilePath(TableConfig table)
         {
-            var cleanTableName = SanitizeFileName(table.Name);
-            return Path.Combine(_cacheDirectory, $"{cleanTableName}.xlsx");
+            var cacheKey = BuildCacheKey(table);
+            return Path.Combine(_cacheDirectory, $"{cacheKey}.xlsx");
         }
 
         public bool ShouldDownload(TableConfig table)
@@ -50,6 +52,27 @@ namespace FiitFlow.Parser.Services
                 .Trim();
                 
             return string.IsNullOrEmpty(cleanName) ? "unknown_table" : cleanName;
+        }
+
+        private static string BuildCacheKey(TableConfig table)
+        {
+            var cleanTableName = SanitizeFileName(table.Name);
+
+            if (string.IsNullOrWhiteSpace(table.Url))
+                return cleanTableName;
+
+            var urlHash = HashToHex(table.Url, 12);
+            return string.IsNullOrWhiteSpace(cleanTableName)
+                ? urlHash
+                : $"{cleanTableName}_{urlHash}";
+        }
+
+        private static string HashToHex(string input, int length)
+        {
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var hash = SHA256.HashData(bytes);
+            var hex = Convert.ToHexString(hash).ToLowerInvariant();
+            return length > 0 && length < hex.Length ? hex.Substring(0, length) : hex;
         }
     }
 }
