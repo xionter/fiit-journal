@@ -159,13 +159,15 @@ export default function SubjectsGroupConfigEditor({ student, term }: ConfigEdito
                                 trigger={trigger}
                             />
 
-                            {/*<button*/}
-                            {/*    type="button"*/}
-                            {/*    className="btn btn-danger"*/}
-                            {/*    onClick={() => { remove(subjectIndex); trigger(); }}*/}
-                            {/*>*/}
-                            {/*    Удалить предмет*/}
-                            {/*</button>*/}
+                            {subjectField.baseName.length > 0 && (
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={() => { remove(subjectIndex); trigger(); }}
+                                >
+                                    Удалить предмет
+                                </button>
+                            )}
                         </div>
                     ))}
 

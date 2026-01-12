@@ -631,6 +631,12 @@ footer {
         font-size: 18px;
     }
 
+    .edit-subject-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none !important;
+    }
+
 /* Страница редактирования */
 .page-header {
     margin-bottom: 30px;
