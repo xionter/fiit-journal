@@ -7,9 +7,10 @@ fiitflow.db
 *.xlsx
 *.xls
 
-#.vs/
-#*.user
-#*.suo
+.vs/
+*.user
+*.suo
+.vscode/
 
 .idea/
 *.sln.iml
