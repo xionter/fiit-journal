@@ -1,3 +1,10 @@
+
+
+
+https://github.com/user-attachments/assets/db9da28e-e5b3-45fc-8dfb-f92db317c9bc
+
+
+
 # FIITFLOW
 
 FIITFLOW — это веб-сервис для студентов ФИИТ, который позволяет отслеживать баллы по всем предметам в одном месте.
